@@ -29,7 +29,7 @@ const { restoreUser } = require("../../utils/auth.js");
 // GET /api/restore-user
 //const { restoreUser } = require('../../utils/auth.js'); //added to the top of this file on line 6
 
-// router.use(restoreUser); // before any other middleware or route handlers are connected to the router
+router.use(restoreUser); // DO NOT COMMENT OUT. before any other middleware or route handlers are connected to the router
 
 // router.get('/restore-user', (req, res) => {
 //     return res.json(req.user);
@@ -48,9 +48,9 @@ const { restoreUser } = require("../../utils/auth.js");
 //-----------------------end tests for phase 03 authentication
 //-----------------------phase 04 user auth routes
 
-// router.use('/session', sessionRouter);
+router.use('/session', sessionRouter); //DO NOT COMMENT OUT
 
-// router.use('/users', usersRouter);
+router.use('/users', usersRouter); //DO NOT COMMENT OUT
 
 // router.post('/test', (req, res) => {
 //   res.json({ requestBody: req.body });
