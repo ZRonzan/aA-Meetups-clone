@@ -1,11 +1,8 @@
 # aA-Meetup-clone
-Mod 4 and 5 - Meetup clone backend and frontend
-
-# `App Academy - Meetup clone project`
 
 ## Database Schema Design
 
-![Database Schema Rev A](https://user-images.githubusercontent.com/100141010/176776406-a9a64c7b-062a-4891-a4e0-7a0ef38a1f43.png)
+![176776406-a9a64c7b-062a-4891-a4e0-7a0ef38a1f43](https://user-images.githubusercontent.com/100141010/176783587-21baa035-8116-41a2-b4e9-9b1ca6d275f9.png)
 
 ## API Documentation
 
@@ -376,7 +373,7 @@ Creates and returns a new group.
       "city": "New York",
       "state": "NY",
       "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-19 20:39:36" 
+      "updatedAt": "2021-11-19 20:39:36"
     }
     ```
 
@@ -442,7 +439,7 @@ Updates and returns an existing group.
       "city": "New York",
       "state": "NY",
       "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-20 10:06:40" 
+      "updatedAt": "2021-11-20 10:06:40"
     }
     ```
 
@@ -500,7 +497,7 @@ Deletes an existing group.
     ```json
     {
       "message": "Successfully deleted",
-      "statusCode": 200 
+      "statusCode": 200
     }
     ```
 
@@ -739,7 +736,7 @@ Change the status of a membership for a group specified by id.
 
 * Error response: If changing the status to "member" and Current User is not the
   organizer of the group or a member of the group with a status of "co-host".
-  * Status Code: 400
+  * Status Code: 403
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -747,7 +744,7 @@ Change the status of a membership for a group specified by id.
     ```json
     {
       "message": "Current User must be the organizer or a co-host to make someone a member",
-      "statusCode": 400
+      "statusCode": 403
     }
     ```
 
@@ -789,7 +786,13 @@ Delete a membership to a group specified by id.
   * URL: /groups/:groupId/members/:memberId
   * Headers:
     * Content-Type: application/json
-  * Body: none
+  * Body:
+
+    ```json
+    {
+      "memberId": 1
+    }
+    ```
 
 * Successful Response
   * Status Code: 200
@@ -813,6 +816,32 @@ Delete a membership to a group specified by id.
     {
       "message": "Group couldn't be found",
       "statusCode": 404
+    }
+    ```
+
+* Error response: Membership does not exist for this User
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Membership does not exist for this User",
+      "statusCode": 404
+    }
+    ```
+
+* Error response: Only the User or organizer may delete a Membership
+  * Status Code: 403
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Only the User or organizer may delete a Membership",
+      "statusCode": 403
     }
     ```
 
@@ -1431,8 +1460,8 @@ Returns the attendees of an event specified by its id.
     }
     ```
 
-* Successful Response: If you ARE NOT the organizer of the group or a member of 
-  the group with a status of "co-host". Shows all members that don't have a 
+* Successful Response: If you ARE NOT the organizer of the group or a member of
+  the group with a status of "co-host". Shows all members that don't have a
   status of "pending".
   * Status Code: 200
   * Headers:
@@ -1629,7 +1658,13 @@ Delete an attendance to an event specified by id.
   * URL: /events/:eventId/attendees/:userId
   * Headers:
     * Content-Type: application/json
-  * Body: none
+  * Body:
+
+    ```json
+    {
+      "userId": 1
+    }
+    ```
 
 * Successful Response
   * Status Code: 200
@@ -1653,6 +1688,32 @@ Delete an attendance to an event specified by id.
     {
       "message": "Event couldn't be found",
       "statusCode": 404
+    }
+    ```
+
+* Error response: Attendance does not exist for this User
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Attendance does not exist for this User",
+      "statusCode": 404
+    }
+    ```
+
+* Error response: Only the User or organizer may delete an Attendance
+  * Status Code: 403
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Only the User or organizer may delete an Attendance",
+      "statusCode": 403
     }
     ```
 
@@ -1874,3 +1935,4 @@ Return events filtered by query parameters.
       }
     }
     ```
+
