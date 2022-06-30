@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/ZRonzan/aA-Meetups-clone/issues"
   },
-  "homepage": "https://github.com/ZRonzan/aA-Meetups-clone#readme"
+  "homepage": "https://github.com/ZRonzan/aA-Meetups-clone#readme",
+  "dependencies": {
+    "pg": "^8.7.3"
+  }
 }
