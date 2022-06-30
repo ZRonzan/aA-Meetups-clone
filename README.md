@@ -1,7 +1,7 @@
 # aA-Meetups-clone
 Mod 4 and 5 - Meetup clone backend and frontend
 
-# `App Academy - Meetups clone project`
+# `App Academy - Meetup clone project`
 
 ## Database Schema Design
 
