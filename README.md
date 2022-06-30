@@ -1,4 +1,4 @@
-# aA-Meetups-clone
+# aA-Meetup-clone
 Mod 4 and 5 - Meetup clone backend and frontend
 
 # `App Academy - Meetup clone project`
