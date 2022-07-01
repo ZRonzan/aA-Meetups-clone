@@ -2,7 +2,7 @@
 
 ## Database Schema Design
 
-![176776406-a9a64c7b-062a-4891-a4e0-7a0ef38a1f43](https://user-images.githubusercontent.com/100141010/176783587-21baa035-8116-41a2-b4e9-9b1ca6d275f9.png)
+![Untitled (5)](https://user-images.githubusercontent.com/100141010/176940120-9c4f2dee-0ebb-4083-a31b-c50c477c334b.png)
 
 ## API Documentation
 
@@ -1580,7 +1580,7 @@ Change the status of an attendance for an event specified by id.
   have a membership to the group with the status of "co-host"
 * Request
   * Method: PUT
-  * URL: /events/:eventId/attendees/:userId
+  * URL: /events/:eventId/attendees/
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1655,7 +1655,7 @@ Delete an attendance to an event specified by id.
   the user whose attendance is being deleted
 * Request
   * Method: DELETE
-  * URL: /events/:eventId/attendees/:userId
+  * URL: /events/:eventId/attendees/
   * Headers:
     * Content-Type: application/json
   * Body:
