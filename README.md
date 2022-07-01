@@ -1580,7 +1580,7 @@ Change the status of an attendance for an event specified by id.
   have a membership to the group with the status of "co-host"
 * Request
   * Method: PUT
-  * URL: /events/:eventId/attendees/:userId
+  * URL: /events/:eventId/attendees/
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1655,7 +1655,7 @@ Delete an attendance to an event specified by id.
   the user whose attendance is being deleted
 * Request
   * Method: DELETE
-  * URL: /events/:eventId/attendees/:userId
+  * URL: /events/:eventId/attendees/
   * Headers:
     * Content-Type: application/json
   * Body:
