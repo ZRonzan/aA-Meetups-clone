@@ -2,6 +2,7 @@ const router = require('express').Router();
 //importing routes from phase 04:
 const sessionRouter = require('./session.js');
 const usersRouter = require('./users.js');
+const groupsRouter = require('./groups.js');
 //importing restore code from phase 3:
 const { restoreUser } = require("../../utils/auth.js");
 
@@ -51,6 +52,8 @@ router.use(restoreUser); // DO NOT COMMENT OUT. before any other middleware or r
 router.use('/session', sessionRouter); //DO NOT COMMENT OUT
 
 router.use('/users', usersRouter); //DO NOT COMMENT OUT
+
+router.use('/groups', groupsRouter) //DO NOT COMMENT OUT
 
 // router.post('/test', (req, res) => {
 //   res.json({ requestBody: req.body });
