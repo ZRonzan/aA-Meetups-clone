@@ -11,7 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Group.belongsTo(models.User, {foreignKey: 'organizerId', onDelete: 'CASCADE', hooks: true})
+      Group.belongsTo(models.User, {foreignKey: 'organizerId', onDelete: 'CASCADE', hooks: true});
+      Group.belongsToMany(models.User, {through: models.UserGroup});
     }
   }
   Group.init({
