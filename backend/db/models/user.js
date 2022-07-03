@@ -12,8 +12,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     //method to return an object containing safe data
     toSafeObject() {
-      const { id, username, email } = this; // context will be the User instance
-      return { id, username, email };
+      const { id, firstName, lastName, email } = this; // context will be the User instance
+      return { id, firstName, lastName, email };
     };
 
     //method to validate if the password matches the username/email
@@ -27,15 +27,15 @@ module.exports = (sequelize, DataTypes) => {
     };
 
     //logs in a user with valid credentials and password
-    static async login({ credential, password }) {
+    static async login({ email, password }) {
       const { Op } = require('sequelize');
       //finds the user in the database for the matching credential
       const user = await User.scope('loginUser').findOne({
         where: {
           [Op.or]: {
             //credential will be either the username or email
-            username: credential,
-            email: credential
+            // username: credential, // commented out as Meetup does not use usernames
+            email: email
           }
         }
       });
@@ -46,10 +46,11 @@ module.exports = (sequelize, DataTypes) => {
     };
 
     //method to create a new user with the req.body values
-    static async signup({ username, email, password }) {
+    static async signup({ email, firstName, lastName,  password }) {
       const hashedPassword = bcrypt.hashSync(password);
       const user = await User.create({
-        username,
+        firstName,
+        lastName,
         email,
         hashedPassword
       });
@@ -62,23 +63,39 @@ module.exports = (sequelize, DataTypes) => {
   };
 
   User.init({
-    username: {
-      type: DataTypes.STRING,
+    //commented out username field as Meetup does not use usernames
+    // username: {
+    //   type: DataTypes.STRING,
+    //   allowNull: false,
+    //   validate: {
+    //     len: [4, 30],
+    //     isNotEmail(value) {
+    //       if (Validator.isEmail(value)) {
+    //         throw new Error("Cannot be an email.");
+    //       }
+    //     }
+    //   }
+    // },
+    firstName: {
+      type: DataTypes.STRING(25),
       allowNull: false,
       validate: {
-        len: [4, 30],
-        isNotEmail(value) {
-          if (Validator.isEmail(value)) {
-            throw new Error("Cannot be an email.");
-          }
-        }
+        isAlpha: true
+      }
+    },
+    lastName: {
+      type: DataTypes.STRING(25),
+      allowNull: false,
+      validate: {
+        isAlpha: true
       }
     },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        len: [3, 256]
+        len: [3, 256],
+        isEmail: true
       }
     },
     hashedPassword: {
@@ -99,7 +116,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       scopes: {
         currentUser: {
-          attributes: { exclude: ["hashedPassword"] }
+          attributes: { exclude: ["hashedPassword", "createdAt", "updatedAt"] }
         },
         loginUser: {
           attributes: {}

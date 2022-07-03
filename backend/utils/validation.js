@@ -7,14 +7,22 @@ const handleValidationErrors = (req, _res, next) => {
   const validationErrors = validationResult(req);
 
   if (!validationErrors.isEmpty()) {
-    const errors = validationErrors
-      .array()
-      .map((error) => `${error.msg}`);
+    // const errors = validationErrors //code from original auth-me code. commented out due to below code creating an array of errors with the parameters for each field
+    //   .array()
+    //   .map((error) => `${error.msg}`);
 
-    const err = Error('Bad request.');
+    //create an array of all errors found in validation
+    const errors = []
+    validationErrors.errors.forEach(el => {
+      let err = {}
+      err[el.param] = el.msg;
+      errors.push(err)
+    });
+
+    const err = Error('Validation error');
     err.errors = errors;
     err.status = 400;
-    err.title = 'Bad request.';
+    err.title = 'Validation error';
     next(err);
   }
   next();

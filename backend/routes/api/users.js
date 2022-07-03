@@ -14,15 +14,19 @@ const validateSignup = [
     check('email')
         .exists({ checkFalsy: true })
         .isEmail()
-        .withMessage('Please provide a valid email.'),
-    check('username')
+        .withMessage('Invalid email'),
+    check('firstName')
         .exists({ checkFalsy: true })
-        .isLength({ min: 4 })
-        .withMessage('Please provide a username with at least 4 characters.'),
-    check('username')
-        .not()
-        .isEmail()
-        .withMessage('Username cannot be an email.'),
+        .withMessage('First Name is required'),
+    check('firstName')
+        .isAlpha()
+        .withMessage('First name must contain letters only'),
+    check('lastName')
+        .exists({ checkFalsy: true })
+        .withMessage('First Name is required'),
+    check('lastName')
+        .isAlpha()
+        .withMessage('First name must contain letters only'),
     check('password')
         .exists({ checkFalsy: true })
         .isLength({ min: 6 })
@@ -33,16 +37,35 @@ const validateSignup = [
 
 // Sign up
 router.post(
-    '/',
+    '/signup',
     validateSignup, //added in phase 5 to validate signup inputs
     async (req, res) => {
-        const { email, password, username } = req.body;
-        const user = await User.signup({ email, username, password });
+        const { email, password, firstName, lastName } = req.body;
 
-        await setTokenCookie(res, user);
+        const checkUser = await User.findOne({
+            where: {
+                email: email
+            }
+        })
+
+        //check if user with the same email exists
+        if (checkUser) {
+            res.status(403);
+            return res.json({
+                message: "User already exists",
+                statusCode: res.statusCode,
+                errors: {
+                    email: "User with that email already exists"
+                }
+            })
+        }
+
+        const user = await User.signup({ email, firstName, lastName, password });
+
+        let token = await setTokenCookie(res, user);
 
         return res.json({
-            user
+            user, token
         });
     }
 );

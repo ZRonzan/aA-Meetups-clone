@@ -14,42 +14,42 @@ const router = express.Router();
 
 //middleware for phase 05 to validate keys from the req.body
 const validateLogin = [
-    check('credential')
+    check('email')
         .exists({ checkFalsy: true })
         .notEmpty()
-        .withMessage('Please provide a valid email or username.'),
+        .withMessage('Email is required'),
     check('password')
         .exists({ checkFalsy: true })
-        .withMessage('Please provide a password.'),
+        .withMessage('Password is required'),
     handleValidationErrors
 ];
 //----------------------------------------------------------
 
 // Log in using username/email and the password
 router.post(
-    '/',
+    '/login',
     validateLogin,
     async (req, res, next) => {
-        const { credential, password } = req.body;
+        const { email, password } = req.body;
 
         //runs model method to login
-        const user = await User.login({ credential, password });
+        const user = await User.login({ email, password });
 
         //if credentials are incorrect: give an error
         if (!user) {
-            const err = new Error('Login failed');
+            const err = new Error('Invalid Credentials');
             err.status = 401;
             err.title = 'Login failed';
-            err.errors = ['The provided credentials were invalid.'];
+            // err.errors = ['The provided credentials were invalid.']; // commented out to match the api documentation
             return next(err);
         }
 
         //set the cookie upon successful login
-        await setTokenCookie(res, user);
+        let token = await setTokenCookie(res, user);
 
         //return the user that just logged in
         return res.json({
-            user
+            user, token
         });
     }
 );
@@ -66,7 +66,7 @@ router.delete(
 // Restore session user
 router.get(
     '/',
-    restoreUser, //run the restor middleware to check is a user is already logged in, then moves to the next middleware
+    restoreUser, //run the restore middleware to check is a user is already logged in, then moves to the next middleware
     (req, res) => {
         const { user } = req;
         if (user) {
