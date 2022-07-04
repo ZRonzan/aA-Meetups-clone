@@ -3,7 +3,7 @@ const express = require('express')
 
 //importing authentication middleware and User model from phase 03:
 const { setTokenCookie, restoreUser } = require('../../utils/auth');
-const { User } = require('../../db/models');
+const { User, Group, UserGroup, sequelize} = require('../../db/models');
 //------------------------------------------------------------------
 //---------------importing for phase 05-----------------------------
 const { check } = require('express-validator');
@@ -62,6 +62,44 @@ router.delete(
         return res.json({ message: 'success' });
     }
 );
+
+//Get all groups joined or organized by the current User
+router.get('/groups', restoreUser ,async (req, res) => {
+
+
+    const foundOwnedGroups = await Group.findAll({
+        include: {
+            model: UserGroup,
+            attributes: []
+        },
+        where: {
+            organizerId: req.user.id
+        },
+        attributes: {
+            include: [[sequelize.fn("COUNT", sequelize.col("UserGroups.groupId")),"numMembers"]],
+        },
+        group: ['UserGroups.groupId']
+    });
+
+
+    const foundGroupsAsMember = await UserGroup.findAll({
+        attributes: [],
+        include: {
+            model: Group,
+            attributes: {
+                include: [[sequelize.fn("COUNT", sequelize.col("groupId")),"numMembers"]],
+            },
+            group: ['groupId']
+        },
+        where: {
+            memberId: req.user.id
+        }
+    });
+
+    let allGroups =[...foundOwnedGroups, ...foundGroupsAsMember]
+
+    res.json({Groups: allGroups})
+})
 
 // Restore session user
 router.get(

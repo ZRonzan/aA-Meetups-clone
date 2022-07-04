@@ -52,6 +52,16 @@ module.exports = {
         city: "Los Angeles",
         state: "CA",
         previewImage: "previewImageURL5"
+      },
+      {
+        organizerId: 1,
+        name: "Test group 6",
+        about: "details for test group 6------------------------------------",
+        type: "Online",
+        private: false,
+        city: "Los Angeles",
+        state: "CA",
+        previewImage: "previewImageURL6"
       }
     ], {});
   },
