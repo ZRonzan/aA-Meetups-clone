@@ -680,7 +680,7 @@ Change the status of a membership for a group specified by id.
   have a membership to the group with the status of "co-host"
 * Request
   * Method: PUT
-  * URL: /groups/:groupId/members/:memberId
+  * URL: /groups/:groupId/members/
   * Headers:
     * Content-Type: application/json
   * Body:
