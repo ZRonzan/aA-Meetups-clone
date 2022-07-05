@@ -99,7 +99,7 @@ router.get(
                         model: Image,
                         as: 'previewImage',
                         attributes: ['imageUrl'],
-                        limit: 100000 //why is this needed to prevent things from breaking????????
+                        limit: 1000000 //why is this needed to prevent things from breaking????????
                     },
                     {
                         model: User,
