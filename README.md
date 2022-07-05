@@ -783,7 +783,7 @@ Delete a membership to a group specified by id.
   the user whose membership is being deleted
 * Request
   * Method: DELETE
-  * URL: /groups/:groupId/members/:memberId
+  * URL: /groups/:groupId/members/
   * Headers:
     * Content-Type: application/json
   * Body:

@@ -148,7 +148,7 @@ router.put(
             return next(err);
         }
 
-        const foundCurrMember = await Member.findOne({
+        const foundCurrUser = await Member.findOne({
             where: {
                 groupId: req.params.groupId,
                 memberId: req.user.id
@@ -168,7 +168,7 @@ router.put(
         }
 
         if (req.body.status === 'Member') {
-            if (foundGroup.organizerId === req.user.id || foundCurrMember.status === 'Co-Host') {
+            if (foundGroup.organizerId === req.user.id || foundCurrUser.status === 'Co-Host') {
                 const { memberId, status } = req.body;
 
                 let updatedmember = await Member.findOne({
@@ -217,7 +217,58 @@ router.put(
             return next(err);
         }
     }
-)
+);
+
+//Delete a membership specified by id
+router.delete(
+    '/:groupId/members',
+    requireAuth,
+    async (req, res, next) => {
+
+        const foundGroup = await Group.findByPk(req.params.groupId)
+
+        if (!foundGroup) {
+            const err = new Error("Group couldn't be found");
+            err.status = 404;
+            return next(err);
+        }
+
+        const foundMemberToDelete = await Member.findOne({
+            where: {
+                groupId: req.params.groupId,
+                memberId: req.body.memberId
+            }
+        })
+
+        if (!foundMemberToDelete) {
+            const err = new Error("Membership does not exist for this User");
+            err.status = 404;
+            return next(err);
+        }
+
+        if (req.user.id !== req.body.memberId) {
+            if (foundGroup.organizerId === req.user.id) {
+                foundMemberToDelete.destroy();
+                res.json({
+                    "message": "Successfully deleted membership from group"
+                })
+            } else {
+                const err = new Error("Only the User or organizer may delete a Membership");
+                err.status = 403;
+                return next(err);
+            }
+        } else if (req.user.id === req.body.memberId) {
+            foundMemberToDelete.destroy();
+            res.json({
+                "message": "Successfully deleted membership from group"
+            })
+        } else {
+            const err = new Error("Bad request. Cannot delete membership");
+            err.status = 400;
+            return next(err);
+        }
+    }
+);
 
 
 //Get group details and number of members from group id
