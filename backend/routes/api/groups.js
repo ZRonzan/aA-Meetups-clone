@@ -61,26 +61,26 @@ router.get(
 
         let foundMembers;
 
-        if(req.user && req.user.id && req.user.id === foundGroup.organizerId) {
+        if (req.user && req.user.id && req.user.id === foundGroup.organizerId) {
             foundMembers = await User.findAll({
                 include: {
-                        model: Member,
-                        attributes: ['status'],
-                        where: {
-                            groupId: req.params.groupId
-                        }
+                    model: Member,
+                    attributes: ['status'],
+                    where: {
+                        groupId: req.params.groupId
                     }
+                }
             });
         } else {
             foundMembers = await User.findAll({
                 include: {
-                        model: Member,
-                        attributes: ['status'],
-                        where: {
-                            groupId: req.params.groupId,
-                            status: {[Op.not]: 'Pending'}
-                        }
+                    model: Member,
+                    attributes: ['status'],
+                    where: {
+                        groupId: req.params.groupId,
+                        status: { [Op.not]: 'Pending' }
                     }
+                }
             });
         }
 
@@ -88,36 +88,168 @@ router.get(
     }
 );
 
+//Request membership for a group based on the group Id
+router.post(
+    '/:groupId/members',
+    requireAuth,
+    async (req, res, next) => {
+        const foundGroup = await Group.findByPk(req.params.groupId)
+
+        if (!foundGroup) {
+            const err = new Error("Group couldn't be found");
+            err.status = 404;
+            return next(err);
+        }
+
+        if (foundGroup.organizerId === req.user.id) {
+            const err = new Error("Current user is the Organizer of the group");
+            err.status = 400;
+            return next(err);
+        }
+
+        const foundMember = await Member.findOne({
+            where: {
+                groupId: req.params.groupId,
+                memberId: req.user.id
+            }
+        })
+
+        if (foundMember) {
+            if (foundMember.status === 'Pending') {
+                const err = new Error("Membership has already been requested");
+                err.status = 400;
+                return next(err);
+            } else if (foundMember.status === 'Member' || foundMember.status === 'Co-Host') {
+                const err = new Error("User is already a member of the group");
+                err.status = 400;
+                return next(err);
+            }
+        }
+
+        let newApplication = await Member.create({
+            groupId: req.params.groupId,
+            memberId: req.user.id
+        });
+
+        res.json(newApplication);
+    }
+);
+
+//change the status of a membership specified by id
+router.put(
+    '/:groupId/members',
+    requireAuth,
+    async (req, res, next) => {
+        const foundGroup = await Group.findByPk(req.params.groupId)
+
+        if (!foundGroup) {
+            const err = new Error("Group couldn't be found");
+            err.status = 404;
+            return next(err);
+        }
+
+        const foundCurrMember = await Member.findOne({
+            where: {
+                groupId: req.params.groupId,
+                memberId: req.user.id
+            }
+        })
+        const foundMemberToUpdate = await Member.findOne({
+            where: {
+                groupId: req.params.groupId,
+                memberId: req.body.memberId
+            }
+        })
+
+        if (!foundMemberToUpdate) {
+            const err = new Error("Membership between the user and the group does not exits");
+            err.status = 404;
+            return next(err);
+        }
+
+        if (req.body.status === 'Member') {
+            if (foundGroup.organizerId === req.user.id || foundCurrMember.status === 'Co-Host') {
+                const { memberId, status } = req.body;
+
+                let updatedmember = await Member.findOne({
+                    where: {
+                        memberId: memberId,
+                        groupId: req.params.groupId
+                    },
+                    attributes: ['id', 'groupId', 'memberId', 'status']
+                })
+                updatedmember.status = status;
+                await updatedmember.save();
+
+                res.json(updatedmember)
+            } else {
+                const err = new Error("Current User must be the organizer or a co-host to make someone a member");
+                err.status = 403;
+                return next(err);
+            }
+        } else if (req.body.status === 'Co-Host') {
+            if (foundGroup.organizerId === req.user.id) {
+                const { memberId, status } = req.body;
+
+                let updatedmember = await Member.findOne({
+                    where: {
+                        memberId: memberId,
+                        groupId: req.params.groupId
+                    },
+                    attributes: ['id', 'groupId', 'memberId', 'status']
+                })
+                updatedmember.status = status;
+                await updatedmember.save();
+
+                res.json(updatedmember)
+            } else {
+                const err = new Error("Current User must be the organizer to add a co-host");
+                err.status = 403;
+                return next(err);
+            }
+        } else if (req.body.status === 'Pending') {
+            const err = new Error("Cannot change a membership status to pending");
+            err.status = 400;
+            return next(err);
+        } else {
+            const err = new Error("Bad request. Cannot update membership");
+            err.status = 400;
+            return next(err);
+        }
+    }
+)
+
+
 //Get group details and number of members from group id
 router.get(
     '/:groupId',
     async (req, res, next) => {
 
-            const foundGroup = await Group.findOne({
-                include: [
-                    {
-                        model: Image,
-                        as: 'previewImage',
-                        attributes: ['imageUrl'],
-                        limit: 1000000 //why is this needed to prevent things from breaking????????
-                    },
-                    {
-                        model: User,
-                        as: 'Organizer'
-                    },
-                    {
-                        model: Member,
-                        attributes: []
-                    },
-                ],
-                attributes: {
-                    include: [[sequelize.fn("COUNT", sequelize.col("Members.groupId")), "numMembers"]],
+        const foundGroup = await Group.findOne({
+            include: [
+                {
+                    model: Image,
+                    as: 'previewImage',
+                    attributes: ['imageUrl'],
+                    limit: 1000000 //why is this needed to prevent things from breaking????????
                 },
-                where: {
-                    id: req.params.groupId
+                {
+                    model: User,
+                    as: 'Organizer'
                 },
-                group: ['Members.groupId']
-            })
+                {
+                    model: Member,
+                    attributes: []
+                },
+            ],
+            attributes: {
+                include: [[sequelize.fn("COUNT", sequelize.col("Members.groupId")), "numMembers"]],
+            },
+            where: {
+                id: req.params.groupId
+            },
+            group: ['Members.groupId']
+        })
 
 
 
@@ -205,7 +337,7 @@ router.put(
             newError.status = 403
             return next(newError)
         } else {
-            let { name, about, type, private, city, state} = req.body;
+            let { name, about, type, private, city, state } = req.body;
             foundGroup.name = name;
             foundGroup.about = about;
             foundGroup.type = type;
