@@ -92,19 +92,34 @@ router.get(
 router.get(
     '/:groupId',
     async (req, res, next) => {
-        const foundGroup = await Group.findOne({
-            where: {
-                id: req.params.groupId
-            },
-            include: [
-                { model: Member, attributes: [] },
-                { model: User, as: "Organizer" }
-            ],
-            attributes: {
-                include: [[sequelize.fn("COUNT", sequelize.col("Members.groupId")), "numMembers"]],
-            },
-            group: ['Members.groupId']
-        });
+
+            const foundGroup = await Group.findOne({
+                include: [
+                    {
+                        model: Image,
+                        as: 'previewImage',
+                        attributes: ['imageUrl'],
+                        limit: 100000 //why is this needed to prevent things from breaking????????
+                    },
+                    {
+                        model: User,
+                        as: 'Organizer'
+                    },
+                    {
+                        model: Member,
+                        attributes: []
+                    },
+                ],
+                attributes: {
+                    include: [[sequelize.fn("COUNT", sequelize.col("Members.groupId")), "numMembers"]],
+                },
+                where: {
+                    id: req.params.groupId
+                },
+                group: ['Members.groupId']
+            })
+
+
 
         if (!foundGroup) {
             let err = new Error("Group couldn't be found")
@@ -112,16 +127,7 @@ router.get(
             return next(err)
         }
 
-        const images = await Image.findAll({
-            where: {
-                groupId: req.params.groupId
-            }
-        });
-
-        let modifiedGroup = foundGroup.toJSON()
-        modifiedGroup.images = images
-
-        res.json(modifiedGroup);
+        res.json(foundGroup);
     }
 );
 
