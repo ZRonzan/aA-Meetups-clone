@@ -11,7 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Image.belongsTo(models.Group, {foreignKey: 'groupId', onDelete: "CASCADE", hooks: true})
+      Image.belongsTo(models.Group, {foreignKey: 'groupId', as: 'previewImage'})
+      Image.belongsTo(models.Group, {foreignKey: 'groupId', as: 'images'})
     }
   }
   Image.init({
@@ -28,7 +29,8 @@ module.exports = (sequelize, DataTypes) => {
             throw new Error('This image cannot be uploaded to multiple groups at once')
           }
         }
-      }
+      },
+      onDelete: 'CASCADE'
     },
     venueId: {
       type: DataTypes.INTEGER,
@@ -67,11 +69,9 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Image',
-    defaultScope: {
-      attributes: {
-        exclude: ['id', 'groupId', 'venueId', 'eventId' , "createdAt", "updatedAt"]
-      }
-    }
+    // defaultScope: {
+    //   attributes: ['imageUrl']
+    // }
   });
   return Image;
 };

@@ -131,10 +131,18 @@ router.get(
     '/',
     async (_req, res) => {
         const foundGroups = await Group.findAll({
-            include: {
-                model: Member,
-                attributes: []
-            },
+            include: [
+                {
+                    model: Member,
+                    attributes: []
+                },
+                {
+                    model: Image,
+                    as: 'previewImage',
+                    attributes: ['imageUrl'],
+                    limit: 1
+                }
+            ],
             attributes: {
                 include: [[sequelize.fn("COUNT", sequelize.col("Members.groupId")), "numMembers"]],
             },
@@ -159,17 +167,12 @@ router.post(
             type: req.body.type,
             private: req.body.private,
             city: req.body.city,
-            state: req.body.state,
-            previewImage: req.body.previewImage
+            state: req.body.state
         })
 
         await newGroup.save();
 
-        let newGroupResponse = await Group.findByPk(newGroup.id, {
-            attributes: {
-                exclude: ['previewImage']
-            }
-        })
+        let newGroupResponse = await Group.findByPk(newGroup.id)
 
         res.json(newGroupResponse);
     }
@@ -196,22 +199,17 @@ router.put(
             newError.status = 403
             return next(newError)
         } else {
-            let { name, about, type, private, city, state, previewImage } = req.body;
+            let { name, about, type, private, city, state} = req.body;
             foundGroup.name = name;
             foundGroup.about = about;
             foundGroup.type = type;
             foundGroup.private = private;
             foundGroup.city = city;
             foundGroup.state = state;
-            foundGroup.previewImage = previewImage;
 
             await foundGroup.save()
 
-            let newGroupResponse = await Group.findByPk(foundGroup.id, {
-                attributes: {
-                    exclude: ['previewImage']
-                }
-            })
+            let newGroupResponse = await Group.findByPk(foundGroup.id)
 
             res.json(newGroupResponse);
         }
@@ -236,21 +234,14 @@ router.delete(
             newError.status = 403;
             return next(newError);
         }
+
         await foundGroup.destroy();
 
         res.status(200)
         res.json({
             "message": "Successfully deleted",
             "statusCode": res.statusCode
-        })
-
-
-        // res.status(200);
-        // return res.json({
-        //     "message": "Successfully deleted",
-        //     "statusCode": 200
-        // });
-
+        });
     }
 );
 

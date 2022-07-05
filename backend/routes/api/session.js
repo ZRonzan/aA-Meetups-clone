@@ -3,7 +3,7 @@ const express = require('express')
 
 //importing authentication middleware and User model from phase 03:
 const { setTokenCookie, restoreUser } = require('../../utils/auth');
-const { User, Group, Member, sequelize} = require('../../db/models');
+const { User, Group, Member, sequelize, Image } = require('../../db/models');
 //------------------------------------------------------------------
 //---------------importing for phase 05-----------------------------
 const { check } = require('express-validator');
@@ -64,19 +64,26 @@ router.delete(
 );
 
 //Get all groups joined or organized by the current User
-router.get('/groups', restoreUser ,async (req, res) => {
+router.get('/groups', restoreUser, async (req, res) => {
 
 
     const foundOwnedGroups = await Group.findAll({
-        include: {
+        include: [{
             model: Member,
             attributes: []
         },
+        {
+            model: Image,
+            as: 'previewImage',
+            attributes: ['imageUrl'],
+            limit: 1
+        }
+        ],
         where: {
             organizerId: req.user.id
         },
         attributes: {
-            include: [[sequelize.fn("COUNT", sequelize.col("Members.groupId")),"numMembers"]],
+            include: [[sequelize.fn("COUNT", sequelize.col("Members.groupId")), "numMembers"]],
         },
         group: ['Members.groupId']
     });
@@ -84,21 +91,29 @@ router.get('/groups', restoreUser ,async (req, res) => {
 
     const foundGroupsAsMember = await Member.findAll({
         attributes: [],
-        include: {
-            model: Group,
-            attributes: {
-                include: [[sequelize.fn("COUNT", sequelize.col("groupId")),"numMembers"]],
+        include: [
+            {
+                model: Group,
+                attributes: {
+                    include: [[sequelize.fn("COUNT", sequelize.col("groupId")), "numMembers"]],
+                },
+                include: {
+                    model: Image,
+                    as: 'previewImage',
+                    attributes: ['imageUrl'],
+                    limit: 1
+                }
             },
-            group: ['groupId']
-        },
+        ],
+        group: ['groupId'],
         where: {
             memberId: req.user.id
         }
     });
 
-    let allGroups =[...foundOwnedGroups, ...foundGroupsAsMember]
+    let allGroups = [...foundOwnedGroups, ...foundGroupsAsMember]
 
-    res.json({Groups: allGroups})
+    res.json({ Groups: allGroups })
 })
 
 // Restore session user

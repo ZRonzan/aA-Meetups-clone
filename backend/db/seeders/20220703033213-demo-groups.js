@@ -10,8 +10,7 @@ module.exports = {
         type: "Online",
         private: false,
         city: "Los Angeles",
-        state: "CA",
-        previewImage: "previewImageURL1"
+        state: "CA"
       },
       {
         organizerId: 2,
@@ -20,8 +19,7 @@ module.exports = {
         type: "Online",
         private: false,
         city: "New York City",
-        state: "NY",
-        previewImage: "previewImageURL2"
+        state: "NY"
       },
       {
         organizerId: 3,
@@ -30,8 +28,7 @@ module.exports = {
         type: "In Person",
         private: true,
         city: "Atlanta",
-        state: "GA",
-        previewImage: "previewImageURL3"
+        state: "GA"
       },
       {
         organizerId: 1,
@@ -40,8 +37,7 @@ module.exports = {
         type: "In Person",
         private: true,
         city: "Los Angeles",
-        state: "CA",
-        previewImage: "previewImageURL4"
+        state: "CA"
       },
       {
         organizerId: 2,
@@ -50,8 +46,7 @@ module.exports = {
         type: "Online",
         private: false,
         city: "Los Angeles",
-        state: "CA",
-        previewImage: "previewImageURL5"
+        state: "CA"
       },
       {
         organizerId: 1,
@@ -60,8 +55,7 @@ module.exports = {
         type: "Online",
         private: false,
         city: "Los Angeles",
-        state: "CA",
-        previewImage: "previewImageURL6"
+        state: "CA"
       }
     ], {});
   },

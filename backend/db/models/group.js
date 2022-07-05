@@ -13,8 +13,9 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Group.belongsTo(models.User, {foreignKey: 'organizerId', as: "Organizer"});
       //Group.belongsToMany(models.User, {through: models.Member, as: "Members"});
-      Group.hasMany(models.Member, {foreignKey: 'groupId', onDelete: "CASCADE", hooks: true})
-      Group.hasMany(models.Image, {foreignKey: 'groupId'})
+      Group.hasMany(models.Member, {foreignKey: 'groupId', onDelete: 'CASCADE', hooks: true})
+      Group.hasMany(models.Image, {foreignKey: 'groupId', as: 'previewImage', onDelete: 'CASCADE', hooks: true})
+      Group.hasMany(models.Image, {foreignKey: 'groupId', as: 'images', onDelete: 'CASCADE', hooks: true})
     }
   }
   Group.init({
@@ -69,9 +70,6 @@ module.exports = (sequelize, DataTypes) => {
           if (!states.includes(val)) throw new Error('State must be valid');
         }
       }
-    },
-    previewImage: {
-      type: DataTypes.STRING
     }
   }, {
     sequelize,
