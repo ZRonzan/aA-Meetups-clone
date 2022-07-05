@@ -50,14 +50,18 @@ router.post(
 
         //check if user with the same email exists
         if (checkUser) {
-            res.status(403);
-            return res.json({
-                message: "User already exists",
-                statusCode: res.statusCode,
-                errors: {
-                    email: "User with that email already exists"
-                }
-            })
+            let err = new Error("User already exists")
+            err.status = 403;
+            return next (err)
+
+            // res.status(403);
+            // return res.json({
+            //     message: "User already exists",
+            //     statusCode: res.statusCode,
+            //     errors: {
+            //         email: "User with that email already exists"
+            //     }
+            // })
         }
 
         const user = await User.signup({ email, firstName, lastName, password });

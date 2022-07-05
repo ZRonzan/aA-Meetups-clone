@@ -1,13 +1,16 @@
 // backend/routes/api/session.js
 const express = require('express')
 
-//importing authentication middleware and User model from phase 03:
+//importing authentication middleware and models from phase 03:
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
 const { Group, sequelize, UserGroup, User, Image } = require('../../db/models');
 //------------------------------------------------------------------
 //---------------importing for phase 05-----------------------------
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
+//------------------------------------------------------------------
+//----------------importing Op query operators----------------------
+const { Op } = require('sequelize')
 //------------------------------------------------------------------
 
 const router = express.Router();
@@ -17,11 +20,11 @@ const validateGroups = [
     check('name')
         .exists({ checkFalsy: true })
         .notEmpty()
-        .isLength({max:60})
+        .isLength({ max: 60 })
         .withMessage('Name must be 60 characters or less'),
     check('about')
         .exists({ checkFalsy: true })
-        .isLength({min: 50})
+        .isLength({ min: 50 })
         .withMessage('About must be 50 characters or more'),
     check('type')
         .exists({ checkFalsy: true })
@@ -42,6 +45,50 @@ const validateGroups = [
 //----------------------------------------------------------
 
 router.use(restoreUser)
+
+//Get group details and number of members from group id
+router.get(
+    '/:groupId/members',
+    async (req, res, next) => {
+
+        const foundGroup = await Group.findByPk(req.params.groupId);
+
+        if (!foundGroup) {
+            let err = new Error("Group couldn't be found")
+            err.status = 404
+            return next(err)
+        };
+
+        let foundMembers;
+
+        if(req.user && req.user.id && req.user.id === foundGroup.organizerId) {
+            foundMembers = await User.findAll({
+                include: {
+                        model: UserGroup,
+                        as: "Members",
+                        attributes: ['status'],
+                        where: {
+                            groupId: req.params.groupId
+                        }
+                    }
+            });
+        } else {
+            foundMembers = await User.findAll({
+                include: {
+                        model: UserGroup,
+                        as: "Members",
+                        attributes: ['status'],
+                        where: {
+                            groupId: req.params.groupId,
+                            status: {[Op.not]: 'Pending'}
+                        }
+                    }
+            });
+        }
+
+        res.json(foundMembers)
+    }
+);
 
 //Get group details and number of members from group id
 router.get(
@@ -127,6 +174,85 @@ router.post(
         })
 
         res.json(newGroupResponse);
+    }
+);
+
+//edit a group (requires valid logged in user)
+router.put(
+    '/:groupId',
+    requireAuth,
+    validateGroups,
+    async (req, res, next) => {
+        const foundGroup = await Group.findOne({
+            where: {
+                id: req.params.groupId
+            }
+        })
+
+        if (!foundGroup) {
+            let newError = new Error("Group couldn't be found")
+            newError.status = 404
+            return next(newError)
+        } else if (req.user.id !== foundGroup.organizerId) {
+            let newError = new Error("Current user is not the owner of the group. That are not authorized to edit this group")
+            newError.status = 403
+            return next(newError)
+        } else {
+            let { name, about, type, private, city, state, previewImage } = req.body;
+            foundGroup.name = name;
+            foundGroup.about = about;
+            foundGroup.type = type;
+            foundGroup.private = private;
+            foundGroup.city = city;
+            foundGroup.state = state;
+            foundGroup.previewImage = previewImage;
+
+            await foundGroup.save()
+
+            let newGroupResponse = await Group.findByPk(foundGroup.id, {
+                attributes: {
+                    exclude: ['previewImage']
+                }
+            })
+
+            res.json(newGroupResponse);
+        }
+    }
+);
+
+//edit a group (requires valid logged in user)
+router.delete(
+    '/:groupId',
+    requireAuth,
+    async (req, res, next) => {
+        const foundGroup = await Group.findByPk(req.params.groupId)
+
+        if (!foundGroup) {
+            let newError = new Error("Group couldn't be found");
+            newError.status = 404;
+            return next(newError)
+        }
+
+        if (req.user.id !== foundGroup.organizerId) {
+            let newError = new Error("Current user is not the owner of the group. That are not authorized to delete this group");
+            newError.status = 403;
+            return next(newError);
+        }
+        await foundGroup.destroy();
+
+        res.status(200)
+        res.json({
+            "message": "Successfully deleted",
+            "statusCode": res.statusCode
+        })
+
+
+        // res.status(200);
+        // return res.json({
+        //     "message": "Successfully deleted",
+        //     "statusCode": 200
+        // });
+
     }
 );
 

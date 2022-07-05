@@ -11,19 +11,19 @@ module.exports = {
       groupId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        // references: {
-        //   model: 'Groups',
-        //   key: 'id'
-        // },
+        references: {
+          model: 'Groups',
+          key: 'id'
+        },
         onDelete: 'CASCADE'
       },
       memberId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        // references: {
-        //   model: 'Users',
-        //   key: 'id'
-        // },
+        references: {
+          model: 'Users',
+          key: 'id'
+        },
         onDelete: 'CASCADE'
       },
       status: {
