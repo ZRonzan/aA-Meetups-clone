@@ -3,7 +3,7 @@ const express = require('express')
 
 //importing authentication middleware and models from phase 03:
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
-const { Group, sequelize, UserGroup, User, Image } = require('../../db/models');
+const { Group, sequelize, Member, User, Image } = require('../../db/models');
 //------------------------------------------------------------------
 //---------------importing for phase 05-----------------------------
 const { check } = require('express-validator');
@@ -64,8 +64,7 @@ router.get(
         if(req.user && req.user.id && req.user.id === foundGroup.organizerId) {
             foundMembers = await User.findAll({
                 include: {
-                        model: UserGroup,
-                        as: "Members",
+                        model: Member,
                         attributes: ['status'],
                         where: {
                             groupId: req.params.groupId
@@ -75,8 +74,7 @@ router.get(
         } else {
             foundMembers = await User.findAll({
                 include: {
-                        model: UserGroup,
-                        as: "Members",
+                        model: Member,
                         attributes: ['status'],
                         where: {
                             groupId: req.params.groupId,
@@ -99,13 +97,13 @@ router.get(
                 id: req.params.groupId
             },
             include: [
-                { model: UserGroup, attributes: [] },
+                { model: Member, attributes: [] },
                 { model: User, as: "Organizer" }
             ],
             attributes: {
-                include: [[sequelize.fn("COUNT", sequelize.col("UserGroups.groupId")), "numMembers"]],
+                include: [[sequelize.fn("COUNT", sequelize.col("Members.groupId")), "numMembers"]],
             },
-            group: ['UserGroups.groupId']
+            group: ['Members.groupId']
         });
 
         if (!foundGroup) {
@@ -134,13 +132,13 @@ router.get(
     async (_req, res) => {
         const foundGroups = await Group.findAll({
             include: {
-                model: UserGroup,
+                model: Member,
                 attributes: []
             },
             attributes: {
-                include: [[sequelize.fn("COUNT", sequelize.col("UserGroups.groupId")), "numMembers"]],
+                include: [[sequelize.fn("COUNT", sequelize.col("Members.groupId")), "numMembers"]],
             },
-            group: ['UserGroups.groupId'],
+            group: ['Members.groupId'],
             order: [['id']]
         })
 

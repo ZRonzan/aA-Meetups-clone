@@ -3,7 +3,7 @@ const express = require('express')
 
 //importing authentication middleware and User model from phase 03:
 const { setTokenCookie, restoreUser } = require('../../utils/auth');
-const { User, Group, UserGroup, sequelize} = require('../../db/models');
+const { User, Group, Member, sequelize} = require('../../db/models');
 //------------------------------------------------------------------
 //---------------importing for phase 05-----------------------------
 const { check } = require('express-validator');
@@ -69,20 +69,20 @@ router.get('/groups', restoreUser ,async (req, res) => {
 
     const foundOwnedGroups = await Group.findAll({
         include: {
-            model: UserGroup,
+            model: Member,
             attributes: []
         },
         where: {
             organizerId: req.user.id
         },
         attributes: {
-            include: [[sequelize.fn("COUNT", sequelize.col("UserGroups.groupId")),"numMembers"]],
+            include: [[sequelize.fn("COUNT", sequelize.col("Members.groupId")),"numMembers"]],
         },
-        group: ['UserGroups.groupId']
+        group: ['Members.groupId']
     });
 
 
-    const foundGroupsAsMember = await UserGroup.findAll({
+    const foundGroupsAsMember = await Member.findAll({
         attributes: [],
         include: {
             model: Group,
