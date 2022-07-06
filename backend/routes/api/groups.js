@@ -41,6 +41,26 @@ const validateGroups = [
         .withMessage('State is required'),
     handleValidationErrors
 ];
+
+const validateVenues = [
+    check('address')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .withMessage("Street address is required"),
+    check('city')
+        .exists({ checkFalsy: true })
+        .withMessage("City is required"),
+    check('state')
+        .exists({ checkFalsy: true })
+        .withMessage("State is required"),
+    check('lat')
+        .isDecimal({ min: -90, max: 90 })
+        .withMessage("Latitude is not valid"),
+    check('lng')
+        .isDecimal({ min: -180, max: 180 })
+        .withMessage("Longitude is not valid"),
+    handleValidationErrors
+];
 //----------------------------------------------------------
 
 //Get group details and number of members from group id
@@ -128,17 +148,73 @@ router.get(
         const updatedfoundEvents = []
         for (let event of foundEvents) {
             newEvent = event.toJSON()
-            newEvent.numAttending = await event.countAttendees({where: {
-                status: {
-                    [Op.is]: 'Member'
+            newEvent.numAttending = await event.countAttendees({
+                where: {
+                    status: {
+                        [Op.is]: 'Member'
+                    }
                 }
-            }})
+            })
             updatedfoundEvents.push(newEvent)
         }
 
         res.json(updatedfoundEvents)
     }
 );
+
+//create a new venue for a group specified by its Id
+router.post(
+    '/:groupId/venues',
+    requireAuth,
+    validateVenues,
+    async (req, res, next) => {
+        const foundGroup = await Group.findByPk(req.params.groupId);
+
+        if (!foundGroup) {
+            const err = new Error("Group couldn't be found");
+            err.status = 404;
+            return next(err);
+        }
+
+        const foundCoHost = await Member.findOne({
+            where: {
+                groupId: req.params.groupId,
+                memberId: req.user.id,
+                status: "Co-Host"
+            }
+        })
+
+        if (foundGroup.organizerId !== req.user.id && !foundCoHost) {
+            const err = new Error("Current user is not the owner or the Co-Host of the group");
+            err.status = 403;
+            return next(err);
+        } else if (foundGroup.organizerId === req.user.id || foundCoHost) {
+            const { address, city, state, lat, lng } = req.body
+            const newEvent = await Venue.create({
+                groupId: req.params.groupId,
+                address: address,
+                city: city,
+                state: state,
+                lat: lat,
+                lng: lng
+            })
+            const newEventResponse = {
+                id: newEvent.id,
+                groupId: newEvent.groupId,
+                address: newEvent.address,
+                city: newEvent.city,
+                state: newEvent.state,
+                lat: newEvent.lat,
+                lng: newEvent.lng
+            }
+            res.json(newEventResponse)
+        } else {
+            const err = new Error("Could not create event");
+            err.status = 400;
+            return next(err);
+        }
+    }
+)
 
 
 //Request membership for a group based on the group Id
@@ -354,7 +430,7 @@ router.get(
 
         let members = await foundGroup.getMembers({
             where: {
-                status: {[Op.not]: 'Pending'}
+                status: { [Op.not]: 'Pending' }
             }
         })
 
@@ -386,7 +462,7 @@ router.get(
         for (let group of foundGroups) {
             let members = await group.getMembers({
                 where: {
-                    status: {[Op.not]: 'Pending'}
+                    status: { [Op.not]: 'Pending' }
                 }
             })
             let updatedGroupObject = group.toJSON()
@@ -395,7 +471,7 @@ router.get(
             foundGroupsWithMemberCounts.push(updatedGroupObject)
         }
 
-        res.json({Groups: foundGroupsWithMemberCounts});
+        res.json({ Groups: foundGroupsWithMemberCounts });
     }
 );
 
