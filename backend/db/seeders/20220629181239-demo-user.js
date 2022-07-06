@@ -22,11 +22,11 @@ module.exports = {
         hashedPassword: bcrypt.hashSync('password') //generate a hash from the password 'password'
       },
       {
-        firstName: 'Fake',
-        lastName: 'Userone',
-        email: 'user1@user.io',
+        firstName: 'John',
+        lastName: 'Smith',
+        email: "john.smith@gmail.com",
         // username: 'FakeUser1',
-        hashedPassword: bcrypt.hashSync('password2')
+        hashedPassword: bcrypt.hashSync("secret password")
       },
       {
         firstName: 'Fake',
