@@ -13,6 +13,8 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Image.belongsTo(models.Group, {foreignKey: 'groupId', as: 'previewImage'})
       Image.belongsTo(models.Group, {foreignKey: 'groupId', as: 'images'})
+      Image.belongsTo(models.Venue, {foreignKey: 'venueId'})
+      Image.belongsTo(models.Event, {foreignKey: 'eventId'})
     }
   }
   Image.init({

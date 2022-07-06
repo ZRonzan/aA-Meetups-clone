@@ -10,17 +10,27 @@ module.exports = {
       },
       groupId: {
         type: Sequelize.INTEGER,
-        references: {
-          model: "Groups",
-          key: "id"
-        },
+        // references: {
+        //   model: "Groups",
+        //   key: "id"
+        // },
         onDelete: 'CASCADE'
       },
       venueId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        // references: {
+        //   model: "Venues",
+        //   key: "id"
+        // },
+        onDelete: 'CASCADE'
       },
       eventId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        // references: {
+        //   model: "Events",
+        //   key: "id"
+        // },
+        onDelete: 'CASCADE'
       },
       imageUrl: {
         type: Sequelize.STRING,
