@@ -29,7 +29,7 @@ const validateGroups = [
     check('type')
         .exists({ checkFalsy: true })
         .isIn(['Online', 'In Person'])
-        .withMessage('Type must be Online or In person'),
+        .withMessage('Type must be Online or In Person'),
     check('private')
         .isBoolean()
         .withMessage('Private must be a boolean'),
