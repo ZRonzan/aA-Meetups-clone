@@ -4,287 +4,287 @@ const sampleImages = [
   //seeding groups
   {
     groupId: 1,
-    imageURL: 'group-1-testImage-1-URL'
+    imageUrl: 'group-1-testImage-1-Url'
   },
   {
     groupId: 1,
-    imageURL: 'group-1-testImage-2-URL'
+    imageUrl: 'group-1-testImage-2-Url'
   },
   {
     groupId: 1,
-    imageURL: 'group-1-testImage-3-URL'
+    imageUrl: 'group-1-testImage-3-Url'
   },
   {
     groupId: 1,
-    imageURL: 'group-1-testImage-4-URL'
+    imageUrl: 'group-1-testImage-4-Url'
   },
   {
     groupId: 1,
-    imageURL: 'group-1-testImage-5-URL'
+    imageUrl: 'group-1-testImage-5-Url'
   },
   {
     groupId: 2,
-    imageURL: 'group-2-testImage-1-URL'
+    imageUrl: 'group-2-testImage-1-Url'
   },
   {
     groupId: 2,
-    imageURL: 'group-2-testImage-2-URL'
+    imageUrl: 'group-2-testImage-2-Url'
   },
   {
     groupId: 2,
-    imageURL: 'group-2-testImage-3-URL'
+    imageUrl: 'group-2-testImage-3-Url'
   },
   {
     groupId: 2,
-    imageURL: 'group-2-testImage-4-URL'
+    imageUrl: 'group-2-testImage-4-Url'
   },
   {
     groupId: 3,
-    imageURL: 'group-3-testImage-1-URL'
+    imageUrl: 'group-3-testImage-1-Url'
   },
   {
     groupId: 3,
-    imageURL: 'group-3-testImage-2-URL'
+    imageUrl: 'group-3-testImage-2-Url'
   },
   {
     groupId: 3,
-    imageURL: 'group-3-testImage-3-URL'
+    imageUrl: 'group-3-testImage-3-Url'
   },
   {
     groupId: 4,
-    imageURL: 'group-4-testImage-1-URL'
+    imageUrl: 'group-4-testImage-1-Url'
   },
   {
     groupId: 4,
-    imageURL: 'group-4-testImage-2-URL'
+    imageUrl: 'group-4-testImage-2-Url'
   },
   {
     groupId: 5,
-    imageURL: 'group-5-testImage-1-URL'
+    imageUrl: 'group-5-testImage-1-Url'
   },
   //seeding Venues
   {
     venueId: 1,
-    imageURL: 'venue-1-testImage-1-URL'
+    imageUrl: 'venue-1-testImage-1-Url'
   },
   {
     venueId: 2,
-    imageURL: 'venue-2-testImage-1-URL'
+    imageUrl: 'venue-2-testImage-1-Url'
   },
   {
     venueId: 2,
-    imageURL: 'venue-2-testImage-2-URL'
+    imageUrl: 'venue-2-testImage-2-Url'
   },
   {
     venueId: 3,
-    imageURL: 'venue-3-testImage-1-URL'
+    imageUrl: 'venue-3-testImage-1-Url'
   },
   {
     venueId: 3,
-    imageURL: 'venue-3-testImage-2-URL'
+    imageUrl: 'venue-3-testImage-2-Url'
   },
   {
     venueId: 3,
-    imageURL: 'venue-3-testImage-3-URL'
+    imageUrl: 'venue-3-testImage-3-Url'
   },
   {
     venueId: 4,
-    imageURL: 'venue-4-testImage-1-URL'
+    imageUrl: 'venue-4-testImage-1-Url'
   },
   {
     venueId: 4,
-    imageURL: 'venue-4-testImage-2-URL'
+    imageUrl: 'venue-4-testImage-2-Url'
   },
   {
     venueId: 4,
-    imageURL: 'venue-4-testImage-3-URL'
+    imageUrl: 'venue-4-testImage-3-Url'
   },{
     venueId: 4,
-    imageURL: 'venue-4-testImage-4-URL'
+    imageUrl: 'venue-4-testImage-4-Url'
   },
   {
     venueId: 5,
-    imageURL: 'venue-5-testImage-1-URL'
+    imageUrl: 'venue-5-testImage-1-Url'
   },
   {
     venueId: 5,
-    imageURL: 'venue-5-testImage-2-URL'
+    imageUrl: 'venue-5-testImage-2-Url'
   },
   {
     venueId: 5,
-    imageURL: 'venue-5-testImage-3-URL'
+    imageUrl: 'venue-5-testImage-3-Url'
   },
   {
     venueId: 5,
-    imageURL: 'venue-5-testImage-4-URL'
+    imageUrl: 'venue-5-testImage-4-Url'
   },
   {
     venueId: 5,
-    imageURL: 'venue-5-testImage-5-URL'
+    imageUrl: 'venue-5-testImage-5-Url'
   },
   {
     venueId: 6,
-    imageURL: 'venue-6-testImage-1-URL'
+    imageUrl: 'venue-6-testImage-1-Url'
   },
   {
     venueId: 6,
-    imageURL: 'venue-6-testImage-2-URL'
+    imageUrl: 'venue-6-testImage-2-Url'
   },
   {
     venueId: 6,
-    imageURL: 'venue-6-testImage-3-URL'
+    imageUrl: 'venue-6-testImage-3-Url'
   },
   {
     venueId: 7,
-    imageURL: 'venue-7-testImage-1-URL'
+    imageUrl: 'venue-7-testImage-1-Url'
   },
   {
     venueId: 7,
-    imageURL: 'venue-7-testImage-2-URL'
+    imageUrl: 'venue-7-testImage-2-Url'
   },
   {
     venueId: 8,
-    imageURL: 'venue-8-testImage-1-URL'
+    imageUrl: 'venue-8-testImage-1-Url'
   },
   {
     venueId: 8,
-    imageURL: 'venue-8-testImage-2-URL'
+    imageUrl: 'venue-8-testImage-2-Url'
   },
   {
     venueId: 9,
-    imageURL: 'venue-9-testImage-1-URL'
+    imageUrl: 'venue-9-testImage-1-Url'
   },
   {
     venueId: 9,
-    imageURL: 'venue-9-testImage-2-URL'
+    imageUrl: 'venue-9-testImage-2-Url'
   },
   {
     venueId: 9,
-    imageURL: 'venue-9-testImage-3-URL'
+    imageUrl: 'venue-9-testImage-3-Url'
   },
   {
     venueId: 9,
-    imageURL: 'venue-9-testImage-4-URL'
+    imageUrl: 'venue-9-testImage-4-Url'
   },
   //seeding events
   {
     eventId: 1,
-    imageURL: 'event-1-testImage-1-URL'
+    imageUrl: 'event-1-testImage-1-Url'
   },
   {
     eventId: 2,
-    imageURL: 'event-2-testImage-1-URL'
+    imageUrl: 'event-2-testImage-1-Url'
   },
   {
     eventId: 2,
-    imageURL: 'event-2-testImage-2-URL'
+    imageUrl: 'event-2-testImage-2-Url'
   },
   {
     eventId: 3,
-    imageURL: 'event-3-testImage-1-URL'
+    imageUrl: 'event-3-testImage-1-Url'
   },
   {
     eventId: 3,
-    imageURL: 'event-3-testImage-2-URL'
+    imageUrl: 'event-3-testImage-2-Url'
   },
   {
     eventId: 3,
-    imageURL: 'event-3-testImage-3-URL'
+    imageUrl: 'event-3-testImage-3-Url'
   },
   {
     eventId: 4,
-    imageURL: 'event-4-testImage-1-URL'
+    imageUrl: 'event-4-testImage-1-Url'
   },
   {
     eventId: 4,
-    imageURL: 'event-4-testImage-2-URL'
+    imageUrl: 'event-4-testImage-2-Url'
   },
   {
     eventId: 4,
-    imageURL: 'event-4-testImage-3-URL'
+    imageUrl: 'event-4-testImage-3-Url'
   },{
     eventId: 4,
-    imageURL: 'event-4-testImage-4-URL'
+    imageUrl: 'event-4-testImage-4-Url'
   },
   {
     eventId: 5,
-    imageURL: 'event-5-testImage-1-URL'
+    imageUrl: 'event-5-testImage-1-Url'
   },
   {
     eventId: 5,
-    imageURL: 'event-5-testImage-2-URL'
+    imageUrl: 'event-5-testImage-2-Url'
   },
   {
     eventId: 5,
-    imageURL: 'event-5-testImage-3-URL'
+    imageUrl: 'event-5-testImage-3-Url'
   },
   {
     eventId: 5,
-    imageURL: 'event-5-testImage-4-URL'
+    imageUrl: 'event-5-testImage-4-Url'
   },
   {
     eventId: 5,
-    imageURL: 'event-5-testImage-5-URL'
+    imageUrl: 'event-5-testImage-5-Url'
   },
   {
     eventId: 6,
-    imageURL: 'event-6-testImage-1-URL'
+    imageUrl: 'event-6-testImage-1-Url'
   },
   {
     eventId: 6,
-    imageURL: 'event-6-testImage-2-URL'
+    imageUrl: 'event-6-testImage-2-Url'
   },
   {
     eventId: 7,
-    imageURL: 'event-7-testImage-1-URL'
+    imageUrl: 'event-7-testImage-1-Url'
   },
   {
     eventId: 7,
-    imageURL: 'event-7-testImage-2-URL'
+    imageUrl: 'event-7-testImage-2-Url'
   },
   {
     eventId: 7,
-    imageURL: 'event-7-testImage-3-URL'
+    imageUrl: 'event-7-testImage-3-Url'
   },
   {
     eventId: 8,
-    imageURL: 'event-8-testImage-1-URL'
+    imageUrl: 'event-8-testImage-1-Url'
   },
   {
     eventId: 8,
-    imageURL: 'event-8-testImage-2-URL'
+    imageUrl: 'event-8-testImage-2-Url'
   },
   {
     eventId: 9,
-    imageURL: 'event-9-testImage-1-URL'
+    imageUrl: 'event-9-testImage-1-Url'
   },
   {
     eventId: 9,
-    imageURL: 'event-9-testImage-2-URL'
+    imageUrl: 'event-9-testImage-2-Url'
   },
   {
     eventId: 9,
-    imageURL: 'event-9-testImage-3-URL'
+    imageUrl: 'event-9-testImage-3-Url'
   },
   {
     eventId: 9,
-    imageURL: 'event-9-testImage-4-URL'
+    imageUrl: 'event-9-testImage-4-Url'
   },
   {
     eventId: 9,
-    imageURL: 'event-9-testImage-5-URL'
+    imageUrl: 'event-9-testImage-5-Url'
   },
   {
     eventId: 10,
-    imageURL: 'event-10-testImage-1-URL'
+    imageUrl: 'event-10-testImage-1-Url'
   },
   {
     eventId: 10,
-    imageURL: 'event-10-testImage-2-URL'
+    imageUrl: 'event-10-testImage-2-Url'
   },
   {
     eventId: 10,
-    imageURL: 'event-10-testImage-3-URL'
+    imageUrl: 'event-10-testImage-3-Url'
   },
 ]
 
