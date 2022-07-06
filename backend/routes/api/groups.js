@@ -209,7 +209,7 @@ router.post(
             }
             res.json(newEventResponse)
         } else {
-            const err = new Error("Could not create event");
+            const err = new Error("Could not create venue");
             err.status = 400;
             return next(err);
         }
