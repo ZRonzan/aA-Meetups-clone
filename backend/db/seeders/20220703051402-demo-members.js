@@ -68,6 +68,31 @@ module.exports = {
         memberId: 1,
         status: 'Pending'
       },
+      {
+        groupId: 6,
+        memberId: 2,
+        status: 'Member'
+      },
+      {
+        groupId: 6,
+        memberId: 3,
+        status: 'Member'
+      },
+      {
+        groupId: 6,
+        memberId: 4,
+        status: 'Member'
+      },
+      {
+        groupId: 6,
+        memberId: 5,
+        status: 'Member'
+      },
+      {
+        groupId: 6,
+        memberId: 6,
+        status: 'Member'
+      },
     ], {});
   },
 

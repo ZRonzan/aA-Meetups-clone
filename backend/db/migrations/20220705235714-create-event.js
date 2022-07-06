@@ -10,49 +10,59 @@ module.exports = {
       },
       venueId: {
         type: Sequelize.INTEGER,
-        references: {
-          model: "Venues",
-          key: "id"
-        },
+        // references: {
+        //   model: "Venues",
+        //   key: "id"
+        // },
         onDelete: 'CASCADE'
 
       },
       groupId: {
         type: Sequelize.INTEGER,
-        references: {
-          model: "Groups",
-          key: "id"
-        },
+        // references: {
+        //   model: "Groups",
+        //   key: "id"
+        // },
         onDelete: 'CASCADE'
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       description: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       type: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       capacity: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false
       },
       price: {
-        type: Sequelize.DECIMAL
+        type: Sequelize.DECIMAL,
+        allowNull: false,
+        defaultValue: 0.00
       },
       startDate: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        allowNull: false
       },
       endDate: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
     });
   },
