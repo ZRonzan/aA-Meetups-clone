@@ -3,7 +3,7 @@ const express = require('express')
 
 //importing authentication middleware and models from phase 03:
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
-const { Group, sequelize, Member, User, Image } = require('../../db/models');
+const { Group, sequelize, Member, User, Image, Event, Venue } = require('../../db/models');
 //------------------------------------------------------------------
 //---------------importing for phase 05-----------------------------
 const { check } = require('express-validator');
@@ -84,6 +84,62 @@ router.get(
         res.json(foundMembers)
     }
 );
+
+//Get all events of a group specified by its id
+router.get(
+    '/:groupId/events',
+    async (req, res, next) => {
+
+        const foundGroup = await Group.findByPk(req.params.groupId);
+
+        if (!foundGroup) {
+            const err = new Error("Group couldn't be found");
+            err.status = 404;
+            return next(err);
+        }
+
+        const foundEvents = await Event.findAll({
+            include: [
+                {
+                    model: Group,
+                    where: {
+                        id: req.params.groupId
+                    },
+                    attributes: ['id', 'name', 'city', 'state']
+                },
+                {
+                    model: Venue,
+                    attributes: ['id', 'city', 'state']
+                },
+                {
+                    model: Image,
+                    as: "previewImage",
+                    attributes: ['imageUrl'],
+                    limit: 1
+                },
+            ],
+            attributes: {
+                exclude: ['createdAt', 'updatedAt', 'endDate', 'capacity', 'description', 'price']
+            },
+            order: [['id']]
+        });
+
+
+        const updatedfoundEvents = []
+        for (let event of foundEvents) {
+            newEvent = event.toJSON()
+            newEvent.numAttending = await event.countAttendees({where: {
+                status: {
+                    [Op.is]: 'Member'
+                }
+            }})
+            updatedfoundEvents.push(newEvent)
+        }
+
+        res.json(updatedfoundEvents)
+    }
+);
+
 
 //Request membership for a group based on the group Id
 router.post(
