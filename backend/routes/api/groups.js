@@ -31,7 +31,6 @@ const validateGroups = [
         .isIn(['Online', 'In Person'])
         .withMessage('Type must be Online or In person'),
     check('private')
-        .exists({ checkFalsy: true })
         .isBoolean()
         .withMessage('Private must be a boolean'),
     check('city')
@@ -43,8 +42,6 @@ const validateGroups = [
     handleValidationErrors
 ];
 //----------------------------------------------------------
-
-router.use(restoreUser)
 
 //Get group details and number of members from group id
 router.get(
@@ -280,29 +277,18 @@ router.get(
             include: [
                 {
                     model: Image,
-                    as: 'previewImage',
+                    as: 'images',
                     attributes: ['imageUrl'],
-                    limit: 1000000 //why is this needed to prevent things from breaking????????
                 },
                 {
                     model: User,
                     as: 'Organizer'
                 },
-                {
-                    model: Member,
-                    attributes: []
-                },
             ],
-            attributes: {
-                include: [[sequelize.fn("COUNT", sequelize.col("Members.groupId")), "numMembers"]],
-            },
             where: {
                 id: req.params.groupId
             },
-            group: ['Members.groupId']
         })
-
-
 
         if (!foundGroup) {
             let err = new Error("Group couldn't be found")
@@ -310,7 +296,15 @@ router.get(
             return next(err)
         }
 
-        res.json(foundGroup);
+        let members = await foundGroup.getMembers({
+            where: {
+                status: {[Op.not]: 'Pending'}
+            }
+        })
+
+        const foundGroupWithMemberCounts = foundGroup.toJSON()
+        foundGroupWithMemberCounts.numMembers = members.length
+        res.json(foundGroupWithMemberCounts);
     }
 );
 
@@ -322,24 +316,42 @@ router.get(
         const foundGroups = await Group.findAll({
             include: [
                 {
-                    model: Member,
-                    attributes: []
-                },
-                {
                     model: Image,
                     as: 'previewImage',
                     attributes: ['imageUrl'],
                     limit: 1
-                }
+                },
+                {
+                    model: Member,
+                    attributes: [],
+                },
             ],
             attributes: {
                 include: [[sequelize.fn("COUNT", sequelize.col("Members.groupId")), "numMembers"]],
             },
-            group: ['Members.groupId'],
-            order: [['id']]
+            where: {
+                id: {[Op.gte]: 0}
+            },
+            group: ['Members.groupId']
         })
 
-        res.json(foundGroups);
+        const foundGroupsWithMemberCounts = []
+
+        for (let group of foundGroups) {
+            let members = await group.getMembers({
+                where: {
+                    status: {[Op.not]: 'Pending'}
+                }
+            })
+            let updatedGroupObject = group.toJSON()
+            updatedGroupObject.numMembers = members.length
+
+            foundGroupsWithMemberCounts.push(updatedGroupObject)
+        }
+
+        foundGroupsWithMemberCounts.sort((a,b) => a.id - b.id)
+
+        res.json({Groups: foundGroupsWithMemberCounts});
     }
 );
 
@@ -362,7 +374,7 @@ router.post(
         await newGroup.save();
 
         let newGroupResponse = await Group.findByPk(newGroup.id)
-
+        res.statusCode = 201
         res.json(newGroupResponse);
     }
 );
@@ -419,7 +431,7 @@ router.delete(
         }
 
         if (req.user.id !== foundGroup.organizerId) {
-            let newError = new Error("Current user is not the owner of the group. That are not authorized to delete this group");
+            let newError = new Error("Current user is not the owner of the group, and are not authorized to delete this group");
             newError.status = 403;
             return next(newError);
         }

@@ -9,6 +9,7 @@ const { User, Group, Member, sequelize, Image } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 //------------------------------------------------------------------
+const { Op } = require('sequelize')
 
 const router = express.Router();
 
@@ -47,10 +48,11 @@ router.post(
         //set the cookie upon successful login
         let token = await setTokenCookie(res, user);
 
+        let returnedUser = user.toJSON()
+        returnedUser.token = token
+
         //return the user that just logged in
-        return res.json({
-            user, token
-        });
+        return res.json(returnedUser);
     }
 );
 
@@ -68,16 +70,22 @@ router.get('/groups', restoreUser, async (req, res) => {
 
 
     const foundOwnedGroups = await Group.findAll({
-        include: [{
-            model: Member,
-            attributes: []
-        },
-        {
-            model: Image,
-            as: 'previewImage',
-            attributes: ['imageUrl'],
-            limit: 1
-        }
+        include: [
+            {
+                model: Image,
+                as: 'previewImage',
+                attributes: ['imageUrl'],
+                limit: 1
+            },
+            {
+                model: Member,
+                attributes: [],
+                where: {
+                    status: {
+                        [Op.not]: 'Pending'
+                    }
+                }
+            }
         ],
         where: {
             organizerId: req.user.id
@@ -85,33 +93,49 @@ router.get('/groups', restoreUser, async (req, res) => {
         attributes: {
             include: [[sequelize.fn("COUNT", sequelize.col("Members.groupId")), "numMembers"]],
         },
-        group: ['Members.groupId']
+        group: ['Members.groupId'],
+        order: [['id']]
     });
 
-
-    const foundGroupsAsMember = await Member.findAll({
-        attributes: [],
+    const foundGroupsAsMember = await Group.findAll({
         include: [
             {
-                model: Group,
-                attributes: {
-                    include: [[sequelize.fn("COUNT", sequelize.col("groupId")), "numMembers"]],
+                model: Image,
+                as: 'previewImage',
+                attributes: ['imageUrl'],
+                limit: 1,
+            },
+            {
+                model: Member,
+                attributes: [],
+                where: {
+                    memberId: req.user.id,
+                    status: {
+                        [Op.not]: 'Pending'
+                    }
                 },
-                include: {
-                    model: Image,
-                    as: 'previewImage',
-                    attributes: ['imageUrl'],
-                    limit: 1
-                }
             },
         ],
-        group: ['groupId'],
-        where: {
-            memberId: req.user.id
-        }
+        order: ['id']
     });
 
-    let allGroups = [...foundOwnedGroups, ...foundGroupsAsMember]
+    const newfoundGroupsAsMember = []
+
+    for (let group of foundGroupsAsMember) {
+        let members = await group.getMembers({where: {status: {[Op.not]: 'Pending'}}})
+
+        let newGroup = group.toJSON()
+
+        newGroup.numMembers = members.length
+
+        newfoundGroupsAsMember.push(newGroup)
+    }
+
+
+
+    let allGroups = [...foundOwnedGroups, ...newfoundGroupsAsMember]
+
+    allGroups.sort((a, b) => a.id - b.id)
 
     res.json({ Groups: allGroups })
 })

@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Event.hasMany(models.Attendee, {foreignKey: 'eventId', onDelete: 'CASCADE', hooks: true})
-      Event.hasMany(models.Image, {foreignKey: 'eventId', onDelete: 'CASCADE', hooks: true})
+      Event.hasMany(models.Image, {foreignKey: 'eventId', as: 'previewImage',  onDelete: 'CASCADE', hooks: true})
       Event.belongsTo(models.Venue, {foreignKey: 'venueId'})
       Event.belongsTo(models.Group, {foreignKey: 'groupId'})
     }
@@ -57,6 +57,11 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Event',
+    // defaultScope: {
+    //   attributes:{
+    //     include: ['id', 'groupId', 'venueId', 'name', 'type', 'startDate']
+    //   }
+    // }
   });
   return Event;
 };

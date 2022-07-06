@@ -23,10 +23,10 @@ const validateSignup = [
         .withMessage('First name must contain letters only'),
     check('lastName')
         .exists({ checkFalsy: true })
-        .withMessage('First Name is required'),
+        .withMessage('Last Name is required'),
     check('lastName')
         .isAlpha()
-        .withMessage('First name must contain letters only'),
+        .withMessage('Last name must contain letters only'),
     check('password')
         .exists({ checkFalsy: true })
         .isLength({ min: 6 })
@@ -39,7 +39,7 @@ const validateSignup = [
 router.post(
     '/signup',
     validateSignup, //added in phase 5 to validate signup inputs
-    async (req, res) => {
+    async (req, res, next) => {
         const { email, password, firstName, lastName } = req.body;
 
         const checkUser = await User.findOne({
@@ -52,7 +52,10 @@ router.post(
         if (checkUser) {
             let err = new Error("User already exists")
             err.status = 403;
-            return next (err)
+            err.errors = {
+                "email": "User with that email already exists"
+            }
+            return next(err)
 
             // res.status(403);
             // return res.json({
@@ -66,11 +69,13 @@ router.post(
 
         const user = await User.signup({ email, firstName, lastName, password });
 
+        let returnedUser = user.toJSON();
+
         let token = await setTokenCookie(res, user);
 
-        return res.json({
-            user, token
-        });
+        returnedUser.token = token
+
+        return res.json(returnedUser);
     }
 );
 
