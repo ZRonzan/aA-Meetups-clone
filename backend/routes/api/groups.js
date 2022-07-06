@@ -321,18 +321,8 @@ router.get(
                     attributes: ['imageUrl'],
                     limit: 1
                 },
-                {
-                    model: Member,
-                    attributes: [],
-                },
             ],
-            attributes: {
-                include: [[sequelize.fn("COUNT", sequelize.col("Members.groupId")), "numMembers"]],
-            },
-            where: {
-                id: {[Op.gte]: 0}
-            },
-            group: ['Members.groupId']
+            order: [['id']]
         })
 
         const foundGroupsWithMemberCounts = []
@@ -348,8 +338,6 @@ router.get(
 
             foundGroupsWithMemberCounts.push(updatedGroupObject)
         }
-
-        foundGroupsWithMemberCounts.sort((a,b) => a.id - b.id)
 
         res.json({Groups: foundGroupsWithMemberCounts});
     }
