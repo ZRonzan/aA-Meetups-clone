@@ -61,7 +61,7 @@ Returns the information about the current user that is logged in.
 
     ```json
     {
-      "id": 1,
+      "id": 2,
       "firstName": "John",
       "lastName": "Smith",
       "email": "john.smith@gmail.com"
@@ -96,7 +96,7 @@ information.
 
     ```json
     {
-      "id": 1,
+      "id": 2,
       "firstName": "John",
       "lastName": "Smith",
       "email": "john.smith@gmail.com",
