@@ -76,26 +76,25 @@ router.get('/groups', restoreUser, async (req, res) => {
                 as: 'previewImage',
                 attributes: ['imageUrl'],
                 limit: 1
-            },
-            {
-                model: Member,
-                attributes: [],
-                where: {
-                    status: {
-                        [Op.not]: 'Pending'
-                    }
-                }
             }
         ],
         where: {
             organizerId: req.user.id
         },
-        attributes: {
-            include: [[sequelize.fn("COUNT", sequelize.col("Members.groupId")), "numMembers"]],
-        },
-        group: ['Members.groupId'],
         order: [['id']]
     });
+
+    const newfoundOwnedGroups = [];
+
+    for (let group of foundOwnedGroups) {
+        let members = await group.getMembers({where: {status: {[Op.not]: 'Pending'}}})
+
+        let newGroup = group.toJSON()
+
+        newGroup.numMembers = members.length
+
+        newfoundOwnedGroups.push(newGroup)
+    }
 
     const foundGroupsAsMember = await Group.findAll({
         include: [
@@ -133,7 +132,7 @@ router.get('/groups', restoreUser, async (req, res) => {
 
 
 
-    let allGroups = [...foundOwnedGroups, ...newfoundGroupsAsMember]
+    let allGroups = [...newfoundOwnedGroups, ...newfoundGroupsAsMember]
 
     allGroups.sort((a, b) => a.id - b.id)
 
