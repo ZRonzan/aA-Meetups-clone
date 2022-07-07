@@ -16,7 +16,7 @@ module.exports = {
         },
         onDelete: 'CASCADE'
       },
-      attendeeId: {
+      userId: {
         type: Sequelize.INTEGER,
         references: {
           model: "Users",

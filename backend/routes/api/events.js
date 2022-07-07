@@ -50,7 +50,7 @@ const validateEvents = [
 //Get all Attendees of an Event specified by its id
 router.get(
     '/:eventId/attendees',
-    async (req,res,next) => {
+    async (req, res, next) => {
         const foundEvent = await Event.findByPk(req.params.eventId);
         if (!foundEvent) {
             const err = new Error("Event couldn't be found");
@@ -87,7 +87,7 @@ router.get(
                 ],
                 attributes: ['id', 'firstName', 'lastName']
             })
-            res.json({Attendees: foundMembersWithPending});
+            res.json({ Attendees: foundMembersWithPending });
         } else {
             const foundMembersWithoutPending = await User.findAll({
                 include: [
@@ -105,7 +105,7 @@ router.get(
                 ],
                 attributes: ['id', 'firstName', 'lastName']
             })
-            res.json({Attendees: foundMembersWithoutPending});
+            res.json({ Attendees: foundMembersWithoutPending });
         }
 
     }
@@ -238,16 +238,16 @@ router.put(
         } else if (foundGroup.organizerId === req.user.id || foundCoHost) {
             const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body
 
-                foundEvent.venueId= venueId
-                foundEvent.name= name
-                foundEvent.type= type
-                foundEvent.capacity= capacity
-                foundEvent.price= price
-                foundEvent.description= description
-                foundEvent.startDate= startDate
-                foundEvent.endDate= endDate
+            foundEvent.venueId = venueId
+            foundEvent.name = name
+            foundEvent.type = type
+            foundEvent.capacity = capacity
+            foundEvent.price = price
+            foundEvent.description = description
+            foundEvent.startDate = startDate
+            foundEvent.endDate = endDate
 
-                await foundEvent.save()
+            await foundEvent.save()
 
             const updatedEventResponse = {
                 id: foundEvent.id,
@@ -270,8 +270,153 @@ router.put(
 
     }
 
-)
+);
 
+//Request to Attend an Event based on the Event's id
+router.post(
+    '/:eventId/join',
+    requireAuth,
+    async (req, res, next) => {
+        const foundEvent = await Event.findByPk(req.params.eventId)
+        if (!foundEvent) {
+            const err = new Error("Event couldn't be found");
+            err.status = 404;
+            return next(err);
+        };
+
+        const foundGroup = await Group.findByPk(foundEvent.groupId)
+        if (!foundGroup) {
+            const err = new Error("Group couldn't be found");
+            err.status = 404;
+            return next(err);
+        };
+
+
+        const foundMembership = await Member.findOne({
+            where: {
+                groupId: foundGroup.id,
+                memberId: req.user.id,
+                status: {
+                    [Op.not]: 'Pending'
+                }
+            }
+        });
+
+        const checkAttendance = await Attendee.findOne({
+            where: {
+                eventId: req.params.eventId,
+                userId: req.user.id,
+            }
+        });
+
+        if (checkAttendance && (checkAttendance.status === 'Pending' || checkAttendance.status === 'Waitlist')) {
+            const err = new Error("Attendance has already been requested")
+            err.status = 400;
+            return next(err);
+        } else if (checkAttendance && checkAttendance.status === 'Member') {
+            const err = new Error("User is already an attendee of the event")
+            err.status = 400;
+            return next(err);
+        };
+
+        if (foundGroup.organizerId === req.user.id || foundMembership) {
+            await Attendee.create(
+                {
+                    eventId: req.params.eventId,
+                    userId: req.user.id,
+                    status: 'Pending'
+                }
+            );
+
+            res.json({
+                eventId: req.params.eventId,
+                userId: req.user.id,
+                status: 'Pending'
+            });
+        } else {
+            const err = new Error("Current user cannot apply for attendance to the specified event. Please confirm group membership")
+            err.status = 400;
+            return next(err);
+        }
+    }
+);
+
+//Change the status of an attendance for an event specified by id
+router.put(
+    '/:eventId/attendees',
+    requireAuth,
+    async (req, res, next) => {
+        if(req.body.status === 'Pending') {
+            const err = new Error("Cannot change an attendance status to Pending");
+            err.status = 400;
+            return next(err);
+        }
+
+        const foundEvent = await Event.findByPk(req.params.eventId)
+        if (!foundEvent) {
+            const err = new Error("Event couldn't be found");
+            err.status = 404;
+            return next(err);
+        };
+
+        const foundGroup = await Group.findByPk(foundEvent.groupId)
+        if (!foundGroup) {
+            const err = new Error("Group couldn't be found");
+            err.status = 404;
+            return next(err);
+        };
+
+
+        const foundCoHost = await Member.findOne({
+            where: {
+                groupId: foundGroup.id,
+                memberId: req.user.id,
+                status: 'Co-Host'
+            }
+        });
+
+        const foundAttendee = await Attendee.findOne({
+            where: {
+                eventId: req.params.eventId,
+                userId: req.body.userId,
+            }
+        });
+        if (!foundAttendee) {
+            const err = new Error("Attendance between the user and the event does not exist");
+            err.status = 404;
+            return next(err);
+        };
+
+        if (foundGroup.organizerId === req.user.id || foundCoHost) {
+
+            if (foundAttendee.status === 'Pending' || foundAttendee.status === 'Waitlist') {
+                foundAttendee.status = req.body.status
+                foundAttendee.save();
+
+                returnObj = {
+                    id: foundAttendee.id,
+                    eventId: foundAttendee.eventId,
+                    userId: foundAttendee.userId,
+                    status: foundAttendee.status,
+                }
+                return res.json(returnObj);
+
+            } else {
+                const err = new Error("Member is already an attendee of this event")
+                err.status = 400;
+                return next(err)
+            }
+
+        } else {
+            const err = new Error("Current user cannot update status for this member and/or event. Please confirm group Organizer of Co-Host status")
+            err.status = 403;
+            return next(err);
+        }
+    }
+);
+
+
+//delete an event specified by event id
 router.delete(
     "/:eventId",
     requireAuth,

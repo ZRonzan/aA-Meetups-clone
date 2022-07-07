@@ -1527,7 +1527,7 @@ Request attendance for an event specified by id.
     {
       "eventId": 1,
       "userId": 2,
-      "status": "pending"
+      "status": "Pending"
     }
     ```
 
@@ -1587,8 +1587,8 @@ Change the status of an attendance for an event specified by id.
 
     ```json
     {
-      "userId": 2,
-      "status": "member"
+      "userId": 5,
+      "status": "Member"
     }
     ```
 
@@ -1600,10 +1600,10 @@ Change the status of an attendance for an event specified by id.
 
     ```json
     {
-      "id": 1,
-      "eventId": 1,
-      "userId": 2,
-      "status": "member"
+      "id": 11,
+      "eventId": 6,
+      "userId": 5,
+      "status": "Member"
     }
     ```
 
@@ -1628,7 +1628,7 @@ Change the status of an attendance for an event specified by id.
 
     ```json
     {
-      "message": "Cannot change an attendance status to pending",
+      "message": "Cannot change an attendance status to Pending",
       "statusCode": 400
     }
     ```
