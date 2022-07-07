@@ -65,9 +65,9 @@ const validateQueries = [
         .withMessage("Type must be 'Online' or 'In Person'"),
     query('startDate')
         .optional()
-        .toDate()
         .isAfter()
         .custom((value, { req }) => !isNaN(Date.parse(value)))
+        .toDate()
         .withMessage("Start date must be a valid datetime"),
     handleValidationErrors
 ];
@@ -209,10 +209,10 @@ router.get(
         }
 
         if (startDate) {
-            if (!isNaN(Date.parse(startDate))) queries.where.startDate =  startDate
+            if (!isNaN(Date.parse(startDate))) queries.where.startDate =  startDate;
         }
-        if (name) queries.where.name = name
-        if (type) queries.where.type = type
+        if (name) queries.where.name = {[Op.substring]: name};
+        if (type) queries.where.type = type;
 
 
 
@@ -371,7 +371,8 @@ router.post(
 
             res.json({
                 id: newImage.id,
-                eventId: newImage.eventId,
+                imageableId: newImage.eventId,
+                imageableType: 'Event',
                 imageUrl: newImage.imageUrl
             });
         }

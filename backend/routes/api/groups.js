@@ -213,7 +213,8 @@ router.post(
 
             res.json({
                 id: newImage.id,
-                groupId: newImage.groupId,
+                imageableId: newImage.groupId,
+                imageableType: "Group",
                 imageUrl: newImage.imageUrl
             });
         } else {

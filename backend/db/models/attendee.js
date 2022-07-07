@@ -27,7 +27,13 @@ module.exports = (sequelize, DataTypes) => {
     status: {
       type: DataTypes.STRING,
       allowNull:false,
-      defaultValue: "Pending"
+      defaultValue: 'Pending',
+      validate: {
+        check(val) {
+          const validStatus = ['Waitlist', 'Member', 'Pending']
+          if (!validStatus.includes(val)) throw new Error('Status must be valid');
+        }
+      }
     },
   }, {
     sequelize,
