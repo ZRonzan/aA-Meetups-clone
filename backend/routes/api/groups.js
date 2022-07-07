@@ -276,8 +276,8 @@ router.post(
                 capacity: capacity,
                 price: price,
                 description: description,
-                startDate: startDate,
-                endDate: endDate
+                startDate: new Date(startDate),
+                endDate: new Date(endDate)
             });
             const newEventResponse = {
                 id: newEvent.id,

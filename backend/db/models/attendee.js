@@ -18,12 +18,16 @@ module.exports = (sequelize, DataTypes) => {
   Attendee.init({
     eventId: {
       type: DataTypes.INTEGER,
+      allowNull:false
     },
     userId: {
       type: DataTypes.INTEGER,
+      allowNull:false
     },
     status: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      allowNull:false,
+      defaultValue: "Pending"
     },
   }, {
     sequelize,

@@ -208,12 +208,8 @@ router.get(
             }
         }
 
-        console.log(startDate)
-
         if (startDate) {
-            const newStartDate = startDate
-            console.log(newStartDate)
-            if (!isNaN(Date.parse(startDate))) queries.where.startDate = {[Op.lte]: newStartDate}
+            if (!isNaN(Date.parse(startDate))) queries.where.startDate =  startDate
         }
         if (name) queries.where.name = name
         if (type) queries.where.type = type
@@ -311,8 +307,8 @@ router.put(
             foundEvent.capacity = capacity
             foundEvent.price = price
             foundEvent.description = description
-            foundEvent.startDate = startDate
-            foundEvent.endDate = endDate
+            foundEvent.startDate = new Date(startDate)
+            foundEvent.endDate = new Date(endDate)
 
             await foundEvent.save()
 
