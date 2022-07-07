@@ -4,6 +4,8 @@ const sessionRouter = require('./session.js');
 const usersRouter = require('./users.js');
 const groupsRouter = require('./groups.js');
 const eventsRouter = require('./events.js');
+const venuesRouter = require('./venues.js');
+const imagesRouter = require('./images.js');
 //importing restore code from phase 3:
 const { restoreUser } = require("../../utils/auth.js");
 
@@ -57,6 +59,10 @@ router.use('/users', usersRouter); //DO NOT COMMENT OUT
 router.use('/groups', groupsRouter) //DO NOT COMMENT OUT
 
 router.use('/events', eventsRouter) //DO NOT COMMENT OUT
+
+router.use('/venues', venuesRouter) //DO NOT COMMENT OUT
+
+router.use('/images', imagesRouter) //DO NOT COMMENT OUT
 
 // router.post('/test', (req, res) => {
 //   res.json({ requestBody: req.body });

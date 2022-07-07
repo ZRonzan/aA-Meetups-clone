@@ -3,7 +3,7 @@ const express = require('express')
 
 //importing authentication middleware and models from phase 03:
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
-const { Group, sequelize, Member, User, Image } = require('../../db/models');
+const { Group, sequelize, Member, User, Image, Event, Venue } = require('../../db/models');
 //------------------------------------------------------------------
 //---------------importing for phase 05-----------------------------
 const { check } = require('express-validator');
@@ -39,6 +39,56 @@ const validateGroups = [
     check('state')
         .exists({ checkFalsy: true })
         .withMessage('State is required'),
+    handleValidationErrors
+];
+
+const validateVenues = [
+    check('address')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .withMessage("Street address is required"),
+    check('city')
+        .exists({ checkFalsy: true })
+        .withMessage("City is required"),
+    check('state')
+        .exists({ checkFalsy: true })
+        .withMessage("State is required"),
+    check('lat')
+        .isDecimal({ min: -90, max: 90 })
+        .withMessage("Latitude is not valid"),
+    check('lng')
+        .isDecimal({ min: -180, max: 180 })
+        .withMessage("Longitude is not valid"),
+    handleValidationErrors
+];
+
+const validateEvents = [
+    check('venueCheck')
+        .exists({ checkFalsy: true })
+        .withMessage("Venue does not exist"),
+    check('name')
+        .isLength({ min: 5 })
+        .exists({ checkFalsy: true })
+        .withMessage("Name must be at least 5 characters"),
+    check('type')
+        .exists({ checkFalsy: true })
+        .isIn(['In Person', 'Online'])
+        .withMessage("Type must be Online or In Person"),
+    check('capacity')
+        .isInt({ min: 1 })
+        .withMessage("Capacity must be an integer"),
+    check('price')
+        .isCurrency({ allow_negatives: false, digits_after_decimal: [0, 1, 2] })
+        .withMessage("Price is invalid"),
+    check('description')
+        .exists({ checkFalsy: true })
+        .withMessage("Description is required"),
+    check('startDate')
+        .isAfter()
+        .withMessage("Start date must be in the future"),
+    check('endDate')
+        .custom((value, { req }) => (Date.parse(value) - Date.parse(req.body.startDate)) >= 0)
+        .withMessage("End date is less than start date"),
     handleValidationErrors
 ];
 //----------------------------------------------------------
@@ -84,6 +134,227 @@ router.get(
         res.json(foundMembers)
     }
 );
+
+//Get all events of a group specified by its id
+router.get(
+    '/:groupId/events',
+    async (req, res, next) => {
+
+        const foundGroup = await Group.findByPk(req.params.groupId);
+
+        if (!foundGroup) {
+            const err = new Error("Group couldn't be found");
+            err.status = 404;
+            return next(err);
+        }
+
+        const foundEvents = await Event.findAll({
+            include: [
+                {
+                    model: Group,
+                    where: {
+                        id: req.params.groupId
+                    },
+                    attributes: ['id', 'name', 'city', 'state']
+                },
+                {
+                    model: Venue,
+                    attributes: ['id', 'city', 'state']
+                },
+                {
+                    model: Image,
+                    as: "previewImage",
+                    attributes: ['imageUrl'],
+                    limit: 1
+                },
+            ],
+            attributes: {
+                exclude: ['createdAt', 'updatedAt', 'endDate', 'capacity', 'description', 'price']
+            },
+            order: [['id']]
+        });
+
+
+        const updatedfoundEvents = []
+        for (let event of foundEvents) {
+            newEvent = event.toJSON()
+            newEvent.numAttending = await event.countAttendees({
+                where: {
+                    status: {
+                        [Op.is]: 'Member'
+                    }
+                }
+            })
+            updatedfoundEvents.push(newEvent)
+        }
+
+        res.json({Events: updatedfoundEvents})
+    }
+);
+
+//Add an Image to a Group based on the Group's id
+router.post(
+    '/:groupId/images',
+    requireAuth,
+    async (req, res, next) => {
+        const foundGroup = await Group.findByPk(req.params.groupId);
+        if (!foundGroup) {
+            let err = new Error("Group couldn't be found")
+            err.status = 404
+            return next(err);
+        }
+
+        if (foundGroup.organizerId === req.user.id) {
+            const newImage = await Image.create({
+                uploaderId: req.user.id,
+                groupId: foundGroup.id,
+                imageUrl: req.body.url
+            });
+
+            res.json({
+                id: newImage.id,
+                imageableId: newImage.groupId,
+                imageableType: "Group",
+                imageUrl: newImage.imageUrl
+            });
+        } else {
+            let err = new Error("Current user must be the group organizer in order to upload images to this group")
+            err.status = 403
+            return next(err);
+        }
+    }
+)
+
+//create a new event for a group specified by its Id
+router.post(
+    '/:groupId/events',
+    requireAuth,
+    async (req, res, next) => {
+        if (req.body.venueId) {
+            const foundVenue = await Venue.findByPk(req.body.venueId);
+            if (!foundVenue) {
+                let err = new Error("Venue couldn't be found")
+                err.status = 404
+                return next(err);
+            } else {
+                req.body.venueCheck = true;
+                next();
+            }
+        } else {
+            next();
+        }
+    },
+    validateEvents,
+    async (req, res, next) => {
+        const foundGroup = await Group.findByPk(req.params.groupId);
+
+        if (!foundGroup) {
+            const err = new Error("Group couldn't be found");
+            err.status = 404;
+            return next(err);
+        }
+
+        const foundCoHost = await Member.findOne({
+            where: {
+                groupId: req.params.groupId,
+                memberId: req.user.id,
+                status: "Co-Host"
+            }
+        })
+
+        if (foundGroup.organizerId !== req.user.id && !foundCoHost) {
+            const err = new Error("Current user is not the owner or the Co-Host of the group");
+            err.status = 403;
+            return next(err);
+        } else if (foundGroup.organizerId === req.user.id || foundCoHost) {
+            const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body
+
+            const newEvent = await Event.create({
+                groupId: foundGroup.id,
+                venueId: venueId,
+                name: name,
+                type: type,
+                capacity: capacity,
+                price: price,
+                description: description,
+                startDate: new Date(startDate),
+                endDate: new Date(endDate)
+            });
+            const newEventResponse = {
+                id: newEvent.id,
+                groupId: foundGroup.id,
+                venueId: newEvent.venueId,
+                name: newEvent.name,
+                type: newEvent.type,
+                capacity: newEvent.capacity,
+                price: newEvent.price,
+                description: newEvent.description,
+                startDate: newEvent.startDate,
+                endDate: newEvent.endDate
+            };
+            res.json(newEventResponse);
+        } else {
+            const err = new Error("Could not create event");
+            err.status = 400;
+            return next(err);
+        }
+    }
+)
+
+//create a new venue for a group specified by its Id
+router.post(
+    '/:groupId/venues',
+    requireAuth,
+    validateVenues,
+    async (req, res, next) => {
+        const foundGroup = await Group.findByPk(req.params.groupId);
+
+        if (!foundGroup) {
+            const err = new Error("Group couldn't be found");
+            err.status = 404;
+            return next(err);
+        }
+
+        const foundCoHost = await Member.findOne({
+            where: {
+                groupId: req.params.groupId,
+                memberId: req.user.id,
+                status: "Co-Host"
+            }
+        })
+
+        if (foundGroup.organizerId !== req.user.id && !foundCoHost) {
+            const err = new Error("Current user is not the owner or the Co-Host of the group");
+            err.status = 403;
+            return next(err);
+        } else if (foundGroup.organizerId === req.user.id || foundCoHost) {
+            const { address, city, state, lat, lng } = req.body
+            const newVenue = await Venue.create({
+                groupId: req.params.groupId,
+                address: address,
+                city: city,
+                state: state,
+                lat: lat,
+                lng: lng
+            })
+            const newVenueResponse = {
+                id: newVenue.id,
+                groupId: newVenue.groupId,
+                address: newVenue.address,
+                city: newVenue.city,
+                state: newVenue.state,
+                lat: newVenue.lat,
+                lng: newVenue.lng
+            }
+            res.json(newVenueResponse)
+        } else {
+            const err = new Error("Could not create venue");
+            err.status = 400;
+            return next(err);
+        }
+    }
+)
+
 
 //Request membership for a group based on the group Id
 router.post(
@@ -298,7 +569,7 @@ router.get(
 
         let members = await foundGroup.getMembers({
             where: {
-                status: {[Op.not]: 'Pending'}
+                status: { [Op.not]: 'Pending' }
             }
         })
 
@@ -330,7 +601,7 @@ router.get(
         for (let group of foundGroups) {
             let members = await group.getMembers({
                 where: {
-                    status: {[Op.not]: 'Pending'}
+                    status: { [Op.not]: 'Pending' }
                 }
             })
             let updatedGroupObject = group.toJSON()
@@ -339,7 +610,7 @@ router.get(
             foundGroupsWithMemberCounts.push(updatedGroupObject)
         }
 
-        res.json({Groups: foundGroupsWithMemberCounts});
+        res.json({ Groups: foundGroupsWithMemberCounts });
     }
 );
 

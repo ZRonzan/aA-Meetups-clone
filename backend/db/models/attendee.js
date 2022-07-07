@@ -12,18 +12,28 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Attendee.belongsTo(models.Event, {foreignKey: 'eventId'})
-      Attendee.belongsTo(models.User, {foreignKey: 'attendeeId'})
+      Attendee.belongsTo(models.User, {foreignKey: 'userId'})
     }
   }
   Attendee.init({
     eventId: {
       type: DataTypes.INTEGER,
+      allowNull:false
     },
-    attendeeId: {
+    userId: {
       type: DataTypes.INTEGER,
+      allowNull:false
     },
     status: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      allowNull:false,
+      defaultValue: 'Pending',
+      validate: {
+        check(val) {
+          const validStatus = ['Waitlist', 'Member', 'Pending']
+          if (!validStatus.includes(val)) throw new Error('Status must be valid');
+        }
+      }
     },
   }, {
     sequelize,

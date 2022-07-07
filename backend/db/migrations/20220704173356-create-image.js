@@ -8,6 +8,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      uploaderId: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
       groupId: {
         type: Sequelize.INTEGER,
         // references: {

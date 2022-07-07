@@ -19,8 +19,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Event.init({
     venueId: {
-      type: DataTypes.INTEGER,
-      allowNull: false
+      type: DataTypes.INTEGER
     },
     groupId: {
       type: DataTypes.INTEGER,
@@ -28,7 +27,12 @@ module.exports = (sequelize, DataTypes) => {
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        check(val) {
+          if (val.length < 5) throw new Error('Name must be at leeast 5 characters long');
+        }
+      }
     },
     description: {
       type: DataTypes.STRING,
@@ -36,23 +40,41 @@ module.exports = (sequelize, DataTypes) => {
     },
     type: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        check(val) {
+          const validStatus = ['Online', 'In Person']
+          if (!validStatus.includes(val)) throw new Error('Type must be Online or In Person');
+        }
+      }
     },
     capacity: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        min: 0
+      }
     },
     price: {
       type: DataTypes.DECIMAL,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        min: 0
+      }
     },
     startDate: {
       type: DataTypes.DATE,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isAfter: new Date()
+      }
     },
     endDate: {
       type: DataTypes.DATE,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isAfter: this.startDate
+      }
     },
   }, {
     sequelize,
