@@ -180,9 +180,7 @@ router.get(
             newEvent = event.toJSON()
             newEvent.numAttending = await event.countAttendees({
                 where: {
-                    status: {
-                        [Op.is]: 'Member'
-                    }
+                    status: 'Member'
                 }
             })
             updatedfoundEvents.push(newEvent)
