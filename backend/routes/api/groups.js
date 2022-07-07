@@ -188,7 +188,7 @@ router.get(
             updatedfoundEvents.push(newEvent)
         }
 
-        res.json(updatedfoundEvents)
+        res.json({Events: updatedfoundEvents})
     }
 );
 

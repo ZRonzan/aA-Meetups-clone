@@ -187,12 +187,14 @@ router.get(
         if (page) {
             if (page < 0) page = 0
             else if (page > 10) page = 10
+            else page = Number(page)
         } else {
             page = 0
         }
         if (size) {
             if (size < 0) size = 20
             else if (size > 20) size = 20
+            else size = Number(size)
         } else {
             size = 20
         }
@@ -245,7 +247,7 @@ router.get(
             foundEventsWithAttendeeCount.push(eventWithAttendees);
         }
 
-        res.json({ Events: foundEventsWithAttendeeCount, page: page+1, size:size })
+        res.json({ Events: foundEventsWithAttendeeCount, page: pagination.offset+1, size: pagination.limit })
 
     }
 );
