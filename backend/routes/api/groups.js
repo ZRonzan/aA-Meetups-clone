@@ -192,6 +192,38 @@ router.get(
     }
 );
 
+//Add an Image to a Group based on the Group's id
+router.post(
+    '/:groupId/images',
+    requireAuth,
+    async (req, res, next) => {
+        const foundGroup = await Group.findByPk(req.params.groupId);
+        if (!foundGroup) {
+            let err = new Error("Group couldn't be found")
+            err.status = 404
+            return next(err);
+        }
+
+        if (foundGroup.organizerId === req.user.id) {
+            const newImage = await Image.create({
+                uploaderId: req.user.id,
+                groupId: foundGroup.id,
+                imageUrl: req.body.url
+            });
+
+            res.json({
+                id: newImage.id,
+                groupId: newImage.groupId,
+                imageUrl: newImage.imageUrl
+            });
+        } else {
+            let err = new Error("Current user must be the group organizer in order to upload images to this group")
+            err.status = 403
+            return next(err);
+        }
+    }
+)
+
 //create a new event for a group specified by its Id
 router.post(
     '/:groupId/events',

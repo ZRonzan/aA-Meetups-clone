@@ -15,9 +15,14 @@ module.exports = (sequelize, DataTypes) => {
       Image.belongsTo(models.Group, {foreignKey: 'groupId', as: 'images'})
       Image.belongsTo(models.Venue, {foreignKey: 'venueId'})
       Image.belongsTo(models.Event, {foreignKey: 'eventId'})
+      Image.belongsTo(models.User, {foreignKey: 'uploaderId'})
     }
   }
   Image.init({
+    uploaderId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     groupId: {
       type:DataTypes.INTEGER,
       validate: {

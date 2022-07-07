@@ -6,7 +6,7 @@ const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
 const { Group, sequelize, Member, User, Image, Venue, Attendee, Event } = require('../../db/models');
 //------------------------------------------------------------------
 //---------------importing for phase 05-----------------------------
-const { check } = require('express-validator');
+const { check, query } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 //------------------------------------------------------------------
 //----------------importing Op query operators----------------------
@@ -43,6 +43,32 @@ const validateEvents = [
     check('endDate')
         .custom((value, { req }) => (Date.parse(value) - Date.parse(req.body.startDate)) >= 0)
         .withMessage("End date is less than start date"),
+    handleValidationErrors
+];
+
+const validateQueries = [
+    query('page')
+        .optional()
+        .isInt({ min: 0 })
+        .withMessage("Page must be greater than or equal to 0"),
+    query('size')
+        .optional()
+        .isInt({ min: 0 })
+        .withMessage("Size must be greater than or equal to 0"),
+    query('name')
+        .optional()
+        .isString()
+        .withMessage("Name must be a string"),
+    query('type')
+        .optional()
+        .isIn(['Online', 'In Person'])
+        .withMessage("Type must be 'Online' or 'In Person'"),
+    query('startDate')
+        .optional()
+        .toDate()
+        .isAfter()
+        .custom((value, { req }) => !isNaN(Date.parse(value)))
+        .withMessage("Start date must be a valid datetime"),
     handleValidationErrors
 ];
 //----------------------------------------------------------
@@ -119,7 +145,7 @@ router.get(
             include: [
                 { model: Group, attributes: ['id', 'name', 'private', 'city', 'state'] },
                 { model: Venue, attributes: ['id', 'address', 'city', 'state', 'lat', 'lng'] },
-                { model: Image, as: 'previewImage', attributes: ['imageUrl'], limit: 10000000 }
+                { model: Image, as: 'previewImage', attributes: ['imageUrl']}
             ],
             attributes: {
                 exclude: ['createdAt', 'updatedAt'],
@@ -154,8 +180,47 @@ router.get(
 //Get all events
 router.get(
     '/',
-    async (_req, res, next) => {
-        const foundEvents = await Event.scope('defaultScope').findAll({
+    validateQueries,
+    async (req, res, next) => {
+        let { page, size, name, type, startDate } = req.query;
+
+        if (page) {
+            if (page < 0) page = 0
+            else if (page > 10) page = 10
+        } else {
+            page = 0
+        }
+        if (size) {
+            if (size < 0) size = 20
+            else if (size > 20) size = 20
+        } else {
+            size = 20
+        }
+
+        const pagination = {
+            limit: size,
+            offset: size * page
+        };
+
+        const queries = {
+            where: {
+                //queries go here if they exist
+            }
+        }
+
+        console.log(startDate)
+
+        if (startDate) {
+            const newStartDate = startDate
+            console.log(newStartDate)
+            if (!isNaN(Date.parse(startDate))) queries.where.startDate = {[Op.lte]: newStartDate}
+        }
+        if (name) queries.where.name = name
+        if (type) queries.where.type = type
+
+
+
+        const foundEvents = await Event.findAll({
             include: [
                 { model: Group, attributes: ['id', 'name', 'city', 'state'] },
                 { model: Venue, attributes: ['id', 'city', 'state'] },
@@ -164,6 +229,8 @@ router.get(
             attributes: {
                 exclude: ['createdAt', 'updatedAt', 'endDate', 'capacity', 'description', 'price']
             },
+            ...queries,
+            ...pagination,
             order: [['id']]
         })
 
@@ -272,6 +339,49 @@ router.put(
 
 );
 
+//Add an Image to a Group based on the Group's id
+router.post(
+    '/:eventId/images',
+    requireAuth,
+    async (req, res, next) => {
+
+        const foundEvent = await Event.findByPk(req.params.eventId)
+        if (!foundEvent) {
+            let err = new Error("Event couldn't be found")
+            err.status = 404
+            return next(err);
+        }
+
+        const foundAttendee = await Attendee.findOne({
+            where: {
+                userId: req.user.id,
+                eventId: foundEvent.id,
+                status: 'Member'
+            }
+        });
+
+        if (!foundAttendee) {
+            let err = new Error("Current user is not attending this event and cannot upload an image")
+            err.status = 403
+            return next(err);
+        }
+
+        if (foundAttendee) {
+            const newImage = await Image.create({
+                uploaderId: req.user.id,
+                eventId: foundEvent.id,
+                imageUrl: req.body.url
+            });
+
+            res.json({
+                id: newImage.id,
+                eventId: newImage.eventId,
+                imageUrl: newImage.imageUrl
+            });
+        }
+    }
+)
+
 //Request to Attend an Event based on the Event's id
 router.post(
     '/:eventId/join',
@@ -346,7 +456,7 @@ router.put(
     '/:eventId/attendees',
     requireAuth,
     async (req, res, next) => {
-        if(req.body.status === 'Pending') {
+        if (req.body.status === 'Pending') {
             const err = new Error("Cannot change an attendance status to Pending");
             err.status = 400;
             return next(err);
@@ -409,6 +519,67 @@ router.put(
 
         } else {
             const err = new Error("Current user cannot update status for this member and/or event. Please confirm group Organizer of Co-Host status")
+            err.status = 403;
+            return next(err);
+        }
+    }
+);
+
+//Delete attendance to an event specified by id
+router.delete(
+    '/:eventId/attendees',
+    requireAuth,
+    async (req, res, next) => {
+
+        const foundEvent = await Event.findByPk(req.params.eventId)
+        if (!foundEvent) {
+            const err = new Error("Event couldn't be found");
+            err.status = 404;
+            return next(err);
+        };
+
+        const foundGroup = await Group.findByPk(foundEvent.groupId)
+        if (!foundGroup) {
+            const err = new Error("Group couldn't be found");
+            err.status = 404;
+            return next(err);
+        };
+
+
+        const foundMember = await Member.findOne({
+            where: {
+                groupId: foundGroup.id,
+                memberId: req.user.id
+            }
+        });
+
+        const foundAttendee = await Attendee.findOne({
+            where: {
+                eventId: req.params.eventId,
+                userId: req.body.userId,
+            }
+        });
+        if (!foundAttendee) {
+            const err = new Error("Attendance does not exist for this User");
+            err.status = 404;
+            return next(err);
+        };
+
+        if (foundGroup.organizerId === req.user.id) {
+            await foundAttendee.destroy();
+
+            res.json({
+                "message": "Successfully deleted attendance from event"
+            })
+
+        } else if (foundMember && req.body.userId === req.user.id) {
+            await foundAttendee.destroy();
+
+            res.json({
+                "message": "Successfully deleted attendance from event"
+            })
+        } else {
+            const err = new Error("Only the User or organizer may delete an Attendance")
             err.status = 403;
             return next(err);
         }
