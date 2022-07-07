@@ -245,7 +245,7 @@ router.get(
             foundEventsWithAttendeeCount.push(eventWithAttendees);
         }
 
-        res.json({ Events: foundEventsWithAttendeeCount })
+        res.json({ Events: foundEventsWithAttendeeCount, page: page+1, size:size })
 
     }
 );
