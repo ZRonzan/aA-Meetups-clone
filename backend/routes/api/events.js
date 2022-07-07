@@ -47,6 +47,70 @@ const validateEvents = [
 ];
 //----------------------------------------------------------
 
+//Get all Attendees of an Event specified by its id
+router.get(
+    '/:eventId/attendees',
+    async (req,res,next) => {
+        const foundEvent = await Event.findByPk(req.params.eventId);
+        if (!foundEvent) {
+            const err = new Error("Event couldn't be found");
+            err.status = 404;
+            return next(err)
+        };
+
+        const foundGroup = await Group.findByPk(foundEvent.groupId)
+        if (!foundGroup) {
+            const err = new Error("Group couldn't be found");
+            err.status = 404;
+            return next(err);
+        };
+
+        const foundCoHost = await Member.findOne({
+            where: {
+                groupId: foundEvent.groupId,
+                memberId: req.user.id,
+                status: "Co-Host"
+            }
+        })
+
+        if (foundGroup.organizerId === req.user.id || foundCoHost) {
+            const foundMembersWithPending = await User.findAll({
+                include: [
+                    {
+                        model: Attendee,
+                        as: 'Attendance',
+                        attributes: ['status'],
+                        where: {
+                            eventId: req.params.eventId
+                        }
+                    }
+                ],
+                attributes: ['id', 'firstName', 'lastName']
+            })
+            res.json({Attendees: foundMembersWithPending});
+        } else {
+            const foundMembersWithoutPending = await User.findAll({
+                include: [
+                    {
+                        model: Attendee,
+                        as: 'Attendance',
+                        attributes: ['status'],
+                        where: {
+                            status: {
+                                [Op.not]: 'Pending'
+                            },
+                            eventId: req.params.eventId
+                        }
+                    }
+                ],
+                attributes: ['id', 'firstName', 'lastName']
+            })
+            res.json({Attendees: foundMembersWithoutPending});
+        }
+
+    }
+)
+
 //Get event details by eventId
 router.get(
     '/:eventId',
