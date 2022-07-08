@@ -247,7 +247,7 @@ router.get(
             foundEventsWithAttendeeCount.push(eventWithAttendees);
         }
 
-        res.json({ Events: foundEventsWithAttendeeCount, page: pagination.offset+1, size: pagination.limit })
+        res.json({ Events: foundEventsWithAttendeeCount, page: page, size: pagination.limit })
 
     }
 );
