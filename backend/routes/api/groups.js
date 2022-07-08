@@ -112,6 +112,7 @@ router.get(
             foundMembers = await User.findAll({
                 include: {
                     model: Member,
+                    as:'Membership',
                     attributes: ['status'],
                     where: {
                         groupId: req.params.groupId
@@ -122,6 +123,7 @@ router.get(
             foundMembers = await User.findAll({
                 include: {
                     model: Member,
+                    as:'Membership',
                     attributes: ['status'],
                     where: {
                         groupId: req.params.groupId,

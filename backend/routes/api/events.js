@@ -350,6 +350,13 @@ router.post(
             return next(err);
         }
 
+        const foundGroup = await Group.findByPk(foundEvent.groupId)
+        if (!foundGroup) {
+            const err = new Error("Group couldn't be found for this event");
+            err.status = 404;
+            return next(err);
+        };
+
         const foundAttendee = await Attendee.findOne({
             where: {
                 userId: req.user.id,
@@ -358,13 +365,13 @@ router.post(
             }
         });
 
-        if (!foundAttendee) {
-            let err = new Error("Current user is not attending this event and cannot upload an image")
+        if (!foundAttendee && foundGroup.organizerId !== req.user.id) {
+            let err = new Error("Current user is not attending this event and is not the owner of the group associated with this event. Current user is unauthorized to upload an image")
             err.status = 403
             return next(err);
         }
 
-        if (foundAttendee) {
+        if (foundAttendee || foundGroup.organizerId === req.user.id) {
             const newImage = await Image.create({
                 uploaderId: req.user.id,
                 eventId: foundEvent.id,
