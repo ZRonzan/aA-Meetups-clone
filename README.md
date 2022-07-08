@@ -537,7 +537,7 @@ Returns the members of a group specified by its id.
           "firstName": "Clark",
           "lastName": "Adams",
           "Membership": {
-            "status": "co-host"
+            "status": "Co-Host"
           },
         },
         {
@@ -545,7 +545,7 @@ Returns the members of a group specified by its id.
           "firstName": "John",
           "lastName": "Smith",
           "Membership": {
-            "status": "member"
+            "status": "Member"
           },
         },
         {
@@ -553,7 +553,7 @@ Returns the members of a group specified by its id.
           "firstName": "Jane",
           "lastName": "Doe",
           "Membership": {
-            "status": "pending"
+            "status": "Pending"
           },
         },
       ]
@@ -575,7 +575,7 @@ Returns the members of a group specified by its id.
           "firstName": "Clark",
           "lastName": "Adams",
           "Membership": {
-            "status": "co-host"
+            "status": "Co-Host"
           },
         },
         {
@@ -583,7 +583,7 @@ Returns the members of a group specified by its id.
           "firstName": "John",
           "lastName": "Smith",
           "Membership": {
-            "status": "member"
+            "status": "Member"
           },
         },
       ]
@@ -625,7 +625,7 @@ Request a new membership for a group specified by id.
     {
       "groupId": 1,
       "memberId": 2,
-      "status": "pending"
+      "status": "Pending"
     }
     ```
 
@@ -686,7 +686,7 @@ Change the status of a membership for a group specified by id.
     ```json
     {
       "memberId": 2,
-      "status": "member"
+      "status": "Member"
     }
     ```
 
@@ -701,7 +701,7 @@ Change the status of a membership for a group specified by id.
       "id": 1,
       "groupId": 1,
       "memberId": 2,
-      "status": "member"
+      "status": "Member"
     }
     ```
 
@@ -727,7 +727,7 @@ Change the status of a membership for a group specified by id.
 
     ```json
     {
-      "message": "Current User must be the organizer to add a co-host",
+      "message": "Current User must be the organizer to add a Co-Host",
       "statusCode": 403
     }
     ```
@@ -754,7 +754,7 @@ Change the status of a membership for a group specified by id.
 
     ```json
     {
-      "message": "Cannot change a membership status to pending",
+      "message": "Cannot change a membership status to Pending",
       "statusCode": 400
     }
     ```
@@ -1213,8 +1213,8 @@ Creates and returns a new event for a group specified by its id
       "capacity": 10,
       "price": 18.50,
       "description": "The first meet and greet for our group! Come say hello!",
-      "startDate": "2021-11-19 20:00:00",
-      "endDate": "2021-11-19 21:00:00",
+      "startDate": "2023-11-19 20:00:00",
+      "endDate": "2023-11-19 21:00:00",
     }
     ```
 
@@ -1234,8 +1234,8 @@ Creates and returns a new event for a group specified by its id
       "capacity": 10,
       "price": 18.50,
       "description": "The first meet and greet for our group! Come say hello!",
-      "startDate": "2021-11-19 20:00:00",
-      "endDate": "2021-11-19 21:00:00",
+      "startDate": "2023-11-19 20:00:00",
+      "endDate": "2023-11-19 21:00:00",
     }
     ```
 
@@ -1297,8 +1297,8 @@ Edit and returns an event specified by its id
       "capacity": 10,
       "price": 18.50,
       "description": "The first meet and greet for our group! Come say hello!",
-      "startDate": "2021-11-19 20:00:00",
-      "endDate": "2021-11-19 21:00:00",
+      "startDate": "2023-11-19 20:00:00",
+      "endDate": "2023-11-19 21:00:00",
     }
     ```
 
@@ -1318,8 +1318,8 @@ Edit and returns an event specified by its id
       "capacity": 10,
       "price": 18.50,
       "description": "The first meet and greet for our group! Come say hello!",
-      "startDate": "2021-11-19 20:00:00",
-      "endDate": "2021-11-19 21:00:00",
+      "startDate": "2023-11-19 20:00:00",
+      "endDate": "2023-11-19 21:00:00",
     }
     ```
 
@@ -1435,7 +1435,7 @@ Returns the attendees of an event specified by its id.
           "firstName": "Clark",
           "lastName": "Adams",
           "Attendance": {
-            "status": "member"
+            "status": "Member"
           },
         },
         {
@@ -1443,7 +1443,7 @@ Returns the attendees of an event specified by its id.
           "firstName": "John",
           "lastName": "Smith",
           "Attendance": {
-            "status": "waitlist"
+            "status": "Waitlist"
           },
         },
         {
@@ -1451,7 +1451,7 @@ Returns the attendees of an event specified by its id.
           "firstName": "Jane",
           "lastName": "Doe",
           "Attendance": {
-            "status": "pending"
+            "status": "Pending"
           },
         },
       ]
@@ -1474,7 +1474,7 @@ Returns the attendees of an event specified by its id.
           "firstName": "Clark",
           "lastName": "Adams",
           "Attendance": {
-            "status": "member"
+            "status": "Member"
           },
         },
         {
@@ -1482,7 +1482,7 @@ Returns the attendees of an event specified by its id.
           "firstName": "John",
           "lastName": "Smith",
           "Attendance": {
-            "status": "waitlist"
+            "status": "Waitlist"
           },
         },
       ]
