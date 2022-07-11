@@ -1434,25 +1434,25 @@ Returns the attendees of an event specified by its id.
           "id": 2,
           "firstName": "Clark",
           "lastName": "Adams",
-          "Attendance": {
+          "Attendance": [{
             "status": "Member"
-          },
+          }],
         },
         {
           "id": 3,
           "firstName": "John",
           "lastName": "Smith",
-          "Attendance": {
+          "Attendance": [{
             "status": "Waitlist"
-          },
+          }],
         },
         {
           "id": 4,
           "firstName": "Jane",
           "lastName": "Doe",
-          "Attendance": {
+          "Attendance": [{
             "status": "Pending"
-          },
+          }],
         },
       ]
     }
@@ -1473,17 +1473,17 @@ Returns the attendees of an event specified by its id.
           "id": 2,
           "firstName": "Clark",
           "lastName": "Adams",
-          "Attendance": {
+          "Attendance": [{
             "status": "Member"
-          },
+          }],
         },
         {
           "id": 3,
           "firstName": "John",
           "lastName": "Smith",
-          "Attendance": {
+          "Attendance": [{
             "status": "Waitlist"
-          },
+          }],
         },
       ]
     }
