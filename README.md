@@ -1860,7 +1860,7 @@ Return events filtered by query parameters.
     * size: integer, minimum: 0, maximum: 20, default: 20
     * name: string, optional
     * type: string, optional
-    * startDate: string, optional (In format: "yyyy-mm-dd hh:mm:ss". e.g. "2023-01-20 20:00:00")
+    * startDate: string, optional (example format: "2023-01-20 20:00:00" or "2023-01-20T20:00:00.000Z")
   * Body: none
 
 * Successful Response
