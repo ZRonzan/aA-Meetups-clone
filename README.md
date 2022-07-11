@@ -350,7 +350,7 @@ Creates and returns a new group.
       "type": "In Person",
       "private": true,
       "city": "New York",
-      "state": "NY",
+      "state": "NY"
     }
     ```
 
@@ -416,7 +416,7 @@ Updates and returns an existing group.
       "type": "In Person",
       "private": true,
       "city": "New York",
-      "state": "NY",
+      "state": "NY"
     }
     ```
 
@@ -1061,7 +1061,7 @@ Creates and returns a new venue for a group specified by its id
     "city": "New York",
     "state": "NY",
     "lat": 37.7645358,
-    "lng": -122.4730327,
+    "lng": -122.4730327
   }
   ```
 
@@ -1136,7 +1136,7 @@ Edit a new venue specified by its id
     "city": "New York",
     "state": "NY",
     "lat": 37.7645358,
-    "lng": -122.4730327,
+    "lng": -122.4730327
   }
   ```
 
@@ -1214,7 +1214,7 @@ Creates and returns a new event for a group specified by its id
       "price": 18.50,
       "description": "The first meet and greet for our group! Come say hello!",
       "startDate": "2023-11-19 20:00:00",
-      "endDate": "2023-11-19 21:00:00",
+      "endDate": "2023-11-19 21:00:00"
     }
     ```
 
@@ -1298,7 +1298,7 @@ Edit and returns an event specified by its id
       "price": 18.50,
       "description": "The first meet and greet for our group! Come say hello!",
       "startDate": "2023-11-19 20:00:00",
-      "endDate": "2023-11-19 21:00:00",
+      "endDate": "2023-11-19 21:00:00"
     }
     ```
 
