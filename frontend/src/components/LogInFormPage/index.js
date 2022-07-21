@@ -1,14 +1,16 @@
 import { useState } from "react"
-import {useSelector, useDispatch} from "react-redux"
+import { useDispatch } from "react-redux"
+import { useHistory } from "react-router-dom"
 import { loginUserSession } from "../../store/session"
 
 export default function LogInFormPage() {
-    const user = useSelector(state => state.session.user)
     const dispatch = useDispatch()
+    const history = useHistory()
 
 
     const[email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [response, setResponse] = useState("")
 
     const handleSubmit = async(e) => {
         e.preventDefault()
@@ -16,11 +18,19 @@ export default function LogInFormPage() {
             email,
             password
         }
-        let res = await dispatch(loginUserSession(user))
-        if(res) {
+
+        let res = await dispatch(loginUserSession(user));
+        if(!res.message) {
+            setResponse("")
             console.log("received response:", res)
+        } else {
+            console.log("setting response error")
+            setResponse(res.message)
         }
 
+        setPassword("");
+        setEmail("");
+        history.push("/")
     }
 
     return (
@@ -45,12 +55,9 @@ export default function LogInFormPage() {
             </label>
             <button>Log In</button>
         </form>
-        {user && (<div>
-            <h3>Current user:</h3>
-            <div>First name: {user.firstName}</div>
-            <div>Last name: {user.lastName}</div>
-            <div>email: {user.email}</div>
-        </div>)}
+        {response && (
+            <div>{response}</div>
+        )}
         </>
     )
 }

@@ -23,10 +23,16 @@ export const loginUserSession = (credentials) => async (dispatch) => {
         body: JSON.stringify(credentials)
     })
 
+    console.log("past fetch!")
+
     if (response.ok) {
         const data = await response.json();
 
         dispatch(setSessionUser(data));
+        return data;
+    } else {
+        console.log("in here!")
+        const data = await response.json();
         return data;
     }
 }
