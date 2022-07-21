@@ -23,43 +23,33 @@ export const loginUserSession = (credentials) => async (dispatch) => {
         body: JSON.stringify(credentials)
     })
 
-    console.log("past fetch!")
-
     if (response.ok) {
         const data = await response.json();
 
         dispatch(setSessionUser(data));
         return data;
     } else {
-        console.log("in here!")
         const data = await response.json();
         return data;
     }
 }
 
-// export const logOutUserSession = () => async (dispatch) => {
-//     const response = await fetch("/api/session/login", {
-//         method: "POST"
-//     })
+export const restoreUserSession = () => async (dispatch) => {
+    const response = await csrfFetch("/api/session")
 
-//     if(response.ok) {
-//         const data = response.json()
-
-//         dispatch(setSessionUser(data))
-//     }
-// }
+    if (response.ok) {
+        const data = await response.json()
+        dispatch(setSessionUser(data.user))
+    }
+}
 
 
 
 const sessionReducer = (state = { user: null }, action) => {
     switch (action.type) {
         case SET_SESSION_USER:
-            if (!action.user) {
-                return {
-                    ...state,
-                    user: null
-                }
-            } else {
+            console.log(action)
+            if (action.user && Object.keys(action.user).length > 0) {
                 const { id, firstName, lastName, email, token } = action.user
                 return {
                     ...state,
@@ -70,6 +60,11 @@ const sessionReducer = (state = { user: null }, action) => {
                         email,
                         token
                     }
+                }
+            } else {
+                return {
+                    ...state,
+                    user: null
                 }
             }
         case REMOVE_SESSION_USER:
