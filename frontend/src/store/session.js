@@ -1,5 +1,5 @@
 import { csrfFetch } from "./csrf"
-import {useDispatch} from "react-redux"
+
 const SET_SESSION_USER = "session/SET_SESSION_USER"
 const REMOVE_SESSION_USER = "session/REMOVE_SESSION_USER"
 
@@ -14,7 +14,7 @@ export const removeSessionUser = () => ({
 })
 
 export const loginUserSession = (credentials) => async (dispatch) => {
-    console.log("started!")
+
     const response = await csrfFetch("/api/session/login", {
         method: "POST",
         headers: {
@@ -22,12 +22,12 @@ export const loginUserSession = (credentials) => async (dispatch) => {
         },
         body: JSON.stringify(credentials)
     })
-console.log("past fetch!")
-    if(response.ok) {
-        console.log("response OK!")
-        const data = await response.json()
 
-        dispatch(setSessionUser(data))
+    if (response.ok) {
+        const data = await response.json();
+
+        dispatch(setSessionUser(data));
+        return data;
     }
 }
 
@@ -45,16 +45,18 @@ console.log("past fetch!")
 
 
 
-const sessionReducer = (state = {}, action) => {
+const sessionReducer = (state = { user: null }, action) => {
     switch (action.type) {
         case SET_SESSION_USER:
             if (!action.user) {
                 return {
+                    ...state,
                     user: null
                 }
-            }else {
-                const {id, firstName, lastName, email, token } = action.user
+            } else {
+                const { id, firstName, lastName, email, token } = action.user
                 return {
+                    ...state,
                     user: {
                         id,
                         firstName,
@@ -66,6 +68,7 @@ const sessionReducer = (state = {}, action) => {
             }
         case REMOVE_SESSION_USER:
             return {
+                ...state,
                 user: null
             }
         default:
