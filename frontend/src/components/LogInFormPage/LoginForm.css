@@ -1,6 +1,5 @@
 
-/* 
-ul {
+ul.login-form {
     display: flex;
     flex-direction: column;
     width: fit-content;
@@ -11,7 +10,7 @@ ul {
     color: white;
 }
 
-form {
+form.login-form  {
     display: flex;
     flex-direction: column;
     width: fit-content;
@@ -22,7 +21,7 @@ form {
     color: rgb(213, 68, 68);
 }
 
-label {
+label.login-form  {
     display: flex;
     flex-direction: column;
     width: fit-content;
@@ -32,10 +31,10 @@ label {
     color: rgb(213, 68, 68);
 }
 
-button {
+button.login-form  {
     padding: 4px 0px;
     border: 1px solid rgb(151, 55, 55);
     border-radius: 6px;
     background-color: rgb(255, 255, 255);
     color: rgb(213, 68, 68);
-} */
+}

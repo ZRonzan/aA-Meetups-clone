@@ -45,15 +45,16 @@ export default function LogInFormPage() {
         <>
             <form
                 onSubmit={handleSubmit}
+                className="login-form"
             >
-                <label>Email:
+                <label className="login-form">Email:
                     <input
                         onChange={e => setEmail(e.target.value)}
                         value={email}
                     >
                     </input>
                 </label>
-                <label>Password:
+                <label className="login-form">Password:
                     <input
                         type="password"
                         onChange={e => setPassword(e.target.value)}
@@ -61,18 +62,19 @@ export default function LogInFormPage() {
                     >
                     </input>
                 </label>
-                <button>Log In</button>
+                <button className="login-form">Log In</button>
             </form>
             {response && (
                 <>
                     <h4>{response.message}</h4>
-                    <ul>
-                        {response.errors && (
-                            response.errors.map((message, i) => {
+                    {!!response.errors && (
+                        <ul className="login-form">
+                            {response.errors.map((message, i) => {
                                 return (<li key={i}>{Object.keys(message)}: {Object.values(message)}</li>)
-                            })
-                        )}
-                    </ul>
+                            })}
+                        </ul>
+                    )}
+
                 </>
             )}
         </>
