@@ -1,15 +1,18 @@
 import LogInFormPage from "./components/LogInFormPage";
-import { Route } from "react-router-dom";
+import UserSignUpPage from "./components/UserSignUpPage";
+import { Route, Switch } from "react-router-dom";
 import { Link } from "react-router-dom"
-import {useDispatch, useSelector} from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react";
 import { restoreUserSession } from "./store/session";
+import Navigation from "./components/Navigation";
 
 function App() {
 
   const dispatch = useDispatch()
   const user = useSelector(state => state.session.user)
 
+  //restore a logged in user on refresh
   useEffect(() => {
     dispatch(restoreUserSession())
   }, [])
@@ -17,18 +20,23 @@ function App() {
   return (
     <>
       <h1>Meetups Clone</h1>
-      <Route exact path="/login">
-        <LogInFormPage />
-      </Route>
-      <Route exact path="/">
-        <Link to="/login"><button>Login</button></Link>
-      </Route>
+
+      <Navigation />
+      <Switch>
+        <Route path="/login">
+          <LogInFormPage />
+        </Route>
+        <Route path="/signup">
+          <UserSignUpPage />
+        </Route>
+      </Switch>
+      {/* comment out or delete below later. this is testing to see the current logged in user */}
       {user !== null && (<div>
-            <h3>Current user:</h3>
-            <div>First name: {user.firstName}</div>
-            <div>Last name: {user.lastName}</div>
-            <div>email: {user.email}</div>
-        </div>)}
+        <h3>Current user:</h3>
+        <div>First name: {user.firstName}</div>
+        <div>Last name: {user.lastName}</div>
+        <div>email: {user.email}</div>
+      </div>)}
     </>
   );
 }
