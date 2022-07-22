@@ -3,25 +3,27 @@ import UserSignUpPage from "./components/UserSignUpPage";
 import { Route, Switch } from "react-router-dom";
 import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { restoreUserSession } from "./store/session";
 import Navigation from "./components/Navigation";
 
 function App() {
+
+  const [isLoaded, setIsLoaded] = useState(false)
 
   const dispatch = useDispatch()
   const user = useSelector(state => state.session.user)
 
   //restore a logged in user on refresh
   useEffect(() => {
-    dispatch(restoreUserSession())
-  }, [])
+    dispatch(restoreUserSession()).then(() => setIsLoaded(true))
+  }, [dispatch])
 
-  return (
+  return isLoaded && (
     <>
       <h1>Meetups Clone</h1>
 
-      <Navigation />
+      <Navigation isLoaded={isLoaded} />
       <Switch>
         <Route path="/login">
           <LogInFormPage />
