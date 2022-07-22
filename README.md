@@ -2,7 +2,7 @@
 
 ## Database Schema Design
 
-## API Documentation![Untitled (11)](https://user-images.githubusercontent.com/100141010/178020930-57387e03-e822-41b6-91be-e4e12b20493d.png)
+![Untitled (12)](https://user-images.githubusercontent.com/100141010/180488938-f34e05d7-c019-4cff-8abf-4610b55ea880.png)
 
 ## All endpoints that require authentication
 
