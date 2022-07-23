@@ -30,12 +30,10 @@ export default function LogInFormPage() {
         let res = await dispatch(loginUserSession(user));
         if (!res.message) {
             setResponse("")
-            //console.log("received response:", res)
             history.push("/")
             setPassword("");
             setEmail("");
         } else {
-            console.log(res)
             setResponse(res)
         }
 

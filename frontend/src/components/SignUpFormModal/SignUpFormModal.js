@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useHistory } from "react-router-dom"
 import { userSignUp } from "../../store/session"
-import "./UserSignUpPage.css"
+import "./UserSignUpFormModal.css"
 
 export default function UserSignUpPage() {
     const dispatch = useDispatch()
@@ -50,6 +50,7 @@ export default function UserSignUpPage() {
                 onSubmit={handleSubmit}
                 className="signup-form"
             >
+                <h2>SIGN UP</h2>
                 <label className="signup-form">First Name:
                     <input
                         onChange={e => setFirstName(e.target.value)}
@@ -93,31 +94,31 @@ export default function UserSignUpPage() {
                     )}
                 </div>
                 <button disabled={password !== passwordConfirmation} className="signup-form">Sign Up</button>
+                {response && (
+                    <>
+                        {response.message === "Validation error" && (
+                            <>
+                                <ul className="signup-form">
+                                    <h3>{response.message}</h3>
+                                    {response.errors && (
+                                        response.errors.map((message, i) => {
+                                            return (<li key={i}>{Object.values(message)}</li>)
+                                        })
+                                    )}
+                                </ul>
+                            </>
+                        )}
+                        {response.message === "User already exists" && (
+                            <>
+                                <h4>{response.message}</h4>
+                                <ul className="signup-form">
+                                    <li>{Object.values(response.errors.email)}</li>
+                                </ul>
+                            </>
+                        )}
+                    </>
+                )}
             </form>
-            {response && (
-                <>
-                    {response.message === "Validation error" && (
-                        <>
-                            <h4>{response.message}</h4>
-                            <ul className="signup-form">
-                                {response.errors && (
-                                    response.errors.map((message, i) => {
-                                        return (<li key={i}>{Object.values(message)}</li>)
-                                    })
-                                )}
-                            </ul>
-                        </>
-                    )}
-                    {response.message === "User already exists" && (
-                        <>
-                            <h4>{response.message}</h4>
-                            <ul className="signup-form">
-                                <li>{Object.values(response.errors.email)}</li>
-                            </ul>
-                        </>
-                    )}
-                </>
-            )}
         </>
     )
 }

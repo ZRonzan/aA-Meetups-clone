@@ -77,7 +77,6 @@ export const restoreUserSession = () => async (dispatch) => {
 const sessionReducer = (state = { user: null }, action) => {
     switch (action.type) {
         case SET_SESSION_USER:
-            console.log(action)
             if (action.user && Object.keys(action.user).length > 0) {
                 const { id, firstName, lastName, email, token } = action.user
                 return {

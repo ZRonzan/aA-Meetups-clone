@@ -1,7 +1,6 @@
-import LogInFormPage from "./components/LogInFormPage";
-import UserSignUpPage from "./components/UserSignUpPage";
+// import LogInFormPage from "./components/LogInFormPage";
+// import UserSignUpPage from "./components/UserSignUpPage";
 import { Route, Switch } from "react-router-dom";
-import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useState } from "react";
 import { restoreUserSession } from "./store/session";
@@ -24,21 +23,21 @@ function App() {
       <h1>Meetups Clone</h1>
 
       <Navigation isLoaded={isLoaded} />
-      <Switch>
+      {/* <Switch>
         <Route path="/login">
           <LogInFormPage />
         </Route>
         <Route path="/signup">
           <UserSignUpPage />
         </Route>
-      </Switch>
+      </Switch> */}
       {/* comment out or delete below later. this is testing to see the current logged in user */}
-      {user !== null && (<div>
+      {/* {user !== null && (<div>
         <h3>Current user:</h3>
         <div>First name: {user.firstName}</div>
         <div>Last name: {user.lastName}</div>
         <div>email: {user.email}</div>
-      </div>)}
+      </div>)} */}
     </>
   );
 }

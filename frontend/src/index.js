@@ -6,6 +6,8 @@ import { Provider } from "react-redux"
 import { BrowserRouter } from "react-router-dom"
 import { restoreCSRF, csrfFetch } from './store/csrf';
 
+import { ModalProvider } from "./context/Modal";
+
 import * as sessionActions from "./store/session"
 
 import configureStore from "./store"
@@ -23,9 +25,11 @@ if (process.env.NODE_ENV !== "production") {
 function Root() {
   return (
     <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <ModalProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </ModalProvider>
     </Provider>
   )
 }
