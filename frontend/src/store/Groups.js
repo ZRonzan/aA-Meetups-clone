@@ -55,12 +55,45 @@ export const createAGroupThunk = (newGroup) => async (dispatch) => {
         body: JSON.stringify(newGroup)
     })
 
+    const data = await response.json();
     if (response.ok) {
-        const data = await response.json();
-
-        dispatch(getAllGroups())
+        const returnData = await dispatch(getGroupByIdThunk(data.id))
+        return returnData;
+    } else {
         return data;
     }
+
+
+}
+
+export const editAGroupThunk = (editedGroup) => async (dispatch) => {
+    const response = await csrfFetch(`/api/groups/${editedGroup.id}`,{
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(editedGroup)
+    })
+
+    const data = await response.json();
+    if (response.ok) {
+        const returnData = await dispatch(getGroupByIdThunk(data.id))
+        return returnData;
+    } else {
+        return data;
+    }
+}
+
+export const deleteAGroupThunk = (groupId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/groups/${groupId}`,{
+        method: "DELETE"
+    })
+
+    const data = await response.json();
+    if (response.ok) {
+        await dispatch(getAllGroups())
+    }
+    return data;
 }
 
 
