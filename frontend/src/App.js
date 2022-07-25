@@ -5,6 +5,9 @@ import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useState } from "react";
 import { restoreUserSession } from "./store/session";
 import Navigation from "./components/Navigation";
+import GroupsCard from "./components/GroupsCards/Index";
+import GroupDetails from "./components/GroupDetails";
+import EventsCard from "./components/EventsCards/Index";
 
 function App() {
 
@@ -23,6 +26,17 @@ function App() {
       <h1>Meetups Clone</h1>
 
       <Navigation isLoaded={isLoaded} />
+      <Switch>
+        <Route exact path="/groups">
+            <GroupsCard />
+        </Route>
+        <Route exact path="/events">
+            <EventsCard />
+        </Route>
+        <Route path="/groups/:groupId">
+            <GroupDetails />
+        </Route>
+      </Switch>
       {/* <Switch>
         <Route path="/login">
           <LogInFormPage />

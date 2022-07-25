@@ -44,15 +44,11 @@ export const userSignUp = (newUser) => async (dispatch) => {
         body: JSON.stringify(newUser)
     })
 
+    const data = await response.json();
     if (response.ok) {
-        const data = await response.json();
-
         dispatch(setSessionUser(data));
-        return data;
-    } else {
-        const data = await response.json();
-        return data;
     }
+    return data;
 }
 
 export const logoutUserSession = () => async (dispatch) => {

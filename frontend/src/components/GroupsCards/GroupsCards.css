@@ -1,0 +1,15 @@
+
+div.groups-cards.cards {
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding: 1px 10px 10px 10px;
+    margin: 10px;
+    width: 45%;
+}
+
+div.groups-cards.container {
+    display: flex;
+    flex-flow: wrap;
+    justify-content: space-around;
+    border: dotted 1px grey;
+}

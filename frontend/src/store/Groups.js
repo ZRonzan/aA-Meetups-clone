@@ -18,9 +18,9 @@ export const getAllGroupsThunk = () => async (dispatch) => {
 
     if (response.ok) {
         const data = await response.json();
-
-        dispatch(getAllGroups(data.groups))
-        return data.groups;
+        console.log("HERE", data)
+        dispatch(getAllGroups(data.Groups))
+        return data.Groups;
     }
 }
 
@@ -30,18 +30,21 @@ export const getCurrentUserGroupsThunk = () => async (dispatch) => {
     if (response.ok) {
         const data = await response.json();
 
-        dispatch(getAllGroups(data.groups))
-        return data.groups;
+        dispatch(getAllGroups(data.Groups))
+        return data.Groups;
     }
 }
 
 export const getGroupByIdThunk = (groupId) => async (dispatch) => {
     const response = await csrfFetch(`/api/groups/${groupId}`)
 
+    const data = await response.json();
     if (response.ok) {
-        const data = await response.json();
 
         dispatch(getGroupDetails(data))
+        return data;
+    } else {
+        console.log("ERROR")
         return data;
     }
 }
@@ -96,8 +99,12 @@ export const deleteAGroupThunk = (groupId) => async (dispatch) => {
     return data;
 }
 
+const initialState = {
+    groupsList: {},
+    groupDetails: {}
+}
 
-const groupsReducer = (state = {}, action) => {
+const groupsReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
         case GET_GROUP_DETAILS:
@@ -108,7 +115,7 @@ const groupsReducer = (state = {}, action) => {
             action.groups.forEach(group => {
                 groupsObj[group.id] = group
             });
-            newState = { ...state, groups: groupsObj }
+            newState = { ...state, groupsList: groupsObj }
             return newState;
         default:
             return state;

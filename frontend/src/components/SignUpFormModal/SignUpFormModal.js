@@ -34,10 +34,7 @@ export default function UserSignUpPage() {
 
         let res = await dispatch(userSignUp(user));
         if (!res.message) {
-            setResponse("")
             history.push("/")
-            setPassword("");
-            setEmail("");
         } else {
             setResponse(res)
         }
