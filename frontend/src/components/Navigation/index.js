@@ -33,6 +33,11 @@ function Navigation({ isLoaded }) {
         </NavLink>
         {isLoaded && sessionLinks}
       </li>
+      <li
+        style={{visibility: `${sessionUser? "visible": "hidden"}`}}
+      >
+        <NavLink to="/forms/groupForm">Start a new group</NavLink>
+      </li>
     </ul>
   );
 }

@@ -18,12 +18,12 @@ const router = express.Router();
 //middleware for phase 05 to validate keys from the req.body
 const validateGroups = [
     check('name')
-        .exists({ checkFalsy: true })
-        .notEmpty()
         .isLength({ max: 60 })
         .withMessage('Name must be 60 characters or less'),
+    check('name')
+        .isLength({min: 1})
+        .withMessage('Please enter a Name for the group'),
     check('about')
-        .exists({ checkFalsy: true })
         .isLength({ min: 50 })
         .withMessage('About must be 50 characters or more'),
     check('type')
@@ -112,7 +112,7 @@ router.get(
             foundMembers = await User.findAll({
                 include: {
                     model: Member,
-                    as:'Membership',
+                    as: 'Membership',
                     attributes: ['status'],
                     where: {
                         groupId: req.params.groupId
@@ -123,7 +123,7 @@ router.get(
             foundMembers = await User.findAll({
                 include: {
                     model: Member,
-                    as:'Membership',
+                    as: 'Membership',
                     attributes: ['status'],
                     where: {
                         groupId: req.params.groupId,
@@ -188,7 +188,7 @@ router.get(
             updatedfoundEvents.push(newEvent)
         }
 
-        res.json({Events: updatedfoundEvents})
+        res.json({ Events: updatedfoundEvents })
     }
 );
 

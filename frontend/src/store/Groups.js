@@ -1,6 +1,7 @@
 import { csrfFetch } from "./csrf"
 
 const GET_ALL_GROUPS = "groups/GET_ALL_GROUPS"
+const GET_ALL_USER_GROUPS = "groups/GET_ALL_USER_GROUPS"
 const GET_GROUP_DETAILS = "groups/GET_GROUP_DETAILS"
 
 export const getAllGroups = (groups) => ({
@@ -13,12 +14,16 @@ export const getGroupDetails = (group) => ({
     group
 })
 
+export const getAllUserGroups = (groups) => ({
+    type: GET_ALL_USER_GROUPS,
+    groups
+})
+
 export const getAllGroupsThunk = () => async (dispatch) => {
     const response = await csrfFetch("/api/groups")
 
     if (response.ok) {
         const data = await response.json();
-        console.log("HERE", data)
         dispatch(getAllGroups(data.Groups))
         return data.Groups;
     }
@@ -29,8 +34,7 @@ export const getCurrentUserGroupsThunk = () => async (dispatch) => {
 
     if (response.ok) {
         const data = await response.json();
-
-        dispatch(getAllGroups(data.Groups))
+        dispatch(getAllUserGroups(data.Groups))
         return data.Groups;
     }
 }
@@ -44,7 +48,6 @@ export const getGroupByIdThunk = (groupId) => async (dispatch) => {
         dispatch(getGroupDetails(data))
         return data;
     } else {
-        console.log("ERROR")
         return data;
     }
 }
@@ -69,8 +72,8 @@ export const createAGroupThunk = (newGroup) => async (dispatch) => {
 
 }
 
-export const editAGroupThunk = (editedGroup) => async (dispatch) => {
-    const response = await csrfFetch(`/api/groups/${editedGroup.id}`,{
+export const editAGroupThunk = (editedGroup, groupId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/groups/${groupId}`,{
         method: "PUT",
         headers: {
             "Content-Type": "application/json"
@@ -94,19 +97,23 @@ export const deleteAGroupThunk = (groupId) => async (dispatch) => {
 
     const data = await response.json();
     if (response.ok) {
-        await dispatch(getAllGroups())
+        await dispatch(getAllGroupsThunk())
     }
     return data;
 }
 
 const initialState = {
     groupsList: {},
-    groupDetails: {}
+    groupDetails: {},
+    userGroups: {}
 }
 
 const groupsReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
+        case GET_ALL_USER_GROUPS:
+            newState = {...state, userGroups: action.groups}
+            return newState;
         case GET_GROUP_DETAILS:
             newState = {...state, groupDetails: action.group}
             return newState;
