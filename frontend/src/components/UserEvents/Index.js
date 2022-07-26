@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
-import { useLocation, useParams } from "react-router-dom";
 import * as sessionEvents from "../../store/Events"
 
 export default function UserEventsCards() {

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { NavLink, Route, Switch, useParams, Link, Redirect, useHistory } from "react-router-dom";
 import * as sessionGroups from "../../store/Groups"
 import EventsCard from "../EventsCards/Index";
+import GroupEditFormModal from "../GroupEditFormModal/Index";
 import GroupForm from "../GroupForm/Index";
 
 export default function GroupDetails() {
@@ -57,8 +58,11 @@ export default function GroupDetails() {
                                 <NavLink to={`/groups/${groupId}/events`}>
                                     Events
                                 </NavLink>
-                                <button> Join This Group </button>
-                                <button style={{ visibility: `${user && group.organizerId === user.id? "visible" : "hidden"}` }} onClick={() => setEditFormVisibility(true)}>Edit This Group</button>
+                                {/* <button> Join This Group </button> */}
+                                {user && group.organizerId === user.id && (
+                                    <GroupEditFormModal group={group} />
+                                )}
+                                {/* <button style={{ visibility: `${user && group.organizerId === user.id? "visible" : "hidden"}` }} onClick={() => setEditFormVisibility(true)}>Edit This Group</button> */}
                                 <button style={{ visibility: `${user && group.organizerId === user.id? "visible" : "hidden"}` }} onClick={handleDeletion}>Delete This Group</button>
                             </nav>
                         </div>
