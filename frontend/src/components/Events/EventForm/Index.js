@@ -25,9 +25,20 @@ const EventForm = ({ event }) => {
     const [endDate, setEndDate] = useState(new Date())
     const [venueId, setVenueId] = useState(0)
 
-    useEffect(() => {
+    const [venues, setVenues] = useState([])
 
-        setIsLoaded(true)
+    useEffect(() => {
+        const getVenues = async (groupId) => {
+            return await fetch(`/api/groups/${groupId}/venues`);
+        }
+        console.log("HERE!!!!!")
+        getVenues(groupId)
+            .then(async (response) => {
+                const data = await response.json()
+                console.log(data);
+                setVenues(data.Venues)
+            })
+            .then(() => setIsLoaded(true))
     }, [])
 
     const handleSubmit = async (e) => {
@@ -70,12 +81,22 @@ const EventForm = ({ event }) => {
                 style={{ display: "flex", flexDirection: "column", maxWidth: "500px" }}
             >
                 <label>
-                    Venue: <input
+                    Venue: <select
                         type="number"
-                        onChange={(e) => setVenueId(e.target.value)}
+                        onChange={(e) => setVenueId(e.target.value.id)}
                         value={venueId}
                     >
-                    </input>
+                        <option value={0} disabled={true}>Please select a venue</option>
+                        {venues && venues.length > 0 && (
+                            venues.map((venue, i) => {
+                                return (
+                                    <option key={i} value={venue}>
+                                        {venue.address}, {venue.city}, {venue.state}
+                                    </option>
+                                )
+                            })
+                        )}
+                    </select>
                 </label>
                 <label>
                     Name: <input

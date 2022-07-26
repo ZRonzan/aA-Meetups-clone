@@ -137,6 +137,29 @@ router.get(
     }
 );
 
+// get all venues associated with a group
+router.get(
+    '/:groupId/venues',
+    async (req, res, next) => {
+
+        const foundGroup = await Group.findByPk(req.params.groupId);
+
+        if (!foundGroup) {
+            const err = new Error("Group couldn't be found");
+            err.status = 404;
+            return next(err);
+        }
+
+        const foundVenues = await Venue.findAll({
+            where: {
+                groupId: req.params.groupId
+            }
+        });
+
+        res.json({ Venues: foundVenues })
+    }
+);
+
 //Get all events of a group specified by its id
 router.get(
     '/:groupId/events',
