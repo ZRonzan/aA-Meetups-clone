@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { logoutUserSession } from '../../store/session';
+import { logoutUserSession } from '../../../store/session';
 
 
 function ProfileButton({user}) {

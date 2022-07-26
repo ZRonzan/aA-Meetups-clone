@@ -1,6 +1,6 @@
 // frontend/src/components/UserSignUpFormModal/index.js
 import React, { useState } from 'react';
-import { Modal } from '../../context/Modal';
+import { Modal } from '../../../context/Modal';
 import UserSignUpPage from './SignUpFormModal';
 
 function UserSignUpFormModal() {

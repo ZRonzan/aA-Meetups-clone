@@ -5,15 +5,14 @@ import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useState } from "react";
 import { restoreUserSession } from "./store/session";
 import Navigation from "./components/Navigation";
-import GroupsCard from "./components/GroupsCards/Index";
-import GroupDetails from "./components/GroupDetails";
-import EventsCard from "./components/EventsCards/Index";
+import GroupsCard from "./components/Groups/GroupsCards/Index";
+import GroupDetails from "./components/Groups/GroupDetails/index";
+import EventsCard from "./components/Events/EventsCards/Index";
 import HomePage from "./components/HomePage";
-import GroupForm from "./components/GroupForm/Index";
-import { getCurrentUserGroupsThunk } from "./store/Groups";
-import { getCurrentUserEventsThunk } from "./store/Events";
-import UserGroupsCards from "./components/UserGroups/Index";
-import UserEventsCards from "./components/UserEvents/Index";
+import GroupForm from "./components/Groups/GroupForm/Index";
+import UserGroupsCards from "./components/Groups/UserGroups/Index";
+import UserEventsCards from "./components/Events/UserEvents/Index";
+import EventDetails from "./components/Events/EventsDetails/Index";
 
 function App() {
 
@@ -49,6 +48,9 @@ function App() {
         </Route>
         <Route path="/groups/:groupId">
             <GroupDetails />
+        </Route>
+        <Route exact path="/events/:eventId">
+            <EventDetails />
         </Route>
         <Route path="/forms/groupForm">
             <GroupForm />

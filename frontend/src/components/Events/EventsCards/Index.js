@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
-import { useParams } from "react-router-dom";
-import * as sessionEvents from "../../store/Events"
+import { NavLink, useParams } from "react-router-dom";
+import * as sessionEvents from "../../../store/Events"
 
 export default function EventsCard() {
     const dispatch = useDispatch();
@@ -49,7 +49,7 @@ export default function EventsCard() {
                     return (
                         <div className={`events-cards cards ${groupId? "right" : "left"}`} key={i}>
                             <div>{startDateString()}</div>
-                            <h4>{event.name}</h4>
+                            <h4><NavLink to={`/events/${event.id}`} >{event.name}</NavLink></h4>
                             <div><i className="fa-solid fa-location-dot"></i> {event.Venue.city}, {event.Venue.state}</div>
                             <div>{event.numAttending} {event.numAttending === 1? "attendee": "attendees"}</div>
                             {/* <div><button value={event.id}>Attend (NEED TO IMPLEMENT LATER FOR ATTENDEES FEATURE)</button></div> */}

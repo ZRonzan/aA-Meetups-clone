@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
-import * as sessionEvents from "../../store/Events"
+import * as sessionEvents from "../../../store/Events"
 
 export default function UserEventsCards() {
     const dispatch = useDispatch();

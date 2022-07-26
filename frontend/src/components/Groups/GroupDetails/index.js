@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { NavLink, Route, Switch, useParams, Link, Redirect, useHistory } from "react-router-dom";
-import * as sessionGroups from "../../store/Groups"
-import EventsCard from "../EventsCards/Index";
+import * as sessionGroups from "../../../store/Groups"
+import EventsCard from "../../Events/EventsCards/Index";
 import GroupEditFormModal from "../GroupEditFormModal/Index";
 import GroupForm from "../GroupForm/Index";
 

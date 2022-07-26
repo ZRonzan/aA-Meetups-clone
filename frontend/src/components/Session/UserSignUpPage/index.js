@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useHistory } from "react-router-dom"
-import { userSignUp } from "../../store/session"
+import { userSignUp } from "../../../store/session"
 import "./UserSignUpPage.css"
 
 export default function UserSignUpPage() {

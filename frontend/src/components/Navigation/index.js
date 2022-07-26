@@ -1,9 +1,9 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import ProfileButton from '../ProfileButton';
-import LoginFormModal from '../LoginFormModal/Index';
-import UserSignUpFormModal from '../SignUpFormModal/Index';
+import ProfileButton from '../Session/ProfileButton';
+import LoginFormModal from '../Session/LoginFormModal/Index';
+import UserSignUpFormModal from '../Session/SignUpFormModal/Index';
 // import './Navigation.css';
 
 function Navigation({ isLoaded }) {

@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom"
-import EventsCard from "../EventsCards/Index";
+import EventsCard from "../Events/EventsCards/Index";
 
 const HomePage = () => {
 

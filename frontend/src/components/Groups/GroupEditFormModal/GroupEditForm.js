@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Redirect, Switch, useHistory, useParams } from "react-router-dom"
-import { createAGroupThunk, editAGroupThunk } from "../../store/Groups"
+import { createAGroupThunk, editAGroupThunk } from "../../../store/Groups"
 
 function GroupEditForm({group, setShowModal}) {
   const history = useHistory();

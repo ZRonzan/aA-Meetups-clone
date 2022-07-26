@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { Link} from "react-router-dom";
-import * as sessionGroups from "../../store/Groups"
+import * as sessionGroups from "../../../store/Groups"
 
-export default function UserGroupsCards() {
+import "./GroupsCards.css"
+
+export default function GroupsCard() {
     const dispatch = useDispatch();
 
-    let groups = useSelector(state => Object.values(state.groups.userGroups));
+    let groups = useSelector(state => Object.values(state.groups.groupsList));
 
     const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
-        dispatch(sessionGroups.getCurrentUserGroupsThunk())
+        dispatch(sessionGroups.getAllGroupsThunk())
         setIsLoaded(true)
     }, [dispatch]);
 
@@ -20,10 +22,10 @@ export default function UserGroupsCards() {
             <h2>GROUPS:</h2>
             <div className="groups-cards container">
             {isLoaded && (
-                groups.map((group, i)=> {
+                groups.map((group, i) => {
                     return (
-                        <div className="groups-cards cards" key={i}>
-                            <h4><Link to={`/groups/${group.id}`}>{group.name}</Link></h4>
+                        <div className="groups-cards cards">
+                            <h4><Link to={`/groups/${group.id}`} key={i}>{group.name}</Link></h4>
                             <div>{group.about}</div>
                             <div>Type: {group.private ? `Private` : `Public`}</div>
                             <div>State: {group.state}</div>
