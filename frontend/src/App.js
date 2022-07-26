@@ -13,6 +13,7 @@ import GroupForm from "./components/Groups/GroupForm/Index";
 import UserGroupsCards from "./components/Groups/UserGroups/Index";
 import UserEventsCards from "./components/Events/UserEvents/Index";
 import EventDetails from "./components/Events/EventsDetails/Index";
+import EventForm from "./components/Events/EventForm/Index";
 
 function App() {
 
@@ -52,8 +53,11 @@ function App() {
         <Route exact path="/events/:eventId">
             <EventDetails />
         </Route>
-        <Route path="/forms/groupForm">
+        <Route path="/forms/group-form">
             <GroupForm />
+        </Route>
+        <Route path="/forms/event-form/:groupId">
+            <EventForm />
         </Route>
       </Switch>
     </>

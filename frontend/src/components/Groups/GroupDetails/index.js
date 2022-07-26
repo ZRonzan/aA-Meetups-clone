@@ -26,7 +26,7 @@ export default function GroupDetails() {
         e.preventDefault();
         const response = await dispatch(sessionGroups.deleteAGroupThunk(groupId));
 
-        if(response.statusCode === 200) {
+        if (response.statusCode === 200) {
             history.push("/");
         } else {
             alert("An error occurred. the Group could not be deleted")
@@ -62,8 +62,18 @@ export default function GroupDetails() {
                                 {user && group.organizerId === user.id && (
                                     <GroupEditFormModal group={group} />
                                 )}
-                                {/* <button style={{ visibility: `${user && group.organizerId === user.id? "visible" : "hidden"}` }} onClick={() => setEditFormVisibility(true)}>Edit This Group</button> */}
-                                <button style={{ visibility: `${user && group.organizerId === user.id? "visible" : "hidden"}` }} onClick={handleDeletion}>Delete This Group</button>
+                                {/* <button
+                                style={{ visibility: `${user && group.organizerId === user.id? "visible" : "hidden"}` }}
+                                onClick={() => setEditFormVisibility(true)}
+                                >
+                                Edit This Group
+                                </button> */}
+                                <button
+                                    style={{ visibility: `${user && group.organizerId === user.id ? "visible" : "hidden"}` }}
+                                    onClick={handleDeletion}
+                                >
+                                    Delete This Group
+                                </button>
                             </nav>
                         </div>
                         <Switch>
@@ -78,6 +88,12 @@ export default function GroupDetails() {
                                 <div>members of this group</div>
                             </Route>
                             <Route path="/groups/:groupId/events">
+                                <button
+                                    style={{ visibility: `${user && group.organizerId === user.id ? "visible" : "hidden"}` }}
+                                    onClick={() => history.push(`/forms/event-form/${groupId}`)}
+                                >
+                                    Create an event
+                                </button>
                                 <EventsCard groupId={groupId} />
                             </Route>
                         </Switch>
@@ -92,12 +108,12 @@ export default function GroupDetails() {
                     </div>
                 )}
             </div>)}
-            {editFormVisibility && (
+            {/* {editFormVisibility && (
                 <>
                     <button onClick={() => setEditFormVisibility(false)}>Go Back</button>
                     <GroupForm group={group} />
                 </>
-            )}
+            )} */}
         </>
     )
 }
