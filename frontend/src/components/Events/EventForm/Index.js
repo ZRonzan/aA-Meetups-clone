@@ -16,13 +16,16 @@ const EventForm = ({ setShowModalEvent }) => {
   const [isLoaded, setIsLoaded] = useState(false)
   const [error, setError] = useState([])
 
+  const newDate = new Date().toISOString().slice(0,23)
+  console.log(newDate)
+
   const [name, setName] = useState("")
   const [type, setType] = useState("Online")
   const [capacity, setCapacity] = useState(1)
   const [price, setPrice] = useState(0)
   const [description, setDescription] = useState("")
-  const [startDate, setStartDate] = useState(new Date())
-  const [endDate, setEndDate] = useState(new Date())
+  const [startDate, setStartDate] = useState(new Date().toISOString().slice(0,16))
+  const [endDate, setEndDate] = useState(new Date().toISOString().slice(0,16))
   const [venueId, setVenueId] = useState()
 
   const [venues, setVenues] = useState([])
@@ -32,6 +35,9 @@ const EventForm = ({ setShowModalEvent }) => {
     if (eventId) {
       dispatch(sessionEvents.getEventByIdThunk(eventId))
         .then((res) => {
+          const startDateString = ""
+          const endDateString = ""
+
           console.log(res.startDate)
           setVenueId(res.venue)
           setName(res.name)
@@ -39,8 +45,8 @@ const EventForm = ({ setShowModalEvent }) => {
           setCapacity(res.capacity)
           setPrice(res.price)
           setDescription(res.description)
-          setStartDate(res.startDate)
-          setEndDate(res.endDate)
+          setStartDate(new Date(res.startDate).toISOString().slice(0,23))
+          setEndDate(new Date(res.endDate).toISOString().slice(0,23))
         })
     }
 
@@ -160,8 +166,9 @@ const EventForm = ({ setShowModalEvent }) => {
           </input>
         </label>
         <label>
-          Price: <input
+          Price ($USD): <input
             type="number"
+            step={0.10}
             onChange={(e) => setPrice(e.target.value)}
             value={price}
           >
@@ -175,18 +182,21 @@ const EventForm = ({ setShowModalEvent }) => {
           </textarea>
         </label>
         <label>
-          Start date: <input
+          Start date and time (UTC): <input
             type="datetime-local"
             onChange={(e) => setStartDate(e.target.value)}
             value={startDate}
+            min={new Date().toString().slice(0,16)}
           >
           </input>
         </label>
         <label>
-          End date: <input
+          End date and time (UTC): <input
             type="datetime-local"
             onChange={(e) => setEndDate(e.target.value)}
             value={endDate}
+            min={new Date().toString().slice(0,16)}
+            max={new Date().toString().slice(0,16)}
           >
           </input>
         </label>

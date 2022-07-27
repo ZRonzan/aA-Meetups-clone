@@ -121,7 +121,7 @@ export const deleteAEventThunk = (eventId) => async (dispatch) => {
 
     const data = await response.json();
     if (response.ok) {
-        await dispatch(getAllEvents())
+        await dispatch(getAllEventsThunk())
     }
     return data;
 }
