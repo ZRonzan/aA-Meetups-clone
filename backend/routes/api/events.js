@@ -17,12 +17,22 @@ const router = express.Router();
 
 //middleware to validate body elements when creating/editing an event
 const validateEvents = [
-    check('venueCheck')
-        .exists({ checkFalsy: true })
+    check('venueId')
+        .custom( async (val) => {
+            if (val) {
+                const foundVenue = await Venue.findByPk(val);
+                if (!foundVenue) {
+                    return false;
+                } else {
+                    return true
+                }
+            } else {
+                return true;
+            }
+        })
         .withMessage("Venue does not exist"),
     check('name')
         .isLength({ min: 5 })
-        .exists({ checkFalsy: true })
         .withMessage("Name must be at least 5 characters"),
     check('type')
         .exists({ checkFalsy: true })

@@ -12,6 +12,14 @@ module.exports = {
         lng: -118.243683
       },
       {
+        groupId: 1,
+        address: "1234 Test avenue venue 1",
+        city: "Los Angeles",
+        state: "CA",
+        lat: 34.052235,
+        lng: -118.243683
+      },
+      {
         groupId: 2,
         address: "1234 Test avenue venue 2",
         city: "New York",

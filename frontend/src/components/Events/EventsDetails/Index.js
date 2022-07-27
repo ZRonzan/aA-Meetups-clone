@@ -1,22 +1,20 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
-import { NavLink, Route, Switch, useParams, Link, Redirect, useHistory } from "react-router-dom";
+import { NavLink, useParams, useHistory } from "react-router-dom";
 import * as sessionEvents from "../../../store/Events"
 import * as sessionGroups from "../../../store/Groups"
+import EventEditFormModal from "../EventEditFromModal/Index";
 import EventsCard from "../../Events/EventsCards/Index";
+import EventDeleteFormModal from "../EventDeleteFormModal/Index";
 
 export default function EventDetails() {
     const { eventId } = useParams();
     const dispatch = useDispatch();
     const history = useHistory();
 
-    const [editFormVisibility, setEditFormVisibility] = useState(false)
-
     const event = useSelector(state => state.events.eventDetails);
     const group = useSelector(state => state.groups.groupDetails)
     const user = useSelector(state => state.session.user)
-
-    console.log(group)
 
     const [isLoaded, setIsLoaded] = useState(false)
 
@@ -26,18 +24,6 @@ export default function EventDetails() {
             .then(() => setIsLoaded(true))
 
     }, [dispatch])
-
-    const handleDeletion = async (e) => {
-        e.preventDefault();
-        const response = await dispatch();
-
-        if (response.statusCode === 200) {
-            history.push("/");
-        } else {
-            alert("An error occurred. the Event could not be deleted")
-        }
-
-    }
 
     const startDateString = (inputdate) => {
         const newDate = new Date(inputdate)
@@ -55,13 +41,21 @@ export default function EventDetails() {
     const startDate = startDateString(event.startDate)
     const endDate = startDateString(event.endDate)
 
-
-
     return isLoaded && (
         <>
             <div>
                 <div>{headerDate}</div>
                 <h1>{event.name}</h1>
+                <div
+                    style={{ visibility: `${group.organizerId === user.id ? "visible" : "hidden"}` }}
+                >
+                    <div>
+                        <EventEditFormModal event={event} />
+                    </div>
+                    <div>
+                        <EventDeleteFormModal event={event} groupId={group.id} />
+                    </div>
+                </div>
             </div>
             <div>
                 <div>PREVIEW IMAGE GOES HERE</div>
@@ -76,8 +70,8 @@ export default function EventDetails() {
                 <div>{group.private ? "Private" : "Public"} group</div>
             </div>
             <div>
-                <time class="">{startDate} to {endDate}</time>
-                <div></div>
+                <time><i className="fa-solid fa-clock"></i> {startDate} to {endDate}</time>
+                <div><i className="fa-solid fa-location-dot"></i> {event.Venue ? `${event.Venue.address}, ${event.Venue.city}, ${event.Venue.state} ` : "No venue"}</div>
             </div>
             {/* <div>
                 ATTENDEES MAY GO HERE AT SOME POINT
@@ -88,7 +82,7 @@ export default function EventDetails() {
             </div>
             <div>
                 <div>
-                    <time class="" datetime={`${startDate}`} >{startDate}</time>
+                    <time dateTime={`${startDate}`} >{startDate}</time>
                     <p>{event.name}</p>
                 </div>
                 <div>

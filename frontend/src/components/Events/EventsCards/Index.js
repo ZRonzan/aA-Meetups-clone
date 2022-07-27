@@ -50,7 +50,7 @@ export default function EventsCard() {
                         <div className={`events-cards cards ${groupId? "right" : "left"}`} key={i}>
                             <div>{startDateString()}</div>
                             <h4><NavLink to={`/events/${event.id}`} >{event.name}</NavLink></h4>
-                            <div><i className="fa-solid fa-location-dot"></i> {event.Venue.city}, {event.Venue.state}</div>
+                            <div><i className="fa-solid fa-location-dot"></i> {event.Venue? `${event.Venue.city},` : "No Venue"} {`${event.Venue? event.Venue.state : ""}`}</div>
                             <div>{event.numAttending} {event.numAttending === 1? "attendee": "attendees"}</div>
                             {/* <div><button value={event.id}>Attend (NEED TO IMPLEMENT LATER FOR ATTENDEES FEATURE)</button></div> */}
                         </div>

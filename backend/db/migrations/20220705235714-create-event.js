@@ -15,7 +15,6 @@ module.exports = {
         //   key: "id"
         // },
         onDelete: 'CASCADE'
-
       },
       groupId: {
         type: Sequelize.INTEGER,

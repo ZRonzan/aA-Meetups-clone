@@ -63,12 +63,22 @@ const validateVenues = [
 ];
 
 const validateEvents = [
-    check('venueCheck')
-        .exists({ checkFalsy: true })
+    check('venueId')
+        .custom( async (val) => {
+            if (val) {
+                const foundVenue = await Venue.findByPk(val);
+                if (!foundVenue) {
+                    return false;
+                } else {
+                    return true
+                }
+            } else {
+                return true;
+            }
+        })
         .withMessage("Venue does not exist"),
     check('name')
         .isLength({ min: 5 })
-        .exists({ checkFalsy: true })
         .withMessage("Name must be at least 5 characters"),
     check('type')
         .exists({ checkFalsy: true })
@@ -76,7 +86,7 @@ const validateEvents = [
         .withMessage("Type must be Online or In Person"),
     check('capacity')
         .isInt({ min: 1 })
-        .withMessage("Capacity must be an integer"),
+        .withMessage("Capacity must be an integer greater than 0"),
     check('price')
         .isCurrency({ allow_negatives: false, digits_after_decimal: [0, 1, 2] })
         .withMessage("Price is invalid"),
@@ -252,21 +262,21 @@ router.post(
 router.post(
     '/:groupId/events',
     requireAuth,
-    async (req, res, next) => {
-        if (req.body.venueId) {
-            const foundVenue = await Venue.findByPk(req.body.venueId);
-            if (!foundVenue) {
-                let err = new Error("Venue couldn't be found")
-                err.status = 404
-                return next(err);
-            } else {
-                req.body.venueCheck = true;
-                next();
-            }
-        } else {
-            next();
-        }
-    },
+    // async (req, res, next) => {
+    //     if (req.body.venueId) {
+    //         const foundVenue = await Venue.findByPk(req.body.venueId);
+    //         if (!foundVenue) {
+    //             let err = new Error("Venue couldn't be found")
+    //             err.status = 404
+    //             return next(err);
+    //         } else {
+    //             req.body.venueCheck = true;
+    //             next();
+    //         }
+    //     } else {
+    //         next();
+    //     }
+    // },
     validateEvents,
     async (req, res, next) => {
         const foundGroup = await Group.findByPk(req.params.groupId);

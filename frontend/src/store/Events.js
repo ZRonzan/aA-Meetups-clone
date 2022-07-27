@@ -76,8 +76,8 @@ export const joinEventThunk = (eventId) => async (dispatch) => {
     }
 }
 
-export const createAEventThunk = (newEvent) => async (dispatch) => {
-    const response = await csrfFetch(`/api/events`,{
+export const createAEventThunk = (newEvent, groupId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/groups/${groupId}/events`,{
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -96,8 +96,8 @@ export const createAEventThunk = (newEvent) => async (dispatch) => {
 
 }
 
-export const editAEventThunk = (editedEvent) => async (dispatch) => {
-    const response = await csrfFetch(`/api/events/${editedEvent.id}`,{
+export const editAEventThunk = (editedEvent, eventId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/events/${eventId}`,{
         method: "PUT",
         headers: {
             "Content-Type": "application/json"
