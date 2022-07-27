@@ -1,0 +1,22 @@
+.navigation-main-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.navigation-left {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+.navigation-right {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+.navigation-right-sessionlinks {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}

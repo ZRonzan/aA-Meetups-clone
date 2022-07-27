@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { useHistory, useParams } from "react-router-dom"
+import { useHistory, useParams, Link } from "react-router-dom"
 import * as sessionEvents from "../../../store/Events"
+import * as sessionGroups from "../../../store/Groups"
 
 
 
@@ -12,20 +13,19 @@ const EventForm = ({ setShowModalEvent }) => {
 
   const group = useSelector(state => state.groups.groupDetails);
   const event = useSelector(state => state.events.eventDetails);
+  const user = useSelector(state => state.session.user)
+
 
   const [isLoaded, setIsLoaded] = useState(false)
   const [error, setError] = useState([])
-
-  const newDate = new Date().toISOString().slice(0,23)
-  console.log(newDate)
 
   const [name, setName] = useState("")
   const [type, setType] = useState("Online")
   const [capacity, setCapacity] = useState(1)
   const [price, setPrice] = useState(0)
   const [description, setDescription] = useState("")
-  const [startDate, setStartDate] = useState(new Date().toISOString().slice(0,16))
-  const [endDate, setEndDate] = useState(new Date().toISOString().slice(0,16))
+  const [startDate, setStartDate] = useState(new Date().toISOString().slice(0, 16))
+  const [endDate, setEndDate] = useState(new Date().toISOString().slice(0, 16))
   const [venueId, setVenueId] = useState()
 
   const [venues, setVenues] = useState([])
@@ -35,19 +35,20 @@ const EventForm = ({ setShowModalEvent }) => {
     if (eventId) {
       dispatch(sessionEvents.getEventByIdThunk(eventId))
         .then((res) => {
-          const startDateString = ""
-          const endDateString = ""
-
-          console.log(res.startDate)
-          setVenueId(res.venue)
+          console.log(res)
+          setVenueId(res.Venue ? res.Venue.id : "")
           setName(res.name)
           setType(res.type)
           setCapacity(res.capacity)
           setPrice(res.price)
           setDescription(res.description)
-          setStartDate(new Date(res.startDate).toISOString().slice(0,23))
-          setEndDate(new Date(res.endDate).toISOString().slice(0,23))
+          setStartDate(new Date(res.startDate).toISOString().slice(0, 23))
+          setEndDate(new Date(res.endDate).toISOString().slice(0, 23))
         })
+    }
+
+    if (groupId) {
+      dispatch(sessionGroups.getGroupByIdThunk(groupId))
     }
 
     const getVenues = async (groupId) => {
@@ -81,7 +82,8 @@ const EventForm = ({ setShowModalEvent }) => {
         price,
         description,
         startDate,
-        endDate
+        endDate,
+        venueId: null
       };
     } else {
       newEvent = {
@@ -112,6 +114,24 @@ const EventForm = ({ setShowModalEvent }) => {
         setError(response);
       }
     }
+  }
+
+  if(isLoaded && !user) {
+    return (
+      <div>
+        <h2>{`Sorry, you must be logged in to access this page.`}</h2>
+        <div>{`Please log in and re-access this page through the correct channels.`}</div>
+        <Link to="/">Go Home</Link>
+      </div>
+    )
+  } else if (isLoaded && (Object.values(group).length === 0 || user.id !== group.organizerId)) {
+    return (
+      <div>
+        <h2>{`Sorry, the page you’re looking for doesn’t exist.`}</h2>
+        <div>{`The link you followed might be broken, or the page may have been deleted.`}</div>
+        <Link to="/">Go Home</Link>
+      </div>
+    )
   }
 
 
@@ -186,7 +206,7 @@ const EventForm = ({ setShowModalEvent }) => {
             type="datetime-local"
             onChange={(e) => setStartDate(e.target.value)}
             value={startDate}
-            min={new Date().toString().slice(0,16)}
+            min={new Date().toString().slice(0, 16)}
           >
           </input>
         </label>
@@ -195,8 +215,8 @@ const EventForm = ({ setShowModalEvent }) => {
             type="datetime-local"
             onChange={(e) => setEndDate(e.target.value)}
             value={endDate}
-            min={new Date().toString().slice(0,16)}
-            max={new Date().toString().slice(0,16)}
+            min={new Date().toString().slice(0, 16)}
+            max={new Date().toString().slice(0, 16)}
           >
           </input>
         </label>

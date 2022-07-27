@@ -28,8 +28,6 @@ function App() {
 
   return isLoaded && (
     <>
-      <h1>Street-Up</h1>
-
       <Navigation isLoaded={isLoaded} />
       <Switch>
         <Route exact path="/">

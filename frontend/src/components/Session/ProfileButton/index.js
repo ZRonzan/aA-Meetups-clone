@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { logoutUserSession } from '../../../store/session';
 
 
-function ProfileButton({user}) {
+function ProfileButton({ user }) {
   const [showMenu, setShowMenu] = useState(false)
   const dispatch = useDispatch();
 
@@ -32,19 +32,19 @@ function ProfileButton({user}) {
   return (
     <>
       <div>
-        <button onClick={openMenu}><i className="fa-solid fa-user"> profile</i></button>
+        <i onClick={openMenu} className="fa-solid fa-user"></i>
       </div>
       {showMenu && (
         <>
-          <ul>
-            <li>User: {user.firstName} {user.lastName}</li>
-            <li>Email: {user.email}</li>
-            <li>
+          <div>
+            <div>User: {user.firstName} {user.lastName}</div>
+            <div>Email: {user.email}</div>
+            <div>
               <button onClick={logout}>
-                <i className="fa-solid fa-arrow-right-from-bracket"> Log out </i>
+                <i className="fa-solid fa-arrow-right-from-bracket"></i>Log Out
               </button>
-            </li>
-          </ul>
+            </div>
+          </div>
         </>
       )}
     </>

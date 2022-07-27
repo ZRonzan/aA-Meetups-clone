@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom"
 import EventsCard from "../Events/EventsCards/Index";
+import Footer from "../Footer/Index";
 
 const HomePage = () => {
 
@@ -35,6 +36,7 @@ const HomePage = () => {
             <div>
                 <EventsCard />
             </div>
+            <Footer />
         </>
     )
 }

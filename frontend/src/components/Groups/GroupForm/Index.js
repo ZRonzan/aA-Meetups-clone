@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react"
-import { useDispatch} from "react-redux"
-import { Redirect, useHistory, useParams } from "react-router-dom"
+import { useDispatch, useSelector} from "react-redux"
+import { Redirect, useHistory, useParams, Link } from "react-router-dom"
 import { createAGroupThunk, editAGroupThunk } from "../../../store/Groups"
 
 
 
 const GroupForm = ({ group }) => {
+
+    const user = useSelector(state => state.session.user)
+
     const history = useHistory();
     const dispatch = useDispatch();
     const { groupId } = useParams();
@@ -105,6 +108,24 @@ const GroupForm = ({ group }) => {
             }
         }
     }
+
+    if(isLoaded && !user) {
+        return (
+          <div>
+            <h2>{`Sorry, you must be logged in to access this page.`}</h2>
+            <div>{`Please log in and re-access this page through the correct channels.`}</div>
+            <Link to="/">Go Home</Link>
+          </div>
+        )
+      } else if (isLoaded && group && Object.values(group).length === 0) {
+        return (
+          <div>
+            <h2>{`Sorry, the page you’re looking for doesn’t exist.`}</h2>
+            <div>{`The link you followed might be broken, or the page may have been deleted.`}</div>
+            <Link to="/">Go Home</Link>
+          </div>
+        )
+      }
 
 
     return isLoaded && (
