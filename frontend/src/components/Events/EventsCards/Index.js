@@ -32,11 +32,7 @@ export default function EventsCard() {
 
     return (
         <div className="events-cards-container">
-            {/* <div className="event-cardlist-container"> */}
-                {/* <div className="all-events-groups-cards-toggle-container">
-                    <h2 className={`all-events-groups-cards-toggle active`}>Events</h2>
-                    <h2 className={`all-events-groups-cards-toggle inactive`} onClick={() => history.push("/groups")}>Groups</h2>
-                </div> */}
+
                 {isLoaded && (
                     events.map((event, i) => {
 
@@ -66,7 +62,6 @@ export default function EventsCard() {
                         )
                     })
                 )}
-            {/* </div> */}
         </div>
     )
 }

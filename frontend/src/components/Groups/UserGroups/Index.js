@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
-import { Link} from "react-router-dom";
+import { Link, useHistory, NavLink } from "react-router-dom";
 import * as sessionGroups from "../../../store/Groups"
+import "./UserGroups.css"
 
 export default function UserGroupsCards() {
     const dispatch = useDispatch();
+    const history = useHistory()
+
+    const [showOwnedGroups, setShowOwnedGroups] = useState(true)
 
     const groups = useSelector(state => Object.values(state.groups.userGroups));
     const user = useSelector(state => state.session.user)
@@ -13,7 +17,7 @@ export default function UserGroupsCards() {
     const organizedGroups = []
 
     groups.forEach(group => {
-        if(group.organizerId === user.id) {
+        if (group.organizerId === user.id) {
             organizedGroups.push(group)
         } else {
             joinedGroups.push(group)
@@ -27,42 +31,69 @@ export default function UserGroupsCards() {
         setIsLoaded(true)
     }, [dispatch]);
 
-    return (
-        <div>
-            <h2>Organized Groups</h2>
-            <div className="groups-cards container">
-            {isLoaded && organizedGroups.length > 0 && (
-                organizedGroups.map((group, i)=> {
-                    return (
-                        <div className="groups-cards cards" key={i}>
-                            <h4><Link to={`/groups/${group.id}`}>{group.name}</Link></h4>
-                            <div>{group.about}</div>
-                            <div>Type: {group.private ? `Private` : `Public`}</div>
-                            <div>State: {group.state}</div>
-                            <div>City: {group.city}</div>
-                            <div>Number of members: {group.numMembers}</div>
-                        </div>
-                    )
-                })
-            )}
+    return isLoaded && (
+        <>
+            <div className="events-groups-toggle-main-container">
+                <div className="all-events-groups-cards-toggle-container">
+                    <h2 className={`all-events-groups-cards-toggle ${showOwnedGroups ? "active" : "inactive"}`} onClick={() => setShowOwnedGroups(true)}>Organized groups {`(${organizedGroups.length})`}</h2>
+                    <h2 className={`all-events-groups-cards-toggle ${!showOwnedGroups ? "active" : "inactive"}`} onClick={() => setShowOwnedGroups(false)}>Joined groups {`(${joinedGroups.length})`}</h2>
+                </div>
             </div>
-            <h2>Joined Groups</h2>
-            <div className="groups-cards container">
-            {isLoaded && joinedGroups.length > 0 && (
-                joinedGroups.map((group, i)=> {
-                    return (
-                        <div className="groups-cards cards" key={i}>
-                            <h4><Link to={`/groups/${group.id}`}>{group.name}</Link></h4>
-                            <div>{group.about}</div>
-                            <div>Type: {group.private ? `Private` : `Public`}</div>
-                            <div>State: {group.state}</div>
-                            <div>City: {group.city}</div>
-                            <div>Number of members: {group.numMembers}</div>
+            <div className="current-user-groups-main-body">
+                {showOwnedGroups && (
+                    <div className="current-user-groups organized-container">
+                        <div className="groups-cards container">
+                            {organizedGroups.length > 0 && (
+                                organizedGroups.map((group, i) => {
+                                    return (
+                                        <div className="groups-card container" onClick={() => history.push(`/groups/${group.id}`)} key={i}>
+                                            <div className="groups-card image-container">IMAGE GOES HERE</div>
+                                            <div className="groups-card info-container">
+                                                <h3 className="groups-card title">{group.name}</h3>
+                                                <div className="groups-card location">{group.city.toUpperCase()}, {group.state}</div>
+                                                <div className="groups-card about">{group.about}</div>
+                                                <div className="groups-card members">{`${group.numMembers} ${group.numMembers === 1 ? 'member' : 'members'} • ${group.private ? `Private` : `Public`}`}</div>
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            )}
+                            {organizedGroups.length === 0 && (
+                                <>
+                                    <h2>You currently have not organized any groups. Why not create one?</h2>
+                                    <div className="navigation-start-a-new-group user-group-page" onClick={() => history.push("/forms/group-form")}>
+                                        Start a new group
+                                    </div>
+                                </>
+                            )}
                         </div>
-                    )
-                })
-            )}
+                    </div>
+                )}
+                {!showOwnedGroups && (
+                    <div className="current-user-groups joined-container">
+                        <div className="groups-cards container">
+                            {isLoaded && joinedGroups.length > 0 && (
+                                joinedGroups.map((group, i) => {
+                                    return (
+                                        <div className="groups-card container" onClick={() => history.push(`/groups/${group.id}`)} key={i}>
+                                            <div className="groups-card image-container">IMAGE GOES HERE</div>
+                                            <div className="groups-card info-container">
+                                                <h3 className="groups-card title">{group.name}</h3>
+                                                <div className="groups-card location">{group.city.toUpperCase()}, {group.state}</div>
+                                                <div className="groups-card about">{group.about}</div>
+                                                <div className="groups-card members">{`${group.numMembers} ${group.numMembers === 1 ? 'member' : 'members'} • ${group.private ? `Private` : `Public`}`}</div>
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            )}
+                            {joinedGroups.length === 0 && (
+                                <h2>You currently have not joined any groups.</h2>
+                            )}
+                        </div>
+                    </div>
+                )}
             </div>
-        </div>
+        </>
     )
 }

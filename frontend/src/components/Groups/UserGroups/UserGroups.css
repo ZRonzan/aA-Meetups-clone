@@ -1,0 +1,25 @@
+
+.current-user-groups-main-body {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.current-user-groups {
+    display: flex;
+    border-top: solid 1px rgb(230,230,230);
+    min-width: 600px;
+    max-width: 900px;
+    width:60%;
+    min-height: min-content;
+    padding: 5px 10px;
+}
+
+.navigation-start-a-new-group.user-group-page {
+    color: white;
+    font-weight: bold;
+}
+
+.navigation-start-a-new-group.user-group-page:hover {
+    cursor: pointer;
+}
