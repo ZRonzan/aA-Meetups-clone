@@ -8,11 +8,11 @@ function UserSignUpFormModal() {
 
   return (
     <>
-      <button onClick={() => setShowModal(true)}><i className="fa-solid fa-user-plus"> Sign Up</i></button>
+      <div className="navigation-log-in-and-sign-up-buttons" onClick={() => setShowModal(true)}>Sign Up</div>
       {showModal && (
         <>
         <Modal onClose={() => setShowModal(false)}>
-          <UserSignUpPage />
+          <UserSignUpPage setShowModal={setShowModal}/>
         </Modal>
         </>
       )}

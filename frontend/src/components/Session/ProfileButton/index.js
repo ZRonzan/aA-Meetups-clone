@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logoutUserSession } from '../../../store/session';
 
 
 function ProfileButton({ user }) {
+  const history = useHistory()
   const [showMenu, setShowMenu] = useState(false)
   const dispatch = useDispatch();
 
@@ -27,22 +28,32 @@ function ProfileButton({ user }) {
   function logout(e) {
     e.preventDefault()
     dispatch(logoutUserSession())
+    history.push("/")
   }
 
   return (
     <>
-      <div>
-        <i onClick={openMenu} className="fa-solid fa-user"></i>
+      <div className="navigation-right-profile" onClick={openMenu}>
+        <div className="navigation-right-profile-circle">
+          {user.firstName[0]}
+        </div>
+        <div className="navigation-right-profile-chevron">
+          {!showMenu && (
+            <i className="fa-solid fa-chevron-down"></i>
+          )}
+          {showMenu && (
+            <i className="fa-solid fa-chevron-up"></i>
+          )}
+        </div>
       </div>
       {showMenu && (
         <>
-          <div>
-            <div>User: {user.firstName} {user.lastName}</div>
-            <div>Email: {user.email}</div>
-            <div>
-              <button onClick={logout}>
-                <i className="fa-solid fa-arrow-right-from-bracket"></i>Log Out
-              </button>
+          <div className="navigation-right-sessionlinks">
+            <div className="navigation-right-sessionlinks-current-user">{user.firstName} {user.lastName}</div>
+              <NavLink className="navigation-right-sessionlinks-link your-groups" to="/session/groups">Your groups</NavLink>
+              <NavLink className="navigation-right-sessionlinks-link your-events" to="/session/events">Your events</NavLink>
+            <div className="navigation-right-sessionlinks-link log-out" onClick={logout}>
+              Log out
             </div>
           </div>
         </>

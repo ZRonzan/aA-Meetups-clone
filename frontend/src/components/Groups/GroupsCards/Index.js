@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import * as sessionGroups from "../../../store/Groups"
 
 import "./GroupsCards.css"
 
 export default function GroupsCard() {
     const dispatch = useDispatch();
+    const history = useHistory()
 
     let groups = useSelector(state => Object.values(state.groups.groupsList));
 
@@ -18,27 +19,28 @@ export default function GroupsCard() {
     }, [dispatch]);
 
     return (
-        <div>
-            <h2>GROUPS:</h2>
-            <div className="groups-cards container">
+        <div className="groups-cards-container">
+            {/* <div> */}
+                {/* <div className="all-events-groups-cards-toggle-container">
+                    <h2 className={`all-events-groups-cards-toggle inactive`} onClick={() => history.push("/events")}>Events</h2>
+                    <h2 className={`all-events-groups-cards-toggle active`}>Groups</h2>
+                </div> */}
                 {isLoaded && (
                     groups.map((group, i) => {
                         return (
-                            <div className="groups-cards cards">
-                                <div>IMAGE GOES HERE</div>
-                                <div>
-                                    <h4><Link to={`/groups/${group.id}`} key={i}>{group.name}</Link></h4>
-                                    <div>{group.about}</div>
-                                    <div>Type: {group.private ? `Private` : `Public`}</div>
-                                    <div>State: {group.state}</div>
-                                    <div>City: {group.city}</div>
-                                    <div>Number of members: {group.numMembers}</div>
+                            <div className="groups-card container" onClick={() => history.push(`/groups/${group.id}`)} key={i}>
+                                <div className="groups-card image-container">IMAGE GOES HERE</div>
+                                <div className="groups-card info-container">
+                                    <h3 className="groups-card title">{group.name}</h3>
+                                    <div className="groups-card location">{group.city.toUpperCase()}, {group.state}</div>
+                                    <div className="groups-card about">{group.about}</div>
+                                    <div className="groups-card members">{`${group.numMembers} ${group.numMembers === 1 ? 'member' : 'members'} • ${group.private ? `Private` : `Public`}`}</div>
                                 </div>
                             </div>
                         )
                     })
                 )}
-            </div>
+            {/* </div> */}
         </div>
     )
 }

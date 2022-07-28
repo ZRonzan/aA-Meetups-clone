@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useHistory, useParams } from "react-router-dom";
 import * as sessionEvents from "../../../store/Events"
 import "./EventsCards.css"
 
 export default function EventsCard() {
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const { groupId } = useParams()
 
@@ -30,9 +31,12 @@ export default function EventsCard() {
     // }
 
     return (
-        <div>
-            <h2>EVENTS:</h2>
-            <div className="events-cards container">
+        <div className="events-cards-container">
+            {/* <div className="event-cardlist-container"> */}
+                {/* <div className="all-events-groups-cards-toggle-container">
+                    <h2 className={`all-events-groups-cards-toggle active`}>Events</h2>
+                    <h2 className={`all-events-groups-cards-toggle inactive`} onClick={() => history.push("/groups")}>Groups</h2>
+                </div> */}
                 {isLoaded && (
                     events.map((event, i) => {
 
@@ -46,22 +50,23 @@ export default function EventsCard() {
 
                             return `${date} ${hours > 12 ? 24 - hours : hours}:${minutes < 10 ? `0${minutes}` : minutes}${hours >= 12 ? `PM` : `AM`} ${timeZone}`
                         }
-
                         return (
-                            <div className="events-card-card-container">
-                                <div>preview image goes here</div>
-                                <div className={`events-cards cards ${groupId ? "right" : "left"}`} key={i}>
-                                    <div>{startDateString()}</div>
-                                    <h4><NavLink to={`/events/${event.id}`} >{event.name}</NavLink></h4>
-                                    <div><i className="fa-solid fa-location-dot"></i> {event.Venue ? `${event.Venue.city},` : "No Venue"} {`${event.Venue ? event.Venue.state : ""}`}</div>
-                                    <div>{event.numAttending} {event.numAttending === 1 ? "attendee" : "attendees"}</div>
+                            <div className="events-card container" onClick={() => history.push(`/events/${event.id}`)} key={i}>
+                                <div className="events-card image-container">preview image goes here</div>
+                                <div className="events-card info-container" >
+                                    <div className="events-card start-date">{startDateString()}</div>
+                                    <h3 className="events-card title">{event.name}</h3>
+                                    <div className="events-card location">{`${event.Group.name} • ${event.Group.city}, ${event.Group.state}`}</div>
+
+                                    {/* <div><i className="fa-solid fa-location-dot"></i> {event.Venue ? `${event.Venue.city},` : "No Venue"} {`${event.Venue ? event.Venue.state : ""}`}</div> */}
+                                    <div className="groups-card members">{event.numAttending} {event.numAttending === 1 ? "attendee" : "attendees"}</div>
                                     {/* <div><button value={event.id}>Attend (NEED TO IMPLEMENT LATER FOR ATTENDEES FEATURE)</button></div> */}
                                 </div>
                             </div>
                         )
                     })
                 )}
-            </div>
+            {/* </div> */}
         </div>
     )
 }

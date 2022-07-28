@@ -34,10 +34,7 @@ export default function UserSignUpPage() {
 
         let res = await dispatch(userSignUp(user));
         if (!res.message) {
-            setResponse("")
             history.push("/")
-            setPassword("");
-            setEmail("");
         } else {
             setResponse(res)
         }
@@ -50,8 +47,10 @@ export default function UserSignUpPage() {
                 onSubmit={handleSubmit}
                 className="signup-form"
             >
+                <h2>SIGN UP</h2>
                 <label className="signup-form">First Name:
                     <input
+                        className="signup-form"
                         onChange={e => setFirstName(e.target.value)}
                         value={firstName}
                     >
@@ -59,6 +58,7 @@ export default function UserSignUpPage() {
                 </label>
                 <label className="signup-form">Last Name:
                     <input
+                        className="signup-form"
                         onChange={e => setLastName(e.target.value)}
                         value={lastName}
                     >
@@ -66,6 +66,7 @@ export default function UserSignUpPage() {
                 </label>
                 <label className="signup-form">Email:
                     <input
+                        className="signup-form"
                         onChange={e => setEmail(e.target.value)}
                         value={email}
                     >
@@ -73,6 +74,7 @@ export default function UserSignUpPage() {
                 </label>
                 <label className="signup-form">Password:
                     <input
+                        className="signup-form"
                         type="password"
                         onChange={e => setPassword(e.target.value)}
                         value={password}
@@ -81,6 +83,7 @@ export default function UserSignUpPage() {
                 </label>
                 <label className="signup-form">Password Confirmation:
                     <input
+                        className="signup-form"
                         type="password"
                         onChange={e => setPasswordConfirmation(e.target.value)}
                         value={passwordConfirmation}
@@ -93,31 +96,31 @@ export default function UserSignUpPage() {
                     )}
                 </div>
                 <button disabled={password !== passwordConfirmation} className="signup-form">Sign Up</button>
+                {response && (
+                    <>
+                        {response.message === "Validation error" && (
+                            <>
+                                <ul className="signup-form">
+                                    <h3>{response.message}</h3>
+                                    {response.errors && (
+                                        response.errors.map((message, i) => {
+                                            return (<li key={i}>{Object.values(message)}</li>)
+                                        })
+                                    )}
+                                </ul>
+                            </>
+                        )}
+                        {response.message === "User already exists" && (
+                            <>
+                                <h4>{response.message}</h4>
+                                <ul className="signup-form">
+                                    <li>{Object.values(response.errors.email)}</li>
+                                </ul>
+                            </>
+                        )}
+                    </>
+                )}
             </form>
-            {response && (
-                <>
-                    {response.message === "Validation error" && (
-                        <>
-                            <h4>{response.message}</h4>
-                            <ul className="signup-form">
-                                {response.errors && (
-                                    response.errors.map((message, i) => {
-                                        return (<li key={i}>{Object.values(message)}</li>)
-                                    })
-                                )}
-                            </ul>
-                        </>
-                    )}
-                    {response.message === "User already exists" && (
-                        <>
-                            <h4>{response.message}</h4>
-                            <ul className="signup-form">
-                                <li>{Object.values(response.errors.email)}</li>
-                            </ul>
-                        </>
-                    )}
-                </>
-            )}
         </>
     )
 }

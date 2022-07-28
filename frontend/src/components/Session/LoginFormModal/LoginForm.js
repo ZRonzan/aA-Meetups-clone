@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import * as sessionActions from "../../../store/session";
 import { useDispatch } from "react-redux";
 import "./ModalLoginForm.css"
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
-function LoginForm() {
+function LoginForm({setShowModal}) {
 
   const history = useHistory()
   const dispatch = useDispatch();
@@ -34,40 +34,52 @@ function LoginForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="modal-login-form">
-      <h2>LOG IN</h2>
-      <label className="modal-login-form">
-        Email:
-        <input
-          type="text"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-      </label>
-      <label className="modal-login-form">
-        Password:
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </label>
-      <button type="submit" className="modal-login-form">Log In</button>
-      {response && (
-        <>
-          <h4>{response.message}</h4>
-          {/* {!!response.errors && (
+    <div className="modal-login-form-container">
+      <form onSubmit={handleSubmit} className="modal-login-form">
+        <div className="modal-login-form-cross" onClick={() => setShowModal(false)}>
+          <i className="fa-solid fa-xmark"></i>
+        </div>
+        <div className="modal-login-form">
+          <h2>Log in</h2>
+          <div>
+            Not a member yet? <span><Link className="modal-login-form-signup-link" to="/sign-up" onClick={() => setShowModal(false)}>Sign up</Link></span>
+          </div>
+        </div>
+        <label className="modal-login-form">
+          Email
+          <input
+            className="modal-login-form"
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </label>
+        <label className="modal-login-form">
+          Password
+          <input
+            className="modal-login-form"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </label>
+        <button type="submit" className="modal-login-form">Log In</button>
+        {response && (
+          <>
+            <div className="modal-login-error" >Your email or password was entered incorrectly</div>
+            {/* {!!response.errors && (
             <ul className="login-form">
               {response.errors.map((message, i) => {
                 return (<li key={i}>{Object.keys(message)}: {Object.values(message)}</li>)
               })}
             </ul>
           )} */}
-        </>
-      )}
-    </form>
+          </>
+        )}
+      </form>
+    </div>
   );
 }
 

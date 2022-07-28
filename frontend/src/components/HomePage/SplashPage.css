@@ -1,0 +1,76 @@
+
+.splash-page-intro-container {
+    display: flex;
+    justify-content: center;
+    padding: 2% 0%;
+    margin-bottom: 3%;
+}
+
+.splash-page-intro-image-container {
+    display:flex;
+    justify-content: center;
+    width: 70%;
+}
+
+.splash-page-title-and-intro-container {
+    min-width: 300px;
+}
+
+.splash-page-intro-image {
+    width: 50%;
+    max-width: 600px;
+}
+
+.splash-page-beneath-intro-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.splash-page-how-it-works-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+    max-width: 1920px;
+
+}
+
+.splash-page-join-find-start-container {
+    width: 70%;
+    min-width: 720px;
+    max-width: 1920px;
+    display: flex;
+    justify-content: space-around;
+    margin: 5% 0%
+}
+
+.splash-page-join-find-start-card {
+    width: 20%;
+    height: 300px
+}
+
+.splash-page-card-image {
+    height: 50%
+}
+
+.splash-page-join-button-container {
+    display: flex;
+    justify-content: center;
+}
+
+.splash-page-join-button {
+    display:flex;
+    padding: 10px 10px;
+    border-radius: 7px;
+    color: white;
+    background-color: rgb(0,130,148);
+    height: 20px;
+    width: fit-content;
+    margin: 2% 0%
+}
+
+.splash-page-join-button:hover {
+    cursor: pointer;
+    background-color: rgb(0, 96, 109);
+}

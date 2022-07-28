@@ -1,6 +1,25 @@
+.demo-user-login-button {
+    font-weight: bold;
+}
+
+.demo-user-login-button:hover {
+    cursor: pointer;
+    color: rgb(0, 152, 171)
+}
+
 .navigation-main-container {
     display: flex;
     justify-content: space-between;
+    border-bottom: 1px solid rgb(230, 230, 230);
+    height: 55px;
+}
+
+.navigation-navlink {
+    text-decoration: none;
+}
+
+.navigation-navlink:visited {
+    text-decoration: none;
 }
 
 .navigation-left {
@@ -13,10 +32,122 @@
     display: flex;
     justify-content: right;
     align-items: center;
+    width: 50%
+}
+
+.navigation-right-profile {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+.navigation-right-sessionlinks-container.logged-in {
+    position: relative;
+}
+
+.navigation-right-sessionlinks-container.logged-out {
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+    width: 100%
+}
+
+.navigation-right-profile-circle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(254, 193, 50);
+    padding: 10px;
+    width: 25px;
+    height: 20px;
+    border: 1px solid black;
+    border-radius: 30px;
+    margin-left: 5%
+}
+
+.navigation-right-profile-circle:hover {
+    cursor: pointer;
+}
+
+.navigation-right-profile-chevron {
+    margin-left: 5%;
+    color: black;
+}
+
+.navigation-right-profile-chevron:hover {
+    cursor: pointer;
+    color: rgb(0, 152, 171);
+}
+
+.navigation-start-a-new-group {
+    background-color: rgb(0, 130, 148);
+    padding: 10px 10px;
+    border-radius: 7px;
+}
+
+.navigation-start-a-new-group:hover {
+    background-color: rgb(0, 96, 109);
+    padding: 10px 10px;
+    border-radius: 7px;
+}
+
+.new-group {
+    color: white;
 }
 
 .navigation-right-sessionlinks {
     display: flex;
-    justify-content: right;
-    align-items: center;
+    flex-direction: column;
+    align-items: start;
+    padding: 20%;
+    position: absolute;
+    background-color: white;
+    border: 1px solid rgb(215, 215, 215);
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 10%);
+    min-width: max-content;
+    top: 110%;
+    left: -100%;
+}
+
+.navigation-right-sessionlinks-link {
+    text-decoration: none;
+    width: 100%;
+    color: rgb(117, 117, 126);
+}
+
+.navigation-right-sessionlinks-link.your-events {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 2%;
+    margin-bottom: 2%;
+    width: 100%;
+    border-bottom: 1px solid rgb(219, 219, 219);
+}
+
+.navigation-right-sessionlinks-link:hover,
+.log-out:hover {
+    color: rgb(95, 95, 95);
+    font-weight: bolder;
+    cursor: pointer;
+}
+
+.navigation-right-sessionlinks-current-user {
+    display: flex;
+    color: rgb(117, 117, 126);
+    flex-direction: column;
+    padding-bottom: 2%;
+    margin-bottom: 2%;
+    width: 100%;
+    border-bottom: 1px solid rgb(219, 219, 219);
+}
+
+.navigation-log-in-and-sign-up-buttons {
+    font-weight: bold;
+    margin-left: 20px
+}
+
+.navigation-log-in-and-sign-up-buttons:hover {
+    cursor: pointer;
+    color: rgb(0, 152, 171);
 }

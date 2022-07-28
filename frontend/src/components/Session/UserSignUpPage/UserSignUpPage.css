@@ -1,41 +1,51 @@
 
 
-ul.signup-form {
+.page-signup-form-container {
+    width: 100%;
+    border-radius: 20px;
+}
+
+.page-signup-form-cross:hover {
+    cursor: pointer;
+    color: rgb(0,152,171);
+}
+
+div.page-signup-form {
     display: flex;
     flex-direction: column;
-    width: fit-content;
-    padding: 10px 30px;
-    border: 1px solid black;
-    border-radius: 6px;
-    background-color: rgb(209, 76, 76);
+    align-items: center;
+    margin-bottom: 10%;
+}
+
+form.page-signup-form {
+    display: flex;
+    flex-direction: column;
+}
+
+input.page-signup-form {
+    height: 30px;
+    border: 1px solid rgb(210, 210, 210);
+    border-radius: 5px;
+}
+
+ul.page-signup-form {
+}
+
+
+label.page-signup-form {
+    display: flex;
+    flex-direction: column;
+}
+
+button.page-signup-form {
+    background-color: rgb(246,88,88);
     color: white;
+    font-weight: bold;
+    padding: 4%;
+    border: none;
+    border-radius: 5px;
 }
 
-form.signup-form {
-    display: flex;
-    flex-direction: column;
-    width: fit-content;
-    padding: 10px 30px;
-    border: 1px solid black;
-    border-radius: 6px;
-    background-color: rgb(222, 222, 222);
-    color: rgb(213, 68, 68);
-}
-
-label.signup-form {
-    display: flex;
-    flex-direction: column;
-    width: fit-content;
-    padding: 10px 0px;
-    border-radius: 6px;
-    background-color: rgb(222, 222, 222);
-    color: rgb(213, 68, 68);
-}
-
-button.signup-form {
-    padding: 4px 0px;
-    border: 1px solid rgb(151, 55, 55);
-    border-radius: 6px;
-    background-color: rgb(255, 255, 255);
-    color: rgb(213, 68, 68);
+button.page-signup-form:hover {
+    background-color: rgb(245, 132, 132);
 }
