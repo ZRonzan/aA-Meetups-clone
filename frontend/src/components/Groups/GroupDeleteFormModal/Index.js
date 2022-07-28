@@ -1,0 +1,60 @@
+// frontend/src/components/LoginFormModal/index.js
+import React, { useState } from 'react';
+import { Modal } from '../../../context/Modal';
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import * as sessionGroups from "../../../store/Groups"
+
+function GroupDeleteFormModal({ group, groupId }) {
+  const [showGroupModalDelete, setShowGroupModalDelete] = useState(false);
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const [isDisabled, setIsDisabled] = useState(false)
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+    dispatch(sessionGroups.deleteAGroupThunk(group.id))
+    .then((res) => {
+      window.alert(`${res.message}`)
+      history.push(`/`)
+    })
+  }
+
+  return (
+    <>
+      <button onClick={() => setShowGroupModalDelete(true)}>Delete this group</button>
+      {showGroupModalDelete && (
+        <>
+          <Modal onClose={() => setShowGroupModalDelete(false)}>
+            <div><i className="fa-solid fa-xmark" onClick={() => setShowGroupModalDelete(false)}></i></div>
+            <h3>Are you sure?</h3>
+            <p>This action is irreversible. Please confirm this decision below:</p>
+            <div>
+              <form
+                onSubmit={handleDelete}
+                className="delete-form-confirmation"
+              >
+                <label>
+                  <input
+                    type="checkbox"
+                    onChange={() => setIsDisabled(!isDisabled)}
+                    checked={isDisabled}
+                  >
+                  </input>
+                  I confirm that I would like to delete this group
+                </label>
+                  <button
+                    disabled={!isDisabled}
+                  >
+                    Delete this group
+                  </button>
+              </form>
+            </div>
+          </Modal>
+        </>
+      )}
+    </>
+  );
+}
+
+export default GroupDeleteFormModal;

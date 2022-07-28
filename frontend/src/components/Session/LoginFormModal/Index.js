@@ -1,6 +1,6 @@
 // frontend/src/components/LoginFormModal/index.js
 import React, { useState } from 'react';
-import { Modal } from '../../context/Modal';
+import { Modal } from '../../../context/Modal';
 import LoginForm from './LoginForm';
 
 function LoginFormModal() {
@@ -8,11 +8,11 @@ function LoginFormModal() {
 
   return (
     <>
-      <button onClick={() => setShowModal(true)}><i className="fa-solid fa-arrow-right-to-bracket"> Log In</i></button>
+      <div className="navigation-log-in-and-sign-up-buttons" onClick={() => setShowModal(true)}>Log In</div>
       {showModal && (
         <>
         <Modal onClose={() => setShowModal(false)}>
-          <LoginForm />
+          <LoginForm setShowModal={setShowModal}/>
         </Modal>
         </>
       )}

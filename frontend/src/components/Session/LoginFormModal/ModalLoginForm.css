@@ -1,0 +1,73 @@
+
+
+.modal-form-container {
+    border-radius: 1rem;
+    width: 45%;
+    max-width: 300px;
+    padding:50px 50px 50px 50px ;
+    min-height: min-content;
+}
+
+.modal-login-form-container {
+    width: 100%;
+    border-radius: 20px;
+}
+
+.modal-login-form-signup-link {
+    text-decoration: none;
+    color: rgb(0,152,171);
+}
+
+.modal-login-form-cross {
+    color: rgb(117,117,126);
+    position: relative;
+    top: -25px;
+    left: 310px;
+}
+
+.modal-login-form-cross:hover {
+    cursor: pointer;
+    color: rgb(0,152,171);
+}
+
+div.modal-login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10%;
+}
+
+form.modal-login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+input.modal-login-form {
+    height: 30px;
+    border: 1px solid rgb(210, 210, 210);
+    border-radius: 5px;
+    margin: 5% 0%;
+}
+
+.modal-login-error {
+    padding: 3%;
+}
+
+
+label.modal-login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+button.modal-login-form {
+    background-color: rgb(246,88,88);
+    color: white;
+    font-weight: bold;
+    padding: 4%;
+    border: none;
+    border-radius: 5px;
+}
+
+button.modal-login-form:hover {
+    background-color: rgb(245, 132, 132);
+}

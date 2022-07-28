@@ -1,10 +1,10 @@
 import { useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useHistory } from "react-router-dom"
-import { userSignUp } from "../../store/session"
+import { userSignUp } from "../../../store/session"
 import "./UserSignUpFormModal.css"
 
-export default function UserSignUpPage() {
+export default function UserSignUpPage({setShowModal}) {
     const dispatch = useDispatch()
     const history = useHistory()
 
@@ -34,10 +34,7 @@ export default function UserSignUpPage() {
 
         let res = await dispatch(userSignUp(user));
         if (!res.message) {
-            setResponse("")
             history.push("/")
-            setPassword("");
-            setEmail("");
         } else {
             setResponse(res)
         }
@@ -46,13 +43,20 @@ export default function UserSignUpPage() {
 
     return (
         <>
+        <div className="signup-form-container">
             <form
                 onSubmit={handleSubmit}
                 className="signup-form"
             >
-                <h2>SIGN UP</h2>
+                <div className="signup-form-cross signup" onClick={() => setShowModal(false)}>
+                    <i className="fa-solid fa-xmark"></i>
+                </div>
+                <div className="signup-form">
+                    <h2>Sign up</h2>
+                </div>
                 <label className="signup-form">First Name:
                     <input
+                        className="signup-form"
                         onChange={e => setFirstName(e.target.value)}
                         value={firstName}
                     >
@@ -60,6 +64,7 @@ export default function UserSignUpPage() {
                 </label>
                 <label className="signup-form">Last Name:
                     <input
+                        className="signup-form"
                         onChange={e => setLastName(e.target.value)}
                         value={lastName}
                     >
@@ -67,6 +72,7 @@ export default function UserSignUpPage() {
                 </label>
                 <label className="signup-form">Email:
                     <input
+                        className="signup-form"
                         onChange={e => setEmail(e.target.value)}
                         value={email}
                     >
@@ -74,6 +80,7 @@ export default function UserSignUpPage() {
                 </label>
                 <label className="signup-form">Password:
                     <input
+                        className="signup-form"
                         type="password"
                         onChange={e => setPassword(e.target.value)}
                         value={password}
@@ -82,6 +89,7 @@ export default function UserSignUpPage() {
                 </label>
                 <label className="signup-form">Password Confirmation:
                     <input
+                        className="signup-form"
                         type="password"
                         onChange={e => setPasswordConfirmation(e.target.value)}
                         value={passwordConfirmation}
@@ -119,6 +127,7 @@ export default function UserSignUpPage() {
                     </>
                 )}
             </form>
+        </div>
         </>
     )
 }

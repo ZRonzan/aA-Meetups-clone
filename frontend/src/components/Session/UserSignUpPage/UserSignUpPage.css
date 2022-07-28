@@ -1,0 +1,51 @@
+
+
+.page-signup-form-container {
+    width: 100%;
+    border-radius: 20px;
+}
+
+.page-signup-form-cross:hover {
+    cursor: pointer;
+    color: rgb(0,152,171);
+}
+
+div.page-signup-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10%;
+}
+
+form.page-signup-form {
+    display: flex;
+    flex-direction: column;
+}
+
+input.page-signup-form {
+    height: 30px;
+    border: 1px solid rgb(210, 210, 210);
+    border-radius: 5px;
+}
+
+ul.page-signup-form {
+}
+
+
+label.page-signup-form {
+    display: flex;
+    flex-direction: column;
+}
+
+button.page-signup-form {
+    background-color: rgb(246,88,88);
+    color: white;
+    font-weight: bold;
+    padding: 4%;
+    border: none;
+    border-radius: 5px;
+}
+
+button.page-signup-form:hover {
+    background-color: rgb(245, 132, 132);
+}

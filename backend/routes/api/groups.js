@@ -18,12 +18,12 @@ const router = express.Router();
 //middleware for phase 05 to validate keys from the req.body
 const validateGroups = [
     check('name')
-        .exists({ checkFalsy: true })
-        .notEmpty()
         .isLength({ max: 60 })
         .withMessage('Name must be 60 characters or less'),
+    check('name')
+        .isLength({min: 1})
+        .withMessage('Please enter a Name for the group'),
     check('about')
-        .exists({ checkFalsy: true })
         .isLength({ min: 50 })
         .withMessage('About must be 50 characters or more'),
     check('type')
@@ -63,12 +63,22 @@ const validateVenues = [
 ];
 
 const validateEvents = [
-    check('venueCheck')
-        .exists({ checkFalsy: true })
+    check('venueId')
+        .custom( async (val) => {
+            if (val) {
+                const foundVenue = await Venue.findByPk(val);
+                if (!foundVenue) {
+                    return false;
+                } else {
+                    return true
+                }
+            } else {
+                return true;
+            }
+        })
         .withMessage("Venue does not exist"),
     check('name')
         .isLength({ min: 5 })
-        .exists({ checkFalsy: true })
         .withMessage("Name must be at least 5 characters"),
     check('type')
         .exists({ checkFalsy: true })
@@ -76,7 +86,7 @@ const validateEvents = [
         .withMessage("Type must be Online or In Person"),
     check('capacity')
         .isInt({ min: 1 })
-        .withMessage("Capacity must be an integer"),
+        .withMessage("Capacity must be an integer greater than 0"),
     check('price')
         .isCurrency({ allow_negatives: false, digits_after_decimal: [0, 1, 2] })
         .withMessage("Price is invalid"),
@@ -112,7 +122,7 @@ router.get(
             foundMembers = await User.findAll({
                 include: {
                     model: Member,
-                    as:'Membership',
+                    as: 'Membership',
                     attributes: ['status'],
                     where: {
                         groupId: req.params.groupId
@@ -123,7 +133,7 @@ router.get(
             foundMembers = await User.findAll({
                 include: {
                     model: Member,
-                    as:'Membership',
+                    as: 'Membership',
                     attributes: ['status'],
                     where: {
                         groupId: req.params.groupId,
@@ -134,6 +144,29 @@ router.get(
         }
 
         res.json(foundMembers)
+    }
+);
+
+// get all venues associated with a group
+router.get(
+    '/:groupId/venues',
+    async (req, res, next) => {
+
+        const foundGroup = await Group.findByPk(req.params.groupId);
+
+        if (!foundGroup) {
+            const err = new Error("Group couldn't be found");
+            err.status = 404;
+            return next(err);
+        }
+
+        const foundVenues = await Venue.findAll({
+            where: {
+                groupId: req.params.groupId
+            }
+        });
+
+        res.json({ Venues: foundVenues })
     }
 );
 
@@ -188,7 +221,7 @@ router.get(
             updatedfoundEvents.push(newEvent)
         }
 
-        res.json({Events: updatedfoundEvents})
+        res.json({ Events: updatedfoundEvents })
     }
 );
 
@@ -229,21 +262,21 @@ router.post(
 router.post(
     '/:groupId/events',
     requireAuth,
-    async (req, res, next) => {
-        if (req.body.venueId) {
-            const foundVenue = await Venue.findByPk(req.body.venueId);
-            if (!foundVenue) {
-                let err = new Error("Venue couldn't be found")
-                err.status = 404
-                return next(err);
-            } else {
-                req.body.venueCheck = true;
-                next();
-            }
-        } else {
-            next();
-        }
-    },
+    // async (req, res, next) => {
+    //     if (req.body.venueId) {
+    //         const foundVenue = await Venue.findByPk(req.body.venueId);
+    //         if (!foundVenue) {
+    //             let err = new Error("Venue couldn't be found")
+    //             err.status = 404
+    //             return next(err);
+    //         } else {
+    //             req.body.venueCheck = true;
+    //             next();
+    //         }
+    //     } else {
+    //         next();
+    //     }
+    // },
     validateEvents,
     async (req, res, next) => {
         const foundGroup = await Group.findByPk(req.params.groupId);
