@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     about: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(1000),
       allowNull: false,
       validate: {
         minlength50(val) {

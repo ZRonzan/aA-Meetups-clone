@@ -70,7 +70,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     imageUrl: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(1000),
       allowNull: false
     },
   }, {
