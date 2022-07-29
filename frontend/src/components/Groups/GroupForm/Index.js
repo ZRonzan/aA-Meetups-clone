@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { Redirect, useHistory, useParams, Link } from "react-router-dom"
+import { Redirect, useHistory, useParams, Link, NavLink } from "react-router-dom"
 import { createAGroupThunk, editAGroupThunk } from "../../../store/Groups"
 import "./GroupForm.css"
 
@@ -241,7 +241,7 @@ const GroupForm = ({ group }) => {
                             placeholder="Please write at least 50 characters..."
                         >
                         </textarea>
-                        <div style={{visibility: `${50-about.length > 0? "visible" : "hidden"}`, fontWeight: "normal"}}> {50-about.length} characters remaining</div>
+                        <div style={{ visibility: `${50 - about.length > 0 ? "visible" : "hidden"}`, fontWeight: "normal" }}> {50 - about.length} characters remaining</div>
                     </label>
                     <div className="create-a-group-form-text">
                         <h2>Lastly, let others know what type of group this will be... </h2>
@@ -279,7 +279,9 @@ const GroupForm = ({ group }) => {
                         </select>
                     </label>
                     <button
-                        className="create-a-group-form" >Submit {group ? "edit" : "new group"}</button>
+                        className="create-a-group-form" >Submit {group ? "edit" : "new group"}
+                    </button>
+                    <NavLink className="create-a-group-form-go-home" to={`/`}>Actually, I've changed my mind. Take me home...</NavLink>
                 </form>
             </div>
         </div>

@@ -105,3 +105,17 @@ button.create-a-group-form {
 button.create-a-group-form:hover {
     background-color: rgb(245, 132, 132);
 }
+
+.create-a-group-form-go-home {
+    border: 1px solid rgb(0,152,171);
+    text-align: center;
+    padding:0.5rem;
+    margin-top: 1rem;
+    color: black;
+    text-decoration: none;
+}
+
+.create-a-group-form-go-home:hover {
+    color: rgb(0,152,171);
+    text-decoration: underline;
+}

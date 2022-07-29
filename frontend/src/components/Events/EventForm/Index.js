@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { useHistory, useParams, Link } from "react-router-dom"
+import { useHistory, useParams, Link, NavLink } from "react-router-dom"
 import * as sessionEvents from "../../../store/Events"
 import * as sessionGroups from "../../../store/Groups"
 import "./EventForm.css"
@@ -140,6 +140,7 @@ const EventForm = ({ setShowModalEvent }) => {
     <>
       <div className="create-an-event-form-main-body-container">
         <div className="create-an-event-form-container">
+          <NavLink to={`/groups/${groupId}/events`}>Go back</NavLink>
           <h1 className="create-an-event-form-title">{eventId ? "Edit your event" : "Create your event"}</h1>
           <div className="create-an-event-form-errors">
             {!!error.errors && (error.errors.length > 0 && (

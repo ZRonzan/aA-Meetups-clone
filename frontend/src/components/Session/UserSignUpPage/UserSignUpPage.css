@@ -6,7 +6,8 @@
 
 
 .signup-page-container {
-    width: 70%;
+    width: 60%;
+    max-width: 900px;
     border-radius: 20px;
 }
 
@@ -37,6 +38,10 @@ input.signup-page {
     border: 1px solid rgb(210, 210, 210);
     border-radius: 5px;
     margin: 5% 0%;
+}
+
+input.signup-page:focus {
+    outline: 1px solid rgb(0,152,171);
 }
 
 /* .signup-error {
