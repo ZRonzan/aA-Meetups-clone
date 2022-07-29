@@ -11,7 +11,6 @@ import EventsCard from "./components/Events/EventsCards/Index";
 import HomePage from "./components/HomePage";
 import GroupForm from "./components/Groups/GroupForm/Index";
 import UserGroupsCards from "./components/Groups/UserGroups/Index";
-import UserEventsCards from "./components/Events/UserEvents/Index";
 import EventDetails from "./components/Events/EventsDetails/Index";
 import EventForm from "./components/Events/EventForm/Index";
 import Footer from "./components/Footer/Index";
@@ -42,9 +41,6 @@ function App() {
           </Route>
           <Route exact path="/session/groups">
             <UserGroupsCards />
-          </Route>
-          <Route exact path="/session/events">
-            <UserEventsCards />
           </Route>
           <Route exact path="/groups">
             <div className="events-groups-toggle-main-container">

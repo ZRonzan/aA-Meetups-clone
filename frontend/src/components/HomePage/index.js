@@ -17,8 +17,8 @@ const HomePage = () => {
 
     return (
         <>
-            {!!!user && (
-                <>
+            {/* {!!!user && (
+                <> */}
                     <div className="splash-page-intro-container">
                         <div className="splash-page-intro-image-container">
                             <div className="splash-page-title-and-intro-container">
@@ -62,7 +62,7 @@ const HomePage = () => {
                                 <div className="splash-page-card-image">
                                     <img src={startGroupImg} alt="Group of people image"></img>
                                 </div>
-                                <Link to="/login"><h3>Start a group</h3></Link>
+                                <Link to="/forms/group-form"><h3>Start a group</h3></Link>
                                 <p>
                                     You don’t have to be an expert to gather people together and explore shared interests.
                                 </p>
@@ -79,22 +79,12 @@ const HomePage = () => {
                             </>
                         )}
                     </div>
-                </>
-            )}
-            {!!user && (
+                {/* </>
+            )} */}
+            {/* {!!user && (
                 <>
                     <div style={{ visibility: `${!!user ? "visible" : "hidden"}` }}>
-                        <div>
-                            <span>Your next event </span>
-                            <Link to="/session/events">See all your events</Link>
-                            <div>
-                                <i className="fa-solid fa-ticket"></i>
-                                <div>
-                                    You have not registered for any events
-                                    Events you have registered for will appear here.
-                                </div>
-                            </div>
-                        </div>
+
                         <div>
                             <span>Your groups </span>
                             <Link to="/session/groups">See all your groups</Link>
@@ -108,10 +98,11 @@ const HomePage = () => {
                         </div>
                     </div>
                     <div>
+                        <div>Here are </div>
                         <EventsCard />
                     </div>
                 </>
-            )}
+            )} */}
         </>
     )
 }

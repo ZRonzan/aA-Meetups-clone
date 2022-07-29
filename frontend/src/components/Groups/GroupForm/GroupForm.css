@@ -1,0 +1,107 @@
+
+.create-a-group-form-main-body-container {
+    display: flex;
+    justify-content: center;
+    background-color: rgb(247, 247, 247);
+}
+
+.create-a-group-form-container {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 600px;
+    max-width: 1200px;
+    width: 70%;
+}
+
+h1.create-a-group-form-title {
+    color: rgb(0,152,171);
+    padding-bottom: 3%;
+}
+
+div.create-a-group-form-errors {
+    background-color: rgb(246,88,88);
+    border-radius: 10px;
+    color:white;
+    min-width: 600px;
+    max-width: 1200px;
+    width: 70%;
+}
+
+div.group-form-submit-errors {
+    margin-top: -5px;
+    padding: 0.3% 10%;
+}
+
+form.create-a-group-form {
+    border: 1px solid rgb(230,230,230);
+    border-radius: 10px;
+    padding: 5px 50px 50px 50px;
+    margin-top: 10px;
+    margin-bottom: 5%;
+    background-color: white;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 5%);
+}
+
+label.create-a-group-form {
+    display: flex;
+    flex-direction: column;
+}
+
+div.create-a-group-form-text {
+    padding-bottom: 3%;
+}
+
+input.create-a-group-form {
+    height: 30px;
+    border: 1px solid rgb(210, 210, 210);
+    border-radius: 5px;
+    margin: 5% 0%;
+}
+
+input.create-a-group-form:focus {
+    outline: 1px solid rgb(0,152,171);
+}
+
+textarea.create-a-group-form {
+    resize: none;
+    height: 200px;
+    border: 1px solid rgb(210, 210, 210);
+    border-radius: 5px;
+    margin: 5% 0%;
+}
+
+textarea.create-a-group-form:focus {
+    outline: 1px solid rgb(0,152,171);
+}
+
+select.create-a-group-form {
+    height: 30px;
+    border: 1px solid rgb(210, 210, 210);
+    border-radius: 5px;
+    margin: 5% 0%;
+}
+
+option.create-a-group-form {
+    height: 100px;
+    border: 1px solid rgb(210, 210, 210);
+    border-radius: 5px;
+    margin: 5% 0%;
+}
+
+select.create-a-group-form:focus {
+    outline: 1px solid rgb(0,152,171);
+}
+
+button.create-a-group-form {
+    background-color: rgb(246,88,88);
+    color: white;
+    font-weight: bold;
+    padding: 4%;
+    border: none;
+    border-radius: 5px;
+}
+
+button.create-a-group-form:hover {
+    background-color: rgb(245, 132, 132);
+}

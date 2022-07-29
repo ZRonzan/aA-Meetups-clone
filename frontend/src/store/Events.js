@@ -41,17 +41,6 @@ export const getAllEventsForGroupIdThunk = (groupId) => async (dispatch) => {
     }
 }
 
-export const getCurrentUserEventsThunk = () => async (dispatch) => {
-    const response = await csrfFetch("/api/session/events")
-
-    if (response.ok) {
-        const data = await response.json();
-
-        dispatch(getAllUserEvents(data.Events))
-        return data.Events;
-    }
-}
-
 export const getEventByIdThunk = (eventId) => async (dispatch) => {
     const response = await csrfFetch(`/api/events/${eventId}`)
 

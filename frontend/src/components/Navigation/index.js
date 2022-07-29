@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch} from 'react-redux';
 import ProfileButton from '../Session/ProfileButton';
 import LoginFormModal from '../Session/LoginFormModal/Index';
@@ -10,6 +10,7 @@ import './Navigation.css';
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);
   const dispatch = useDispatch();
+  const url = useLocation().pathname
 
   const logInDemoUser = () => {
     const demoUser = {
@@ -46,7 +47,7 @@ function Navigation({ isLoaded }) {
         </div>
       </div>
       <div className="navigation-right">
-        <div className="navigation-start-a-new-group"style={{ visibility: `${sessionUser ? "visible" : "hidden"}` }}>
+        <div className="navigation-start-a-new-group"style={{ visibility: `${(sessionUser && url !== "/forms/group-form") ? "visible" : "hidden"}` }}>
           <NavLink className="navigation-navlink new-group" to="/forms/group-form">Start a new group</NavLink>
         </div>
         <div className={`navigation-right-sessionlinks-container ${sessionUser? "logged-in" : "logged-out"}`}>

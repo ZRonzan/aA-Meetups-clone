@@ -116,10 +116,10 @@
     color: rgb(117, 117, 126);
 }
 
-.navigation-right-sessionlinks-link.your-events {
+.navigation-right-sessionlinks-link.your-groups {
     display: flex;
     flex-direction: column;
-    padding-bottom: 2%;
+    padding: 10% 0%;
     margin-bottom: 2%;
     width: 100%;
     border-bottom: 1px solid rgb(219, 219, 219);

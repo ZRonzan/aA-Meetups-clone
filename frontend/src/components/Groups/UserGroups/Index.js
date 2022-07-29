@@ -61,9 +61,6 @@ export default function UserGroupsCards() {
                             {organizedGroups.length === 0 && (
                                 <>
                                     <h2>You currently have not organized any groups. Why not create one?</h2>
-                                    <div className="navigation-start-a-new-group user-group-page" onClick={() => history.push("/forms/group-form")}>
-                                        Start a new group
-                                    </div>
                                 </>
                             )}
                         </div>

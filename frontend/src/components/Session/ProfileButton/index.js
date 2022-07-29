@@ -51,7 +51,6 @@ function ProfileButton({ user }) {
           <div className="navigation-right-sessionlinks">
             <div className="navigation-right-sessionlinks-current-user">{user.firstName} {user.lastName}</div>
               <NavLink className="navigation-right-sessionlinks-link your-groups" to="/session/groups">Your groups</NavLink>
-              <NavLink className="navigation-right-sessionlinks-link your-events" to="/session/events">Your events</NavLink>
             <div className="navigation-right-sessionlinks-link log-out" onClick={logout}>
               Log out
             </div>
