@@ -18,8 +18,6 @@ const HomePage = () => {
 
     return (
         <>
-            {/* {!!!user && (
-                <> */}
             <div className="splash-page-background-div">
                 <img className="splash-page-background" src={graffitiBG} alt="graffiti background"></img>
             </div>
@@ -83,30 +81,6 @@ const HomePage = () => {
                     </>
                 )}
             </div>)}
-            {/* </>
-            )} */}
-            {/* {!!user && (
-                <>
-                    <div style={{ visibility: `${!!user ? "visible" : "hidden"}` }}>
-
-                        <div>
-                            <span>Your groups </span>
-                            <Link to="/session/groups">See all your groups</Link>
-                            <div>
-                                <i className="fa-solid fa-user-group"></i>
-                                <div>
-                                    You have not Joined any groups
-                                </div>
-                                <Link to="/groups"> Dicover groups</Link>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div>Here are </div>
-                        <EventsCard />
-                    </div>
-                </>
-            )} */}
         </>
     )
 }

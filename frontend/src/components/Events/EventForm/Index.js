@@ -36,7 +36,6 @@ const EventForm = ({ setShowModalEvent }) => {
     if (eventId) {
       dispatch(sessionEvents.getEventByIdThunk(eventId))
         .then((res) => {
-          console.log(res)
           setVenueId(res.Venue ? res.Venue.id : "")
           setName(res.name)
           setType(res.type)
@@ -104,6 +103,7 @@ const EventForm = ({ setShowModalEvent }) => {
       if (!response.message) {
         history.push(`/events/${response.id}`);
       } else {
+        window.alert("There are errors in your form submission. Please correct issues outlined at the top of the page and resubmit")
         setError(response);
       }
     } else {
@@ -112,6 +112,7 @@ const EventForm = ({ setShowModalEvent }) => {
         setShowModalEvent(false)
         history.push(`/events/${response.id}`);
       } else {
+        window.alert("There are errors in your form submission. Please correct issues outlined at the top of the page and resubmit")
         setError(response);
       }
     }

@@ -107,107 +107,6 @@ function GroupEditForm({ group, setShowModal }) {
 
 
   return isLoaded && (
-    // <>
-    //   <h2>{group ? "Edit" : "Create"} Form</h2>
-    //   <form
-    //     onSubmit={handleSubmit}
-    //     style={{ display: "flex", flexDirection: "column", maxWidth: "500px" }}
-    //   >
-    //     <label>
-    //       Name:
-    //       <input
-    //         onChange={(e) => setName(e.target.value)}
-    //         value={name}
-    //       >
-    //       </input>
-    //     </label>
-    //     <label>
-    //       About:
-    //       <textarea
-    //         onChange={(e) => setAbout(e.target.value)}
-    //         value={about}
-    //       >
-    //       </textarea>
-    //     </label>
-    //     <label>
-    //       Type:
-    //       <select
-    //         type="select"
-    //         onChange={(e) => setType(e.target.value)}
-    //         value={type}
-    //       >
-    //         <option>In Person</option>
-    //         <option>Online</option>
-    //       </select>
-    //     </label>
-    //     <label>
-    //       Is this group private?:
-    //       <select
-    //         type="select"
-    //         onChange={(e) => setPrivacy(e.target.value)}
-    //         value={privacy}
-    //       >
-    //         <option value={true}>Yes</option>
-    //         <option value={false}>No</option>
-    //       </select>
-    //     </label>
-    //     <label>
-    //       State:
-    //       <select
-    //         onChange={(e) => {
-    //           if (e.target.value.length > 0) {
-    //             foundCities(allStates[e.target.value])
-    //           }
-    //           setState(e.target.value)
-    //         }}
-    //         value={state}
-    //       >
-    //         <option value={""}>Please select a state</option>
-    //         {statesAbbr.map((state, i) => {
-    //           return (
-    //             <option key={i} value={state}>
-    //               {state}
-    //             </option>
-    //           )
-    //         })}
-    //       </select>
-    //     </label>
-    //     <label>
-    //       City:
-    //       <select
-    //         onChange={(e) => setCity(e.target.value)}
-    //         value={city}
-    //         disabled={state.length === 0}
-    //       >
-    //         <option value={""} disabled={state.length > 0}>Please select a city</option>
-    //         {cities.map((city, i) => {
-    //           return (
-    //             <option key={i}>
-    //               {city}
-    //             </option>
-    //           )
-    //         })}
-    //       </select>
-    //     </label>
-    //     <button>Submit {group ? "edit" : "new group"}</button>
-    //   </form>
-    //   <div>
-    //     {!!error.errors && (error.errors.length > 0 && (
-    //       <>
-    //         <h4>{error.message}</h4>
-    //         <ul>
-    //           {error.errors.map((err, i) => {
-    //             return (
-    //               <li key={i}>
-    //                 {Object.keys(err)}: {Object.values(err)}
-    //               </li>
-    //             )
-    //           })}
-    //         </ul>
-    //       </>
-    //     ))}
-    //   </div>
-    // </>
     <>
       <div className="group-event-delete-form-cross modal-event"><i className="fa-solid fa-xmark" onClick={() => setShowModal(false)}></i></div>
 
@@ -225,7 +124,6 @@ function GroupEditForm({ group, setShowModal }) {
                     return (
                       <li
                         className="edit-a-group-form" key={i}>
-                        {/* {Object.keys(err)}: */}
                         {Object.values(err)}
                       </li>
                     )

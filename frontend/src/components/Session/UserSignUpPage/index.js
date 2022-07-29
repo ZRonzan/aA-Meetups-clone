@@ -41,6 +41,10 @@ export default function UserSignUpPage({ setShowModal }) {
 
     }
 
+    useEffect(() => {
+        setResponse("")
+    },[firstName,lastName,email,password,passwordConfirmation])
+
     return (
         <div className="signup-page-main-page-body">
             <div className="signup-page-container">

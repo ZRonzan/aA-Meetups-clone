@@ -22,14 +22,6 @@ export default function EventsCard() {
         };
     }, [dispatch]);
 
-
-    //TO BE IMPLEMENTED AS PART OF THE ATTENDEES FEATURE
-    // const handleJoin = (e) => {
-    //     e.preventDefault();
-    //     //console.log(e.target.value)
-    //     dispatch(sessionEvents.joinEventThunk(e.target.value))
-    // }
-
     return (
         <div className="events-cards-container">
 
@@ -46,7 +38,6 @@ export default function EventsCard() {
 
                             return `${date} ${hours > 12 ? 24 - hours : hours}:${minutes < 10 ? `0${minutes}` : minutes}${hours >= 12 ? `PM` : `AM`} ${timeZone}`
                         }
-                        console.log(event)
                         return (
                             <div className={`events-card container ${groupId? "details": ""}`} onClick={() => history.push(`/events/${event.id}`)} key={i}>
                                 <img
@@ -57,10 +48,7 @@ export default function EventsCard() {
                                     <div className="events-card start-date">{startDateString()}</div>
                                     <h3 className="events-card title">{event.name}</h3>
                                     <div className="events-card location">{`${event.Group.name} • ${event.Group.city}, ${event.Group.state}`}</div>
-
-                                    {/* <div><i className="fa-solid fa-location-dot"></i> {event.Venue ? `${event.Venue.city},` : "No Venue"} {`${event.Venue ? event.Venue.state : ""}`}</div> */}
                                     <div className="groups-card members">{event.numAttending} {event.numAttending === 1 ? "attendee" : "attendees"}</div>
-                                    {/* <div><button value={event.id}>Attend (NEED TO IMPLEMENT LATER FOR ATTENDEES FEATURE)</button></div> */}
                                 </div>
                             </div>
                         )

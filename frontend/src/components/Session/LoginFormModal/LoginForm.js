@@ -51,7 +51,10 @@ function LoginForm({setShowModal}) {
             className="modal-login-form"
             type="text"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setResponse("")
+              setEmail(e.target.value)
+            }}
             required
           />
         </label>
@@ -61,7 +64,10 @@ function LoginForm({setShowModal}) {
             className="modal-login-form"
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setResponse("")
+              setPassword(e.target.value)
+            }}
             required
           />
         </label>
@@ -69,13 +75,6 @@ function LoginForm({setShowModal}) {
         {response && (
           <>
             <div className="modal-login-error" >Your email or password was entered incorrectly</div>
-            {/* {!!response.errors && (
-            <ul className="login-form">
-              {response.errors.map((message, i) => {
-                return (<li key={i}>{Object.keys(message)}: {Object.values(message)}</li>)
-              })}
-            </ul>
-          )} */}
           </>
         )}
       </form>

@@ -45,7 +45,6 @@ export default function UserGroupsCards() {
                         <div className="groups-cards container">
                             {organizedGroups.length > 0 && (
                                 organizedGroups.map((group, i) => {
-                                    console.log(group)
                                     return (
                                         <div className="groups-card container" onClick={() => history.push(`/groups/${group.id}`)} key={i}>
                                             <img

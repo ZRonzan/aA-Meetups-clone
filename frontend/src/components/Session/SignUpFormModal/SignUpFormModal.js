@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useHistory } from "react-router-dom"
 import { userSignUp } from "../../../store/session"
@@ -40,6 +40,10 @@ export default function UserSignUpPage({setShowModal}) {
         }
 
     }
+
+    useEffect(() => {
+        setResponse("")
+    },[firstName,lastName,email,password,passwordConfirmation])
 
     return (
         <>

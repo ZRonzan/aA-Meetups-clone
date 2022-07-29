@@ -79,17 +79,12 @@ export default function EventDetails() {
                             <div className="event-details-time">
                                 <i className="fa-solid fa-clock"></i>
                                 <time>{startDate} to {endDate}</time>
-                                {/* <div>{group.name}</div>
-                                <NavLink to={`/groups/${group.id}/events`}>See more events</NavLink> */}
                             </div>
                             <div className="event-details-venue-location">
                                 <i className="fa-solid fa-location-dot"></i>
                                 <div>{event.Venue ? `${event.Venue.address}, ${event.Venue.city}, ${event.Venue.state} ` : "No venue"}</div>
                             </div>
                         </div>
-                        {/* <div>
-                ATTENDEES MAY GO HERE AT SOME POINT
-            </div> */}
                     </div>
                 </div>
             </div>
@@ -104,9 +99,6 @@ export default function EventDetails() {
                             <div className="event-details-price">{event.price !== 0 ? `$${event.price}` : `FREE`}</div>
                             <div className="event-details-capacity">{event.capacity - event.numAttending} spots left</div>
                         </div>
-                        {/* <div>
-                        <button>Attend (ADDITIONAL FEATURE)</button>
-                    </div> */}
                         <div
                             className="event-details-buttons"
                             style={{ visibility: `${!!user && group.organizerId === user.id ? "visible" : "hidden"}` }}

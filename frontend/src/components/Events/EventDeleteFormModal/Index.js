@@ -16,9 +16,6 @@ function EventDeleteFormModal({ event, groupId }) {
     e.preventDefault();
     dispatch(sessionEvents.deleteAEventThunk(event.id))
       .then((res) => {
-        console.log(res)
-
-
         window.alert("SUCCESSFULLY DELETED")
         history.push(`/groups/${groupId}/events`)
       })

@@ -36,7 +36,6 @@ const EventFormModal = ({ setShowModalEvent }) => {
     if (eventId) {
       dispatch(sessionEvents.getEventByIdThunk(eventId))
         .then((res) => {
-          console.log(res)
           setVenueId(res.Venue ? res.Venue.id : "")
           setName(res.name)
           setType(res.type)

@@ -39,6 +39,10 @@ export default function LogInFormPage() {
 
     }
 
+    useEffect(() => {
+        setResponse("")
+    },[email,password])
+
     return (
         <>
             <form

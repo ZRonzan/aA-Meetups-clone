@@ -23,7 +23,6 @@ export default function GroupsCard() {
 
             {isLoaded && (
                 groups.map((group, i) => {
-                    console.log(group)
                     return (
                         <div className="groups-card container" onClick={() => history.push(`/groups/${group.id}`)} key={i}>
                             <img
