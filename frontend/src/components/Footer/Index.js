@@ -69,6 +69,9 @@ export default function Footer() {
                     <div className="footer-column-header">External resources:</div>
                     <a className="footer-link" href="https://www.vecteezy.com/vector-art/149623-graffiti-abstract-background">Graffiti SVG from Vecteezy</a>
                     <a className="footer-link" href="https://documenter.getpostman.com/view/1134062/T1LJjU52#4829d16f-0f4e-43ec-886e-68ebad1221d8">Cities data API from getpostman</a>
+                    <a className="footer-link" href="https://editor.method.ac/">SVG creation and editing tool</a>
+                    <a className="footer-link" href="https://fontawesome.com/icons?d=gallery&m=free">Font Awesome for icons</a>
+                    <a className="footer-link" href="https://unsplash.com/">Unsplash for free images</a>
                 </div>
             </div>
         </div>
