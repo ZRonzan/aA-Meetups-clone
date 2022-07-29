@@ -55,7 +55,9 @@ export default function EventDetails() {
                 <div className="event-details-main-body-inner-container">
 
                     <div className="event-details-main-body-left-container">
-                        <div className="event-details-main-image">PREVIEW IMAGE GOES HERE</div>
+                        <div className="event-details-main-image">
+                            <img src="https://frenchculture.org/sites/default/files/styles/huge/public/field/image/screen_shot_2017-08-29_at_3.41.10_pm.png?itok=-YB5xLsd" alt="event image"></img>
+                        </div>
                         <h2>Details</h2>
                         <p className="event-details-description">
                             {event.description}
@@ -64,8 +66,10 @@ export default function EventDetails() {
 
                     <div className="event-details-main-body-right-container">
                         <div className="event-details-group-card-container">
-                            <div className="event-details-group-image"></div>
-                            <div className="event-details-group-details">
+                            <div className="event-details-group-image">
+                                <img src="https://d32ydbgkw6ghe6.cloudfront.net/production/uploads/cover_images/358978b4bc2933445c7bec1674715f006220/i1080x475.jpg" alt="event image"></img>
+                            </div>
+                            <div className="event-details-group-details" onClick={() => history.push(`/groups/${group.id}`)}>
                                 <div className="event-details-group-details-name">{group.name}</div>
                                 <div className="event-details-group-details-privacy">{group.private ? "Private" : "Public"} group</div>
 
@@ -78,8 +82,9 @@ export default function EventDetails() {
                                 {/* <div>{group.name}</div>
                                 <NavLink to={`/groups/${group.id}/events`}>See more events</NavLink> */}
                             </div>
-                            <div className="event-details-venue">
-                                <div><i className="fa-solid fa-location-dot"></i> {event.Venue ? `${event.Venue.address}, ${event.Venue.city}, ${event.Venue.state} ` : "No venue"}</div>
+                            <div className="event-details-venue-location">
+                                <i className="fa-solid fa-location-dot"></i>
+                                <div>{event.Venue ? `${event.Venue.address}, ${event.Venue.city}, ${event.Venue.state} ` : "No venue"}</div>
                             </div>
                         </div>
                         {/* <div>
@@ -88,28 +93,30 @@ export default function EventDetails() {
                     </div>
                 </div>
             </div>
-            <div className="event-details">
-                <div className="event-details">
-                    <time dateTime={`${startDate}`} >{startDate}</time>
-                    <p>{event.name}</p>
-                </div>
-                <div className="event-details">
-                    <div className="event-details">
-                        <div className="event-details">{event.price !== 0 ? `$${event.price}` : `Free`}</div>
-                        <div className="event-details">{event.capacity - event.numAttending} spots left</div>
+            <div className="event-details-bottom">
+                <div className="event-details-bottom-container">
+                    <div className="event-details-bottom-left">
+                        <time dateTime={`${startDate}`} >{startDate.toUpperCase()}</time>
+                        <div>{event.name}</div>
                     </div>
-                    {/* <div>
+                    <div className="event-details-bottom-right">
+                        <div className="event-details-price-capacity">
+                            <div className="event-details-price">{event.price !== 0 ? `$${event.price}` : `FREE`}</div>
+                            <div className="event-details-capacity">{event.capacity - event.numAttending} spots left</div>
+                        </div>
+                        {/* <div>
                         <button>Attend (ADDITIONAL FEATURE)</button>
                     </div> */}
-                    <div
-                        className="event-details"
-                        style={{ visibility: `${group.organizerId === user.id ? "visible" : "hidden"}` }}
-                    >
-                        <div>
-                            <EventEditFormModal event={event} />
-                        </div>
-                        <div>
-                            <EventDeleteFormModal event={event} groupId={group.id} />
+                        <div
+                            className="event-details-buttons"
+                            style={{ visibility: `${group.organizerId === user.id ? "visible" : "hidden"}` }}
+                        >
+                            <div>
+                                <EventEditFormModal event={event}/>
+                            </div>
+                            <div>
+                                <EventDeleteFormModal event={event} groupId={group.id} />
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -4,6 +4,7 @@ import { Modal } from '../../../context/Modal';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import * as sessionEvents from "../../../store/Events"
+import "./EventDelete.css"
 
 function EventDeleteFormModal({ event, groupId }) {
   const [showModalDelete, setShowModalDelete] = useState(false);
@@ -14,13 +15,13 @@ function EventDeleteFormModal({ event, groupId }) {
   const handleDelete = (e) => {
     e.preventDefault();
     dispatch(sessionEvents.deleteAEventThunk(event.id))
-    .then((res) => {
-      console.log(res)
+      .then((res) => {
+        console.log(res)
 
 
-      window.alert("SUCCESSFULLY DELETED")
-      history.push(`/groups/${groupId}/events`)
-    })
+        window.alert("SUCCESSFULLY DELETED")
+        history.push(`/groups/${groupId}/events`)
+      })
   }
 
   return (
@@ -28,30 +29,33 @@ function EventDeleteFormModal({ event, groupId }) {
       <button onClick={() => setShowModalDelete(true)}>Delete this event</button>
       {showModalDelete && (
         <>
-          <Modal onClose={() => setShowModalDelete(false)}>
-            <div><i className="fa-solid fa-xmark" onClick={() => setShowModalDelete(false)}></i></div>
-            <h3>Are you sure?</h3>
-            <p>This action is irreversible. Please confirm this decision below:</p>
-            <div>
-              <form
-                onSubmit={handleDelete}
-                className="delete-form-confirmation"
-              >
-                <label>
-                  <input
-                    type="checkbox"
-                    onChange={() => setIsDisabled(!isDisabled)}
-                    checked={isDisabled}
-                  >
-                  </input>
-                  I confirm that I would like to delete this event
-                </label>
+          <Modal onClose={() => setShowModalDelete(false)} formType="delete-event">
+            <div className="group-event-delete-form-cross"><i className="fa-solid fa-xmark" onClick={() => setShowModalDelete(false)}></i></div>
+            <div className="group-event-delete-form">
+              <h3 className="group-event-delete-form">Are you sure?</h3>
+              <p className="group-event-delete-form">This action is irreversible. Please confirm this decision below:</p>
+              <div className="group-event-delete-form">
+                <form
+                  className="group-event-delete-form"
+                  onSubmit={handleDelete}
+                >
+                  <label>
+                    <input
+                      type="checkbox"
+                      onChange={() => setIsDisabled(!isDisabled)}
+                      checked={isDisabled}
+                    >
+                    </input>
+                    I confirm that I would like to delete this event
+                  </label>
                   <button
+                    className={`group-event-delete-form ${!isDisabled? "disabled":"enabled"}`}
                     disabled={!isDisabled}
                   >
                     Delete this event
                   </button>
-              </form>
+                </form>
+              </div>
             </div>
           </Modal>
         </>

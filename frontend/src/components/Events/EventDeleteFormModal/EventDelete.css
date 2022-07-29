@@ -1,0 +1,73 @@
+.modal-form-container.delete-event {
+    border-radius: 1rem;
+    width: 60%;
+    min-width: 500px;
+    max-width: 400px;
+    min-height: min-content;
+}
+
+.group-event-delete-form-cross {
+    display: flex;
+}
+
+.group-event-delete-form-cross i {
+    padding-left: 1rem;
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.group-event-delete-form-cross i:hover {
+    cursor: pointer;
+    color: rgb(0,130,148);
+}
+
+h3.group-event-delete-form {
+    align-self: center;
+}
+
+p.group-event-delete-form {
+    margin: 0;
+}
+
+div.group-event-delete-form {
+    padding: 0% 5% 2% 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+form.group-event-delete-form {
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+button.group-event-delete-form.disabled {
+    background-color: rgb(207, 207, 207);
+    color: white;
+    font-weight: bold;
+    padding: 4%;
+    border: none;
+    border-radius: 5px;
+}
+
+button.group-event-delete-form.enabled {
+    background-color: rgb(246, 88, 88);
+    color: white;
+    font-weight: bold;
+    padding: 4%;
+    border: none;
+    border-radius: 5px;
+}
+
+button.group-event-delete-form.enabled:hover {
+    cursor: pointer;
+    background-color: rgb(245, 132, 132);
+}
+
+input.group-event-delete-form:hover {
+    cursor: pointer;
+}

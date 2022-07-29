@@ -1,44 +1,56 @@
 
+.signup-page-main-page-body {
+    display: flex;
+    justify-content: center;
+}
 
-.page-signup-form-container {
-    width: 100%;
+
+.signup-page-container {
+    width: 70%;
     border-radius: 20px;
 }
 
-.page-signup-form-cross:hover {
-    cursor: pointer;
-    color: rgb(0,152,171);
+h2.signup-page {
+    color: rgb(0,130,148);
 }
 
-div.page-signup-form {
+div.signup-page {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 10%;
 }
 
-form.page-signup-form {
+form.signup-page {
     display: flex;
     flex-direction: column;
+    border: 1px solid rgb(230,230,230);
+    border-radius: 10px;
+    padding: 5px 50px 50px 50px;
+    margin-top: 10px;
+    margin-bottom: 5%;
+    background-color: white;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 5%);
 }
 
-input.page-signup-form {
+input.signup-page {
     height: 30px;
     border: 1px solid rgb(210, 210, 210);
     border-radius: 5px;
+    margin: 5% 0%;
 }
 
-ul.page-signup-form {
-}
+/* .signup-error {
+    padding: 3%;
+} */
 
 
-label.page-signup-form {
+label.signup-page {
     display: flex;
     flex-direction: column;
 }
 
-button.page-signup-form {
-    background-color: rgb(246,88,88);
+button.signup-page {
+    background-color: rgb(246, 88, 88);
     color: white;
     font-weight: bold;
     padding: 4%;
@@ -46,6 +58,6 @@ button.page-signup-form {
     border-radius: 5px;
 }
 
-button.page-signup-form:hover {
+button.signup-page:hover {
     background-color: rgb(245, 132, 132);
 }

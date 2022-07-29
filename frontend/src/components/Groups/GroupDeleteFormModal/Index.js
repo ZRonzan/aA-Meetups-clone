@@ -14,10 +14,10 @@ function GroupDeleteFormModal({ group, groupId }) {
   const handleDelete = (e) => {
     e.preventDefault();
     dispatch(sessionGroups.deleteAGroupThunk(group.id))
-    .then((res) => {
-      window.alert(`${res.message}`)
-      history.push(`/`)
-    })
+      .then((res) => {
+        window.alert(`${res.message}`)
+        history.push(`/`)
+      })
   }
 
   return (
@@ -25,30 +25,34 @@ function GroupDeleteFormModal({ group, groupId }) {
       <button onClick={() => setShowGroupModalDelete(true)}>Delete this group</button>
       {showGroupModalDelete && (
         <>
-          <Modal onClose={() => setShowGroupModalDelete(false)}>
-            <div><i className="fa-solid fa-xmark" onClick={() => setShowGroupModalDelete(false)}></i></div>
-            <h3>Are you sure?</h3>
-            <p>This action is irreversible. Please confirm this decision below:</p>
-            <div>
-              <form
-                onSubmit={handleDelete}
-                className="delete-form-confirmation"
-              >
-                <label>
-                  <input
-                    type="checkbox"
-                    onChange={() => setIsDisabled(!isDisabled)}
-                    checked={isDisabled}
-                  >
-                  </input>
-                  I confirm that I would like to delete this group
-                </label>
+          <Modal onClose={() => setShowGroupModalDelete(false)} formType="delete-event">
+            <div className="group-event-delete-form-cross"><i className="fa-solid fa-xmark" onClick={() => setShowGroupModalDelete(false)}></i></div>
+            <div className="group-event-delete-form">
+              <h3 className="group-event-delete-form">Are you sure?</h3>
+              <p className="group-event-delete-form">This action is irreversible. Please confirm this decision below:</p>
+              <div className="group-event-delete-form">
+                <form
+                  className="group-event-delete-form"
+                  onSubmit={handleDelete}
+                >
+                  <label>
+                    <input
+                      className="group-event-delete-form"
+                      type="checkbox"
+                      onChange={() => setIsDisabled(!isDisabled)}
+                      checked={isDisabled}
+                    >
+                    </input>
+                    I confirm that I would like to delete this group
+                  </label>
                   <button
+                    className={`group-event-delete-form ${!isDisabled ? "disabled" : "enabled"}`}
                     disabled={!isDisabled}
                   >
                     Delete this group
                   </button>
-              </form>
+                </form>
+              </div>
             </div>
           </Modal>
         </>

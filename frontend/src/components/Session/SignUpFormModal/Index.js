@@ -11,7 +11,7 @@ function UserSignUpFormModal() {
       <div className="navigation-log-in-and-sign-up-buttons" onClick={() => setShowModal(true)}>Sign Up</div>
       {showModal && (
         <>
-        <Modal onClose={() => setShowModal(false)}>
+        <Modal onClose={() => setShowModal(false)} formType="login-signup">
           <UserSignUpPage setShowModal={setShowModal}/>
         </Modal>
         </>

@@ -11,7 +11,7 @@ function LoginFormModal() {
       <div className="navigation-log-in-and-sign-up-buttons" onClick={() => setShowModal(true)}>Log In</div>
       {showModal && (
         <>
-        <Modal onClose={() => setShowModal(false)}>
+        <Modal onClose={() => setShowModal(false)} formType="login-signup">
           <LoginForm setShowModal={setShowModal}/>
         </Modal>
         </>

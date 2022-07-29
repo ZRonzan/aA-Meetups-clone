@@ -1,8 +1,9 @@
 
 
-.modal-form-container {
+.modal-form-container.login-signup {
     border-radius: 1rem;
     width: 45%;
+    min-width: min-content;
     max-width: 300px;
     padding:50px 50px 50px 50px ;
     min-height: min-content;

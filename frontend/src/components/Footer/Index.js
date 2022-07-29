@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useHistory } from "react-router-dom";
 import { Modal } from "../../context/Modal";
 import LoginForm from "../Session/LoginFormModal/LoginForm";
 import UserSignUpPage from "../Session/SignUpFormModal/SignUpFormModal";
@@ -12,6 +12,7 @@ export default function Footer() {
 
     const user = useSelector(state => state.session.user)
     const dispatch = useDispatch();
+    const history = useHistory()
 
     const [showFooterLogInModal, setShowFooterLoginModal] = useState(false)
     const [showFooterSignUpModal, setShowFooterSignUpModal] = useState(false)
@@ -24,7 +25,7 @@ export default function Footer() {
     return (
         <div className="footer-main-container">
             <div className="footer-create-a-group">
-                <div className="footer-create-group-text">Create your own Street-Up group.</div>
+                <div className="footer-create-group-text" onClick={() => history.push("/forms/group-form")}>Create your own Street-Up group.</div>
             </div>
             <div className="footer-inner-container">
                 <div className="footer-column">

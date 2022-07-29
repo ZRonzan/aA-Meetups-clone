@@ -1,0 +1,111 @@
+
+.create-an-event-form-main-body-container {
+    display: flex;
+    justify-content: center;
+    background-color: rgb(247, 247, 247);
+    min-height: 750px;
+}
+
+/* .create-an-event-form-container {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 600px;
+    max-width: 1200px;
+    width: 70%;
+} */
+
+h1.create-an-event-form-title {
+    color: rgb(0,152,171);
+    padding-bottom: 3%;
+}
+
+div.create-an-event-form-errors {
+    background-color: rgb(246,88,88);
+    border-radius: 10px;
+    color:white;
+    min-width: 600px;
+    max-width: 1000px;
+    width:70%
+}
+
+div.group-form-submit-errors {
+    margin-top: -5px;
+    padding: 0.3% 10%;
+}
+
+form.create-an-event-form {
+    display:flex;
+    flex-direction: column;
+    border: 1px solid rgb(230,230,230);
+    border-radius: 10px;
+    padding: 50px 50px 50px 50px;
+    margin-top: 10px;
+    margin-bottom: 5%;
+    background-color: white;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 5%);
+}
+
+label.create-an-event-form {
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+}
+
+div.create-an-event-form-text {
+    padding-bottom: 3%;
+}
+
+input.create-an-event-form {
+    height: 30px;
+    border: 1px solid rgb(210, 210, 210);
+    border-radius: 5px;
+    margin: 2% 0%;
+}
+
+input.create-an-event-form:focus {
+    outline: 1px solid rgb(0,152,171);
+}
+
+textarea.create-an-event-form {
+    resize: none;
+    height: 200px;
+    border: 1px solid rgb(210, 210, 210);
+    border-radius: 5px;
+    margin: 2% 0%;
+}
+
+textarea.create-an-event-form:focus {
+    outline: 1px solid rgb(0,152,171);
+}
+
+select.create-an-event-form {
+    height: 30px;
+    border: 1px solid rgb(210, 210, 210);
+    border-radius: 5px;
+    margin: 2% 0%;
+}
+
+option.create-an-event-form {
+    height: 100px;
+    border: 1px solid rgb(210, 210, 210);
+    border-radius: 5px;
+    margin: 2% 0%;
+}
+
+select.create-an-event-form:focus {
+    outline: 1px solid rgb(0,152,171);
+}
+
+button.create-an-event-form {
+    background-color: rgb(246,88,88);
+    color: white;
+    font-weight: bold;
+    padding: 4%;
+    border: none;
+    border-radius: 5px;
+}
+
+button.create-an-event-form:hover {
+    background-color: rgb(245, 132, 132);
+}

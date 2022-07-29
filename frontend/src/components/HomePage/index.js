@@ -73,7 +73,7 @@ const HomePage = () => {
                 <div className="splash-page-join-button" onClick={() => setShowModalSplash(true)}>Join Street-Up</div>
                 {showModalSplash && (
                     <>
-                        <Modal onClose={() => setShowModalSplash(false)}>
+                        <Modal onClose={() => setShowModalSplash(false)} formType="login-signup">
                             <UserSignUpPage setShowModal={setShowModalSplash} />
                         </Modal>
                     </>

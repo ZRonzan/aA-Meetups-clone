@@ -11,7 +11,7 @@ function GroupEditFormModal({group}) {
       <button onClick={() => setShowModal(true)}>Edit this group</button>
       {showModal && (
         <>
-        <Modal onClose={() => setShowModal(false)}>
+        <Modal onClose={() => setShowModal(false)} formType="edit-group">
           <GroupEditForm group={group} setShowModal={setShowModal} />
         </Modal>
         </>

@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from "react-redux"
 import { useHistory, useParams, Link } from "react-router-dom"
 import * as sessionEvents from "../../../store/Events"
 import * as sessionGroups from "../../../store/Groups"
-import "./EventForm.css"
+import "./EventFormModal.css"
 
 
 
-const EventForm = ({ setShowModalEvent }) => {
+const EventFormModal = ({ setShowModalEvent }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { groupId, eventId } = useParams();
@@ -138,10 +138,11 @@ const EventForm = ({ setShowModalEvent }) => {
 
   return isLoaded && (
     <>
-      <div className="create-an-event-form-main-body-container">
-        <div className="create-an-event-form-container">
-          <h1 className="create-an-event-form-title">{eventId ? "Edit your event" : "Create your event"}</h1>
-          <div className="create-an-event-form-errors">
+      <div className="group-event-delete-form-cross modal-event"><i className="fa-solid fa-xmark" onClick={() => setShowModalEvent(false)}></i></div>
+      <div className="create-a-modal-event-form-main-body-container">
+        <div className="create-a-modal-event-form-container">
+          <h1 className="create-a-modal-event-form-title">{eventId ? "Edit your event" : "Create your event"}</h1>
+          <div className="create-a-modal-event-form-errors">
             {!!error.errors && (error.errors.length > 0 && (
               <div className="group-form-submit-errors">
                 <h4>{error.message}</h4>
@@ -158,17 +159,17 @@ const EventForm = ({ setShowModalEvent }) => {
             ))}
           </div>
 
-          <form className="create-an-event-form"
+          <form className="create-a-modal-event-form"
             onSubmit={handleSubmit}
           >
-            <label className="create-an-event-form">
-              Venue: <select className="create-an-event-form"
+            <label className="create-a-modal-event-form">
+              Venue: <select className="create-a-modal-event-form"
                 type="number"
                 onChange={(e) => setVenueId(e.target.value)}
                 value={venueId}
                 placeholder={"Please Select a venue"}
               >
-                <option className="create-an-event-form" value={""}>No venue</option>
+                <option className="create-a-modal-event-form" value={""}>No venue</option>
                 {venues && venues.length > 0 && (
                   venues.map((venue, i) => {
                     return (
@@ -180,32 +181,32 @@ const EventForm = ({ setShowModalEvent }) => {
                 )}
               </select>
             </label>
-            <label className="create-an-event-form">
-              Name: <input className="create-an-event-form"
+            <label className="create-a-modal-event-form">
+              Name: <input className="create-a-modal-event-form"
                 onChange={(e) => setName(e.target.value)}
                 value={name}
               >
               </input>
             </label>
-            <label className="create-an-event-form">
-              type: <select className="create-an-event-form"
+            <label className="create-a-modal-event-form">
+              type: <select className="create-a-modal-event-form"
                 onChange={(e) => setType(e.target.value)}
                 value={type}
               >
-                <option className="create-an-event-form">Online</option>
-                <option className="create-an-event-form">In Person</option>
+                <option className="create-a-modal-event-form">Online</option>
+                <option className="create-a-modal-event-form">In Person</option>
               </select>
             </label>
-            <label className="create-an-event-form">
-              Capacity: <input className="create-an-event-form"
+            <label className="create-a-modal-event-form">
+              Capacity: <input className="create-a-modal-event-form"
                 type="number"
                 onChange={(e) => setCapacity(e.target.value)}
                 value={capacity}
               >
               </input>
             </label>
-            <label className="create-an-event-form">
-              Price ($USD): <input className="create-an-event-form"
+            <label className="create-a-modal-event-form">
+              Price ($USD): <input className="create-a-modal-event-form"
                 type="number"
                 step={0.10}
                 onChange={(e) => setPrice(e.target.value)}
@@ -213,15 +214,15 @@ const EventForm = ({ setShowModalEvent }) => {
               >
               </input>
             </label>
-            <label className="create-an-event-form">
-              Description: <textarea className="create-an-event-form"
+            <label className="create-a-modal-event-form">
+              Description: <textarea className="create-a-modal-event-form"
                 onChange={(e) => setDescription(e.target.value)}
                 value={description}
               >
               </textarea>
             </label>
-            <label className="create-an-event-form">
-              Start date and time (UTC): <input className="create-an-event-form"
+            <label className="create-a-modal-event-form">
+              Start date and time (UTC): <input className="create-a-modal-event-form"
                 type="datetime-local"
                 onChange={(e) => setStartDate(e.target.value)}
                 value={startDate}
@@ -229,8 +230,8 @@ const EventForm = ({ setShowModalEvent }) => {
               >
               </input>
             </label>
-            <label className="create-an-event-form">
-              End date and time (UTC): <input className="create-an-event-form"
+            <label className="create-a-modal-event-form">
+              End date and time (UTC): <input className="create-a-modal-event-form"
                 type="datetime-local"
                 onChange={(e) => setEndDate(e.target.value)}
                 value={endDate}
@@ -239,7 +240,7 @@ const EventForm = ({ setShowModalEvent }) => {
               >
               </input>
             </label>
-            <button className="create-an-event-form">Submit {eventId ? "edit" : "new event"}</button>
+            <button className="create-a-modal-event-form">Submit {eventId ? "edit" : "new event"}</button>
           </form>
         </div>
       </div>
@@ -247,4 +248,4 @@ const EventForm = ({ setShowModalEvent }) => {
   )
 }
 
-export default EventForm
+export default EventFormModal

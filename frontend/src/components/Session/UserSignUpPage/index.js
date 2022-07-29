@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom"
 import { userSignUp } from "../../../store/session"
 import "./UserSignUpPage.css"
 
-export default function UserSignUpPage() {
+export default function UserSignUpPage({ setShowModal }) {
     const dispatch = useDispatch()
     const history = useHistory()
 
@@ -42,85 +42,95 @@ export default function UserSignUpPage() {
     }
 
     return (
-        <>
-            <form
-                onSubmit={handleSubmit}
-                className="signup-form"
-            >
-                <h2>SIGN UP</h2>
-                <label className="signup-form">First Name:
-                    <input
-                        className="signup-form"
-                        onChange={e => setFirstName(e.target.value)}
-                        value={firstName}
-                    >
-                    </input>
-                </label>
-                <label className="signup-form">Last Name:
-                    <input
-                        className="signup-form"
-                        onChange={e => setLastName(e.target.value)}
-                        value={lastName}
-                    >
-                    </input>
-                </label>
-                <label className="signup-form">Email:
-                    <input
-                        className="signup-form"
-                        onChange={e => setEmail(e.target.value)}
-                        value={email}
-                    >
-                    </input>
-                </label>
-                <label className="signup-form">Password:
-                    <input
-                        className="signup-form"
-                        type="password"
-                        onChange={e => setPassword(e.target.value)}
-                        value={password}
-                    >
-                    </input>
-                </label>
-                <label className="signup-form">Password Confirmation:
-                    <input
-                        className="signup-form"
-                        type="password"
-                        onChange={e => setPasswordConfirmation(e.target.value)}
-                        value={passwordConfirmation}
-                    >
-                    </input>
-                </label>
-                <div>
-                    {!(password === passwordConfirmation) && (
-                        <text>Passwords do not match</text>
+        <div className="signup-page-main-page-body">
+            <div className="signup-page-container">
+                <form
+                    onSubmit={handleSubmit}
+                    className="signup-page"
+                >
+                    <div className="signup-page">
+                        <h2 className="signup-page">Sign up</h2>
+                    </div>
+                    {response && (
+                        <>
+                            {response.message === "Validation error" && (
+                                <>
+                                    <ul className="signup-page">
+                                        <h3>Sign up validation errors:</h3>
+                                        {response.errors && (
+                                            response.errors.map((message, i) => {
+                                                return (<li key={i}>{Object.values(message)}</li>)
+                                            })
+                                        )}
+                                    </ul>
+                                </>
+                            )}
+                            {response.message === "User already exists" && (
+                                <>
+                                    <h4>Sign up email error:</h4>
+                                    <ul className="signup-page">
+                                        <li>{Object.values(response.errors.email)}</li>
+                                    </ul>
+                                </>
+                            )}
+                        </>
                     )}
-                </div>
-                <button disabled={password !== passwordConfirmation} className="signup-form">Sign Up</button>
-                {response && (
-                    <>
-                        {response.message === "Validation error" && (
-                            <>
-                                <ul className="signup-form">
-                                    <h3>{response.message}</h3>
-                                    {response.errors && (
-                                        response.errors.map((message, i) => {
-                                            return (<li key={i}>{Object.values(message)}</li>)
-                                        })
-                                    )}
-                                </ul>
-                            </>
+                    <label className="signup-page">First Name:
+                        <input
+                            className="signup-page"
+                            onChange={e => setFirstName(e.target.value)}
+                            value={firstName}
+                            required
+                        >
+                        </input>
+                    </label>
+                    <label className="signup-page">Last Name:
+                        <input
+                            className="signup-page"
+                            onChange={e => setLastName(e.target.value)}
+                            value={lastName}
+                            required
+                        >
+                        </input>
+                    </label>
+                    <label className="signup-page">Email:
+                        <input
+                            className="signup-page"
+                            onChange={e => setEmail(e.target.value)}
+                            value={email}
+                            required
+                        >
+                        </input>
+                    </label>
+                    <label className="signup-page">Password:
+                        <input
+                            className="signup-page"
+                            type="password"
+                            onChange={e => setPassword(e.target.value)}
+                            value={password}
+                            required
+                        >
+                        </input>
+                    </label>
+                    <label className="signup-page">Password Confirmation:
+                        <input
+                            className="signup-page"
+                            type="password"
+                            onChange={e => setPasswordConfirmation(e.target.value)}
+                            value={passwordConfirmation}
+                            required
+                        >
+                        </input>
+                    </label>
+                    <div>
+                        {!(password === passwordConfirmation) && (
+                            <text>Passwords do not match</text>
                         )}
-                        {response.message === "User already exists" && (
-                            <>
-                                <h4>{response.message}</h4>
-                                <ul className="signup-form">
-                                    <li>{Object.values(response.errors.email)}</li>
-                                </ul>
-                            </>
-                        )}
-                    </>
-                )}
-            </form>
-        </>
+                    </div>
+                    <button disabled={password !== passwordConfirmation} className="signup-page">Sign Up</button>
+
+                </form>
+            </div>
+        </div>
     )
 }

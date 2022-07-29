@@ -1,0 +1,107 @@
+.modal-form-container.edit-group {
+    border-radius: 1rem;
+    width: 60%;
+    min-width: 500px;
+    max-width: 700px;
+    min-height: min-content;
+}
+
+
+.edit-a-group-form-main-body-container {
+    display: flex;
+    justify-content: center;
+}
+
+.edit-a-group-form-container {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 600px;
+    max-width: 1200px;
+    width: 100%;
+}
+
+h1.edit-a-group-form-title {
+    color: rgb(0,152,171);
+}
+
+div.edit-a-group-form-errors {
+    background-color: rgb(246,88,88);
+    border-radius: 10px;
+    padding: 1rem;
+    color:white;
+    max-width: 1200px;
+    width: 70%;
+}
+
+div.edit-group-form-submit-errors {
+    margin-top: -5px;
+    padding: 0.3% 10%;
+}
+
+form.edit-a-group-form {
+    border-radius: 10px;
+    padding: 1rem 1rem 1rem 1rem;
+    width: 70%
+}
+
+label.edit-a-group-form {
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+}
+
+input.edit-a-group-form {
+    height: 30px;
+    border: 1px solid rgb(210, 210, 210);
+    border-radius: 5px;
+    margin: 2% 0%;
+}
+
+input.edit-a-group-form:focus {
+    outline: 1px solid rgb(0,152,171);
+}
+
+textarea.edit-a-group-form {
+    resize: none;
+    height: 100px;
+    border: 1px solid rgb(210, 210, 210);
+    border-radius: 5px;
+    margin: 2% 0%;
+}
+
+textarea.edit-a-group-form:focus {
+    outline: 1px solid rgb(0,152,171);
+}
+
+select.edit-a-group-form {
+    height: 30px;
+    border: 1px solid rgb(210, 210, 210);
+    border-radius: 5px;
+    margin: 1% 0%;
+}
+
+option.edit-a-group-form {
+    height: 100px;
+    border: 1px solid rgb(210, 210, 210);
+    border-radius: 5px;
+    margin: 5% 0%;
+}
+
+select.edit-a-group-form:focus {
+    outline: 1px solid rgb(0,152,171);
+}
+
+button.edit-a-group-form {
+    background-color: rgb(246,88,88);
+    color: white;
+    font-weight: bold;
+    margin-top: 1rem;
+    padding: 4%;
+    border: none;
+    border-radius: 5px;
+}
+
+button.edit-a-group-form:hover {
+    background-color: rgb(245, 132, 132);
+}

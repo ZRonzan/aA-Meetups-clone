@@ -1,7 +1,7 @@
 // frontend/src/components/LoginFormModal/index.js
 import React, { useState } from 'react';
 import { Modal } from '../../../context/Modal';
-import EventForm from '../EventForm/Index';
+import EventFormModal from './EventFormModal';
 
 function EventEditFormModal({event}) {
   const [showModalEvent, setShowModalEvent] = useState(false);
@@ -11,8 +11,8 @@ function EventEditFormModal({event}) {
       <button onClick={() => setShowModalEvent(true)}>Edit this event</button>
       {showModalEvent && (
         <>
-        <Modal onClose={() => setShowModalEvent(false)}>
-          <EventForm event={event} setShowModalEvent={setShowModalEvent} />
+        <Modal onClose={() => setShowModalEvent(false)} formType="edit-event">
+          <EventFormModal event={event} setShowModalEvent={setShowModalEvent} />
         </Modal>
         </>
       )}
