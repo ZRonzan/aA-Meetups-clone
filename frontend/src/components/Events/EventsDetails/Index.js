@@ -96,7 +96,7 @@ export default function EventDetails() {
                     </div>
                     <div className="event-details-bottom-right">
                         <div className="event-details-price-capacity">
-                            <div className="event-details-price">{event.price !== 0 ? `$${event.price}` : `FREE`}</div>
+                            <div className="event-details-price">{Number(event.price) !== 0 ? `$${Number(event.price).toFixed(2)}` : `FREE`}</div>
                             <div className="event-details-capacity">{event.capacity - event.numAttending} spots left</div>
                         </div>
                         <div
