@@ -48,11 +48,11 @@ export default function UserGroupsCards() {
                                     console.log(group)
                                     return (
                                         <div className="groups-card container" onClick={() => history.push(`/groups/${group.id}`)} key={i}>
-                                            {!!group && (
-                                            <div className="groups-card image-container">
-                                                <img className="groups-card image"src={group.previewImage[0].imageUrl}></img>
-                                            </div>
-                                            )}
+                                            <img
+                                                style={{ visibility: `${group.previewImage.length > 0 ? "visible" : "hidden"}` }}
+                                                className="groups-card image-container"
+                                                src={group.previewImage.length > 0 ? group.previewImage[0].imageUrl : ""}
+                                            ></img>
                                             <div className="groups-card info-container">
                                                 <h3 className="groups-card title">{group.name}</h3>
                                                 <div className="groups-card location">{group.city.toUpperCase()}, {group.state}</div>
@@ -78,11 +78,11 @@ export default function UserGroupsCards() {
                                 joinedGroups.map((group, i) => {
                                     return (
                                         <div className="groups-card container" onClick={() => history.push(`/groups/${group.id}`)} key={i}>
-                                            {!!group && (
-                                            <div className="groups-card image-container">
-                                                <img className="groups-card image"src={group.previewImage[0].imageUrl}></img>
-                                            </div>
-                                            )}
+                                            <img
+                                                style={{ visibility: `${group.previewImage.length > 0 ? "visible" : "hidden"}` }}
+                                                className="groups-card image-container"
+                                                src={group.previewImage.length > 0 ? group.previewImage[0].imageUrl : ""}
+                                            ></img>
                                             <div className="groups-card info-container">
                                                 <h3 className="groups-card title">{group.name}</h3>
                                                 <div className="groups-card location">{group.city.toUpperCase()}, {group.state}</div>

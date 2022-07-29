@@ -21,24 +21,26 @@ export default function GroupsCard() {
     return (
         <div className="groups-cards-container">
 
-                {isLoaded && (
-                    groups.map((group, i) => {
-                        console.log(group)
-                        return (
-                            <div className="groups-card container" onClick={() => history.push(`/groups/${group.id}`)} key={i}>
-                                <div className="groups-card image-container">
-                                    <img className="groups-card image" src={group.previewImage[0].imageUrl}></img>
-                                </div>
-                                <div className="groups-card info-container">
-                                    <h3 className="groups-card title">{group.name}</h3>
-                                    <div className="groups-card location">{group.city.toUpperCase()}, {group.state}</div>
-                                    <div className="groups-card about">{group.about}</div>
-                                    <div className="groups-card members">{`${group.numMembers} ${group.numMembers === 1 ? 'member' : 'members'} • ${group.private ? `Private` : `Public`}`}</div>
-                                </div>
+            {isLoaded && (
+                groups.map((group, i) => {
+                    console.log(group)
+                    return (
+                        <div className="groups-card container" onClick={() => history.push(`/groups/${group.id}`)} key={i}>
+                            <img
+                                style={{ visibility: `${group.previewImage.length > 0 ? "visible" : "hidden"}` }}
+                                className="groups-card image-container"
+                                src={group.previewImage.length > 0 ? group.previewImage[0].imageUrl : ""}
+                            ></img>
+                            <div className="groups-card info-container">
+                                <h3 className="groups-card title">{group.name}</h3>
+                                <div className="groups-card location">{group.city.toUpperCase()}, {group.state}</div>
+                                <div className="groups-card about">{group.about}</div>
+                                <div className="groups-card members">{`${group.numMembers} ${group.numMembers === 1 ? 'member' : 'members'} • ${group.private ? `Private` : `Public`}`}</div>
                             </div>
-                        )
-                    })
-                )}
+                        </div>
+                    )
+                })
+            )}
         </div>
     )
 }

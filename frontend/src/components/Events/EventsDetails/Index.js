@@ -55,9 +55,9 @@ export default function EventDetails() {
                 <div className="event-details-main-body-inner-container">
 
                     <div className="event-details-main-body-left-container">
-                        {!!event.previewImage.length && (<div className="event-details-main-image">
-                            <img src={event.previewImage[0].imageUrl} alt="event image"></img>
-                        </div>)}
+                        {!!event.previewImage.length && (
+                            <img className="event-details-main-image" src={event.previewImage[0].imageUrl} alt="event image"></img>
+                        )}
                         <h2>Details</h2>
                         <p className="event-details-description">
                             {event.description}
@@ -67,9 +67,7 @@ export default function EventDetails() {
                     <div className="event-details-main-body-right-container">
                         <div className="event-details-group-card-container">
                             {!!group.images.length && (
-                                <div className="event-details-group-image-container">
-                                    <img className="event-details-group-image" src={group.images[0].imageUrl} alt="event image"></img>
-                                </div>
+                                <img className="event-details-group-image-container" src={group.images[0].imageUrl} alt="event image"></img>
                             )}
                             <div className="event-details-group-details" onClick={() => history.push(`/groups/${group.id}`)}>
                                 <div className="event-details-group-details-name">{group.name}</div>
@@ -111,7 +109,7 @@ export default function EventDetails() {
                     </div> */}
                         <div
                             className="event-details-buttons"
-                            style={{ visibility: `${group.organizerId === user.id ? "visible" : "hidden"}` }}
+                            style={{ visibility: `${!!user && group.organizerId === user.id ? "visible" : "hidden"}` }}
                         >
                             <div>
                                 <EventEditFormModal event={event} />

@@ -27,9 +27,9 @@ export default function GroupDetails() {
                 <div className="group-details-page-main-body">
                     <div className="group-details-page-top">
                         <div className="group-details-page-top-container">
-                            <div className="group-details-page-main-image-container">
-                                <img className="group-details-page-main-image" src={group.images[0].imageUrl}></img>
-                            </div>
+                            {group.images.length > 0 && (
+                                <img className="group-details-page-main-image-container" src={group.images[0].imageUrl}></img>
+                            )}
                             <div className="group-details-page-top-details">
                                 <h2 className="group-details-page">{group.name}</h2>
                                 <div className="group-details-page"><i className="fa-solid fa-location-dot"></i> {group.city}, {group.state}</div>

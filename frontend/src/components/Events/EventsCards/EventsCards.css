@@ -32,7 +32,10 @@
 
 .events-card.image-container {
     width: 29%;
+    height: 150px;
+    object-fit: cover;
     margin-right: 1%;
+    border-radius: 10px;
 }
 
 .events-card.info-container {
