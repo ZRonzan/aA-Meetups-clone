@@ -107,7 +107,7 @@ export default function UserSignUpPage({setShowModal}) {
                         {response.message === "Validation error" && (
                             <>
                                 <ul className="signup-form">
-                                    <h3>{response.message}</h3>
+                                    <h3>Sign up validation errors:</h3>
                                     {response.errors && (
                                         response.errors.map((message, i) => {
                                             return (<li key={i}>{Object.values(message)}</li>)
@@ -118,7 +118,7 @@ export default function UserSignUpPage({setShowModal}) {
                         )}
                         {response.message === "User already exists" && (
                             <>
-                                <h4>{response.message}</h4>
+                                <h4>Sign up email error:</h4>
                                 <ul className="signup-form">
                                     <li>{Object.values(response.errors.email)}</li>
                                 </ul>

@@ -144,7 +144,8 @@ const GroupForm = ({ group }) => {
                                     return (
                                         <li
                                             className="create-a-group-form" key={i}>
-                                            {Object.keys(err)}: {Object.values(err)}
+                                            {/* {Object.keys(err)}:*/}
+                                            {Object.values(err)}
                                         </li>
                                     )
                                 })}
@@ -175,7 +176,7 @@ const GroupForm = ({ group }) => {
                             value={state}
                         >
                             <option
-                                className="create-a-group-form" value={""}>Please select a state</option>
+                                className="create-a-group-form" value={""} disabled={true}>Please select a state</option>
                             {statesAbbr.map((state, i) => {
                                 return (
                                     <option key={i} value={state}>
@@ -237,8 +238,10 @@ const GroupForm = ({ group }) => {
                             className="create-a-group-form"
                             onChange={(e) => setAbout(e.target.value)}
                             value={about}
+                            placeholder="Please write at least 50 characters..."
                         >
                         </textarea>
+                        <div style={{visibility: `${50-about.length > 0? "visible" : "hidden"}`, fontWeight: "normal"}}> {50-about.length} characters remaining</div>
                     </label>
                     <div className="create-a-group-form-text">
                         <h2>Lastly, let others know what type of group this will be... </h2>

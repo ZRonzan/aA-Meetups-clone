@@ -12,23 +12,23 @@ const router = express.Router();
 //validation of user creation signup------------------------
 const validateSignup = [
     check('email')
-        .exists({ checkFalsy: true })
         .isEmail()
         .withMessage('Invalid email'),
     check('firstName')
-        .exists({ checkFalsy: true })
-        .withMessage('First Name is required'),
-    check('firstName')
-        .isAlpha()
-        .withMessage('First name must contain letters only'),
+        .exists()
+        .isAlphanumeric()
+        .withMessage('First name is missing or contains invalid characters (only allowed alphanumeric characters)'),
+    // check('firstName')
+    //     .isAlpha()
+    //     .withMessage('First name must contain letters only'),
     check('lastName')
-        .exists({ checkFalsy: true })
-        .withMessage('Last Name is required'),
-    check('lastName')
-        .isAlpha()
-        .withMessage('Last name must contain letters only'),
+        .exists()
+        .isAlphanumeric()
+        .withMessage('Last name is is missing or contains invalid characters (only allowed alphanumeric characters)'),
+    // check('lastName')
+    //     .isAlpha()
+    //     .withMessage('Last name must contain letters only'),
     check('password')
-        .exists({ checkFalsy: true })
         .isLength({ min: 6 })
         .withMessage('Password must be 6 characters or more.'),
     handleValidationErrors

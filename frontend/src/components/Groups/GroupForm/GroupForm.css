@@ -11,7 +11,7 @@
     align-items: center;
     min-width: 600px;
     max-width: 1200px;
-    width: 70%;
+    width: 100%;
 }
 
 h1.create-a-group-form-title {
@@ -25,7 +25,6 @@ div.create-a-group-form-errors {
     color:white;
     min-width: 600px;
     max-width: 1200px;
-    width: 70%;
 }
 
 div.group-form-submit-errors {
@@ -46,6 +45,7 @@ form.create-a-group-form {
 label.create-a-group-form {
     display: flex;
     flex-direction: column;
+    font-weight: bold;
 }
 
 div.create-a-group-form-text {

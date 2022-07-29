@@ -19,67 +19,67 @@ const HomePage = () => {
         <>
             {/* {!!!user && (
                 <> */}
-                    <div className="splash-page-intro-container">
-                        <div className="splash-page-intro-image-container">
-                            <div className="splash-page-title-and-intro-container">
-                                <h1 className="splash-page-intro-title">
-                                    {"Celebrating around 1 week of real connections on Street-Up!"}
-                                </h1>
-                                <p className="splash-page-intro-description">
-                                    However you're planning on stylin' this year, Street-Up can help. For about a week, one person has turned to Street-Up to meet people, make friends, find support, grow a hip hop related community, and explore their interests. Thousands of events (eventually) are going to happen every day. Do you have the skills?
-                                </p>
-                            </div>
-                            <img className="splash-page-intro-image" alt="Image of a Meetup Online Event" src={meetUpSplash1}></img>
-                        </div>
+            <div className="splash-page-intro-container">
+                <div className="splash-page-intro-image-container">
+                    <div className="splash-page-title-and-intro-container">
+                        <h1 className="splash-page-intro-title">
+                            {"Celebrating around 1 week of real connections on Street-Up!"}
+                        </h1>
+                        <p className="splash-page-intro-description">
+                            However you're planning on stylin' this year, Street-Up can help. For about a week, one person has turned to Street-Up to meet people, make friends, find support, grow a hip hop related community, and explore their interests. Thousands of events (eventually) are going to happen every day. Do you have the skills?
+                        </p>
                     </div>
-                    <div className="splash-page-beneath-intro-container">
-                        <div className="splash-page-how-it-works-container">
-                            <h2>How Street-Up works</h2>
-                            <p>
-                                Meet new people who share your interests through online and in-person events. It’s free to create an account.
-                            </p>
+                    <img className="splash-page-intro-image" alt="Image of a Meetup Online Event" src={meetUpSplash1}></img>
+                </div>
+            </div>
+            <div className="splash-page-beneath-intro-container">
+                <div className="splash-page-how-it-works-container">
+                    <h2>How Street-Up works</h2>
+                    <p>
+                        Meet new people who share your interests through online and in-person events. It’s free to create an account.
+                    </p>
+                </div>
+                <div className="splash-page-join-find-start-container">
+                    <div className="splash-page-join-find-start-card">
+                        <div className="splash-page-card-image">
+                            <img src={joinGroupImg} alt="Hands up image"></img>
                         </div>
-                        <div className="splash-page-join-find-start-container">
-                            <div className="splash-page-join-find-start-card">
-                                <div className="splash-page-card-image">
-                                    <img src={joinGroupImg} alt="Hands up image"></img>
-                                </div>
-                                <Link to="/groups"><h3>Join a group</h3></Link>
-                                <p>
-                                    Do what you love, meet others who love it, find your community. The rest is history!
-                                </p>
-                            </div>
-                            <div className="splash-page-join-find-start-card">
-                                <div className="splash-page-card-image">
-                                    <img src={findEventImg} alt="ticket image"></img>
-                                </div>
-                                <Link to="/events"><h3>Find an event</h3></Link>
-                                <p>
-                                    Events are happening on just about any topic you can think of, from free running and street-art to dance and/or rap battles.
-                                </p>
-                            </div>
-                            <div className="splash-page-join-find-start-card">
-                                <div className="splash-page-card-image">
-                                    <img src={startGroupImg} alt="Group of people image"></img>
-                                </div>
-                                <Link to="/forms/group-form"><h3>Start a group</h3></Link>
-                                <p>
-                                    You don’t have to be an expert to gather people together and explore shared interests.
-                                </p>
-                            </div>
+                        <Link to="/groups"><h3>Join a group</h3></Link>
+                        <p>
+                            Do what you love, meet others who love it, find your community. The rest is history!
+                        </p>
+                    </div>
+                    <div className="splash-page-join-find-start-card">
+                        <div className="splash-page-card-image">
+                            <img src={findEventImg} alt="ticket image"></img>
                         </div>
+                        <Link to="/events"><h3>Find an event</h3></Link>
+                        <p>
+                            Events are happening on just about any topic you can think of, from free running and street-art to dance and/or rap battles.
+                        </p>
                     </div>
-                    <div className="splash-page-join-button-container">
-                        <div className="splash-page-join-button" onClick={() => setShowModalSplash(true)}>Join Street-Up</div>
-                        {showModalSplash && (
-                            <>
-                                <Modal onClose={() => setShowModalSplash(false)}>
-                                    <UserSignUpPage setShowModal={setShowModalSplash}/>
-                                </Modal>
-                            </>
-                        )}
+                    <div className="splash-page-join-find-start-card">
+                        <div className="splash-page-card-image">
+                            <img src={startGroupImg} alt="Group of people image"></img>
+                        </div>
+                        <Link to="/forms/group-form"><h3>Start a group</h3></Link>
+                        <p>
+                            You don’t have to be an expert to gather people together and explore shared interests.
+                        </p>
                     </div>
-                {/* </>
+                </div>
+            </div>
+            {!!!user && (<div className="splash-page-join-button-container">
+                <div className="splash-page-join-button" onClick={() => setShowModalSplash(true)}>Join Street-Up</div>
+                {showModalSplash && (
+                    <>
+                        <Modal onClose={() => setShowModalSplash(false)}>
+                            <UserSignUpPage setShowModal={setShowModalSplash} />
+                        </Modal>
+                    </>
+                )}
+            </div>)}
+            {/* </>
             )} */}
             {/* {!!user && (
                 <>
