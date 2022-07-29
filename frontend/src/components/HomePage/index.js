@@ -44,7 +44,7 @@ const HomePage = () => {
                         <div className="splash-page-card-image">
                             <img src={joinGroupImg} alt="Hands up image"></img>
                         </div>
-                        <Link to="/groups"><h3>Join a group</h3></Link>
+                        <Link to="/groups"><h3>Find a group</h3></Link>
                         <p>
                             Do what you love, meet others who love it, find your community. The rest is history!
                         </p>

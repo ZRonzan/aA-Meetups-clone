@@ -1,0 +1,94 @@
+
+
+.event-details-header {
+    display: flex;
+    justify-content: center;
+    padding-top: 1rem;
+    height: 100px;
+    width: 100%;
+}
+
+.event-details-title-container {
+    width: 80%;
+    min-width: 600px;
+    max-width: 1200px;
+}
+
+.event-details-main-body-container {
+    display: flex;
+    justify-content: center;
+    background-color: rgb(246,247,248);
+    width:100%
+}
+
+.event-details-main-body-inner-container {
+    display: flex;
+    justify-content: space-around;
+    min-width: 600px;
+    max-width: 1200px;
+    width: 80%;
+    min-height: 500px;
+}
+
+.event-details-main-body-left-container {
+    width: 60%;
+    padding-top: 2%;
+}
+
+.event-details-main-body-right-container {
+    width: 30%;
+    padding-top: 2%;
+}
+
+.event-details-main-image {
+    max-height: 350px;
+    height: 50%;
+    max-width: 600px;
+}
+
+.event-details-group-card-container {
+    display: flex;
+    justify-content: space-around;
+    padding:24px;
+    background-color: white;
+    border-radius: 1rem;
+    height: 50px
+}
+
+.event-details-group-image {
+    width:20%;
+    background-color: blue;
+    border-radius: 3px;
+}
+
+.event-details-group-details {
+    display: ;
+    width: 70%;
+
+}
+
+.event-details-group-details-name {
+    padding-bottom: 1rem;
+}
+
+.event-details-time-venue-container {
+    display: flex;
+    flex-direction: column;
+    padding:24px;
+    background-color: white;
+    border-radius: 1rem;
+    min-height: 150px;
+    height: min-content;
+    margin-top: 1rem
+}
+
+.event-details-time {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10% 0%;
+}
+
+.event-details-time time{
+    padding-left: 1rem;
+}

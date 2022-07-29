@@ -47,7 +47,7 @@ export default function EventsCard() {
                             return `${date} ${hours > 12 ? 24 - hours : hours}:${minutes < 10 ? `0${minutes}` : minutes}${hours >= 12 ? `PM` : `AM`} ${timeZone}`
                         }
                         return (
-                            <div className="events-card container" onClick={() => history.push(`/events/${event.id}`)} key={i}>
+                            <div className={`events-card container ${groupId? "details": ""}`} onClick={() => history.push(`/events/${event.id}`)} key={i}>
                                 <div className="events-card image-container">preview image goes here</div>
                                 <div className="events-card info-container" >
                                     <div className="events-card start-date">{startDateString()}</div>

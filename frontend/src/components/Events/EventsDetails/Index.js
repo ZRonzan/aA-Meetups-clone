@@ -6,6 +6,7 @@ import * as sessionGroups from "../../../store/Groups"
 import EventEditFormModal from "../EventEditFromModal/Index";
 import EventsCard from "../../Events/EventsCards/Index";
 import EventDeleteFormModal from "../EventDeleteFormModal/Index";
+import "./EventDetails.css"
 
 export default function EventDetails() {
     const { eventId } = useParams();
@@ -43,56 +44,74 @@ export default function EventDetails() {
 
     return isLoaded && (
         <>
-            <div>
-                <div>{headerDate}</div>
-                <h1>{event.name}</h1>
-                <div
-                    style={{ visibility: `${group.organizerId === user.id ? "visible" : "hidden"}` }}
-                >
-                    <div>
-                        <EventEditFormModal event={event} />
+            <div className="event-details-header">
+                <div className="event-details-title-container">
+                    <div>{headerDate}</div>
+                    <h1>{event.name}</h1>
+                </div>
+            </div>
+
+            <div className="event-details-main-body-container">
+                <div className="event-details-main-body-inner-container">
+
+                    <div className="event-details-main-body-left-container">
+                        <div className="event-details-main-image">PREVIEW IMAGE GOES HERE</div>
+                        <h2>Details</h2>
+                        <p className="event-details-description">
+                            {event.description}
+                        </p>
                     </div>
-                    <div>
-                        <EventDeleteFormModal event={event} groupId={group.id} />
+
+                    <div className="event-details-main-body-right-container">
+                        <div className="event-details-group-card-container">
+                            <div className="event-details-group-image"></div>
+                            <div className="event-details-group-details">
+                                <div className="event-details-group-details-name">{group.name}</div>
+                                <div className="event-details-group-details-privacy">{group.private ? "Private" : "Public"} group</div>
+
+                            </div>
+                        </div>
+                        <div className="event-details-time-venue-container">
+                            <div className="event-details-time">
+                                <i className="fa-solid fa-clock"></i>
+                                <time>{startDate} to {endDate}</time>
+                                {/* <div>{group.name}</div>
+                                <NavLink to={`/groups/${group.id}/events`}>See more events</NavLink> */}
+                            </div>
+                            <div className="event-details-venue">
+                                <div><i className="fa-solid fa-location-dot"></i> {event.Venue ? `${event.Venue.address}, ${event.Venue.city}, ${event.Venue.state} ` : "No venue"}</div>
+                            </div>
+                        </div>
+                        {/* <div>
+                ATTENDEES MAY GO HERE AT SOME POINT
+            </div> */}
                     </div>
                 </div>
             </div>
-            <div>
-                <div>PREVIEW IMAGE GOES HERE</div>
-                <h2>Details</h2>
-                <p>
-                    {event.description}
-                </p>
-            </div>
-            <div>
-                <div>Preview image for group goes here</div>
-                <div><NavLink to={`/groups/${group.id}`}>{group.name}</NavLink></div>
-                <div>{group.private ? "Private" : "Public"} group</div>
-            </div>
-            <div>
-                <time><i className="fa-solid fa-clock"></i> {startDate} to {endDate}</time>
-                <div><i className="fa-solid fa-location-dot"></i> {event.Venue ? `${event.Venue.address}, ${event.Venue.city}, ${event.Venue.state} ` : "No venue"}</div>
-            </div>
-            {/* <div>
-                ATTENDEES MAY GO HERE AT SOME POINT
-            </div> */}
-            <div>
-                <div>{group.name}</div>
-                <NavLink to={`/groups/${group.id}/events`}>See more events</NavLink>
-            </div>
-            <div>
-                <div>
+            <div className="event-details">
+                <div className="event-details">
                     <time dateTime={`${startDate}`} >{startDate}</time>
                     <p>{event.name}</p>
                 </div>
-                <div>
-                    <div>
-                        <div>{event.price !== 0 ? `$${event.price}` : `Free`}</div>
-                        <div>{event.capacity - event.numAttending} spots left</div>
+                <div className="event-details">
+                    <div className="event-details">
+                        <div className="event-details">{event.price !== 0 ? `$${event.price}` : `Free`}</div>
+                        <div className="event-details">{event.capacity - event.numAttending} spots left</div>
                     </div>
                     {/* <div>
                         <button>Attend (ADDITIONAL FEATURE)</button>
                     </div> */}
+                    <div
+                        className="event-details"
+                        style={{ visibility: `${group.organizerId === user.id ? "visible" : "hidden"}` }}
+                    >
+                        <div>
+                            <EventEditFormModal event={event} />
+                        </div>
+                        <div>
+                            <EventDeleteFormModal event={event} groupId={group.id} />
+                        </div>
+                    </div>
                 </div>
             </div>
         </>

@@ -7,6 +7,7 @@
 }
 
 
+
 .events-card.container {
     display: flex;
     border-top: solid 1px rgb(230,230,230);
@@ -15,6 +16,14 @@
     width: 60%;
     min-height: min-content;
     padding: 5px 10px;
+}
+
+.events-card.container.details {
+    margin-top: 5px;
+    background-color: white;
+    border-radius: 10px;
+    border: none;
+    height: 150px
 }
 
 .events-card.container:hover {
