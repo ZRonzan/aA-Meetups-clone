@@ -45,9 +45,14 @@ export default function UserGroupsCards() {
                         <div className="groups-cards container">
                             {organizedGroups.length > 0 && (
                                 organizedGroups.map((group, i) => {
+                                    console.log(group)
                                     return (
                                         <div className="groups-card container" onClick={() => history.push(`/groups/${group.id}`)} key={i}>
-                                            <div className="groups-card image-container">IMAGE GOES HERE</div>
+                                            {!!group && (
+                                            <div className="groups-card image-container">
+                                                <img className="groups-card image"src={group.previewImage[0].imageUrl}></img>
+                                            </div>
+                                            )}
                                             <div className="groups-card info-container">
                                                 <h3 className="groups-card title">{group.name}</h3>
                                                 <div className="groups-card location">{group.city.toUpperCase()}, {group.state}</div>
@@ -73,7 +78,11 @@ export default function UserGroupsCards() {
                                 joinedGroups.map((group, i) => {
                                     return (
                                         <div className="groups-card container" onClick={() => history.push(`/groups/${group.id}`)} key={i}>
-                                            <div className="groups-card image-container">IMAGE GOES HERE</div>
+                                            {!!group && (
+                                            <div className="groups-card image-container">
+                                                <img className="groups-card image"src={group.previewImage[0].imageUrl}></img>
+                                            </div>
+                                            )}
                                             <div className="groups-card info-container">
                                                 <h3 className="groups-card title">{group.name}</h3>
                                                 <div className="groups-card location">{group.city.toUpperCase()}, {group.state}</div>

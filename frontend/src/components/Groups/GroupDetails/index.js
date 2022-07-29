@@ -27,8 +27,8 @@ export default function GroupDetails() {
                 <div className="group-details-page-main-body">
                     <div className="group-details-page-top">
                         <div className="group-details-page-top-container">
-                            <div className="group-details-page-main-image">
-                                IMAGE GOES HERE
+                            <div className="group-details-page-main-image-container">
+                                <img className="group-details-page-main-image" src={group.images[0].imageUrl}></img>
                             </div>
                             <div className="group-details-page-top-details">
                                 <h2 className="group-details-page">{group.name}</h2>

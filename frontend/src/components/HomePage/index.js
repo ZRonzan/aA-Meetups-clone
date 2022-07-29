@@ -6,6 +6,7 @@ import meetUpSplash1 from "../../static-files/online_events.svg"
 import startGroupImg from "../../static-files/joinGroup.svg"
 import findEventImg from "../../static-files/ticket.svg"
 import joinGroupImg from "../../static-files/handsUp.svg"
+import graffitiBG from "../../static-files/graffiti.svg"
 import { Modal } from "../../context/Modal";
 import { useState } from "react";
 import UserSignUpPage from "../Session/SignUpFormModal/SignUpFormModal";
@@ -19,6 +20,9 @@ const HomePage = () => {
         <>
             {/* {!!!user && (
                 <> */}
+            <div className="splash-page-background-div">
+                <img className="splash-page-background" src={graffitiBG} alt="graffiti background"></img>
+            </div>
             <div className="splash-page-intro-container">
                 <div className="splash-page-intro-image-container">
                     <div className="splash-page-title-and-intro-container">

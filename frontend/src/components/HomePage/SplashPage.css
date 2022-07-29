@@ -1,4 +1,9 @@
-
+.splash-page-background {
+    position: absolute;
+    z-index: -20;
+    opacity: 0.05;
+    width: 100%;
+}
 
 .splash-page-intro-container {
     display: flex;

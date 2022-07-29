@@ -55,9 +55,9 @@ export default function EventDetails() {
                 <div className="event-details-main-body-inner-container">
 
                     <div className="event-details-main-body-left-container">
-                        <div className="event-details-main-image">
-                            <img src="https://frenchculture.org/sites/default/files/styles/huge/public/field/image/screen_shot_2017-08-29_at_3.41.10_pm.png?itok=-YB5xLsd" alt="event image"></img>
-                        </div>
+                        {!!event.previewImage.length && (<div className="event-details-main-image">
+                            <img src={event.previewImage[0].imageUrl} alt="event image"></img>
+                        </div>)}
                         <h2>Details</h2>
                         <p className="event-details-description">
                             {event.description}
@@ -66,9 +66,11 @@ export default function EventDetails() {
 
                     <div className="event-details-main-body-right-container">
                         <div className="event-details-group-card-container">
-                            <div className="event-details-group-image">
-                                <img src="https://d32ydbgkw6ghe6.cloudfront.net/production/uploads/cover_images/358978b4bc2933445c7bec1674715f006220/i1080x475.jpg" alt="event image"></img>
-                            </div>
+                            {!!group.images.length && (
+                                <div className="event-details-group-image-container">
+                                    <img className="event-details-group-image" src={group.images[0].imageUrl} alt="event image"></img>
+                                </div>
+                            )}
                             <div className="event-details-group-details" onClick={() => history.push(`/groups/${group.id}`)}>
                                 <div className="event-details-group-details-name">{group.name}</div>
                                 <div className="event-details-group-details-privacy">{group.private ? "Private" : "Public"} group</div>
@@ -112,7 +114,7 @@ export default function EventDetails() {
                             style={{ visibility: `${group.organizerId === user.id ? "visible" : "hidden"}` }}
                         >
                             <div>
-                                <EventEditFormModal event={event}/>
+                                <EventEditFormModal event={event} />
                             </div>
                             <div>
                                 <EventDeleteFormModal event={event} groupId={group.id} />

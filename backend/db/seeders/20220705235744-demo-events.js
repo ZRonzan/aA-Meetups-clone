@@ -6,8 +6,35 @@ module.exports = {
       {
         venueId: 1,
         groupId: 1,
-        name: "Sample Event --- 1 --- for group --- 1 ---",
-        description: "Description for sample event. this will include details of the event happening for group --- 1 ---",
+        name: "Adult Hip-Hop Open Level 4 Week Series",
+        description: `Adult Hip-Hop Open Level
+
+        Mondays (4 weeks)
+
+        April 12, 19, 26
+        May 3
+
+        Time: 8pm-9pm
+
+        Instructor: Adrianna
+
+        Description: This class will help you embrace your own unique personality through music and movement. Spread love, fun, and peace!
+
+        *Please book the dates above in advance for 6 weeks. This is our phase 1 of reopening to ensure students and staff safety. First, come first basis.
+
+        Come inside once class before has cleared.
+
+        Students can join us in three different ways.
+
+        Take in person class at LLDA studio.
+
+        Take virtual class via Zoom Live Streaming.
+
+        Wait a little longer to return to dancing.
+
+        NO REFUNDS. Due to this uncertain time we appreciate your support as we had to make extreme adjustments to provide safety measures for our students.
+
+        CREDIT for boutique or private lessons only.`,
         type: "In Person",
         capacity: 40,
         price: 25.00,

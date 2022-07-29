@@ -1,3 +1,29 @@
+.groups-card.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 29%;
+    height: 70%;
+    margin-right: 1%;
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+.groups-card.image {
+    box-sizing: border-box;
+    height: 100px;
+    width: 150%;
+    object-fit: cover;
+}
+
+.groups-card.about {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: rgb(117,117,117);
+    margin-top: 3%;
+}
+
 .events-groups-toggle-main-container {
     display:flex;
     justify-content: center;
@@ -50,10 +76,6 @@
     cursor: pointer;
 }
 
-.groups-card.image-container {
-    width: 29%;
-    margin-right: 1%;
-}
 
 .groups-card.info-container {
     width: 68%;
@@ -69,10 +91,6 @@
     margin-top: 1%;
 }
 
-.groups-card.about {
-    color: rgb(117,117,117);
-    margin-top: 3%;
-}
 
 .groups-card.members {
     color: rgb(117,117,117);

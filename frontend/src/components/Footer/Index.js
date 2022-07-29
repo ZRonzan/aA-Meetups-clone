@@ -65,6 +65,11 @@ export default function Footer() {
                     <a className="footer-link" href="https://www.linkedin.com/in/zeus-ronzan-b26313104/">LinkedIn</a>
                     <a className="footer-link" href="https://github.com/ZRonzan">GitHub</a>
                 </div>
+                <div className="footer-column">
+                    <div className="footer-column-header">External resources:</div>
+                    <a className="footer-link" href="https://www.vecteezy.com/vector-art/149623-graffiti-abstract-background">Graffiti SVG from Vecteezy</a>
+                    <a className="footer-link" href="https://documenter.getpostman.com/view/1134062/T1LJjU52#4829d16f-0f4e-43ec-886e-68ebad1221d8">Cities data API from getpostman</a>
+                </div>
             </div>
         </div>
     )
