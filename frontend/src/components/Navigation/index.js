@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import ProfileButton from '../Session/ProfileButton';
 import LoginFormModal from '../Session/LoginFormModal/Index';
 import UserSignUpFormModal from '../Session/SignUpFormModal/Index';
@@ -12,6 +12,10 @@ function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);
   const dispatch = useDispatch();
   const url = useLocation().pathname
+
+  const urlSplit = url.split("/")
+  urlSplit.shift()
+  console.log(urlSplit)
 
   const logInDemoUser = () => {
     const demoUser = {
@@ -43,15 +47,19 @@ function Navigation({ isLoaded }) {
       <div className="navigation-left">
         <div className="navigation-home-logo">
           <NavLink className="navigation-navlink" exact to="/">
-            <img src={streetUpLogo} alt="Street-Up logo" style={{height: "4.2rem"}}></img>
+            <img src={streetUpLogo} alt="Street-Up logo" style={{ height: "4.2rem" }}></img>
           </NavLink>
         </div>
       </div>
       <div className="navigation-right">
-        <div className="navigation-start-a-new-group"style={{ visibility: `${(sessionUser && url !== "/forms/group-form") ? "visible" : "hidden"}` }}>
-          <NavLink className="navigation-navlink new-group" to="/forms/group-form">Start a new group</NavLink>
-        </div>
-        <div className={`navigation-right-sessionlinks-container ${sessionUser? "logged-in" : "logged-out"}`}>
+        <div style={{ visibility: `${(urlSplit[0] === "groups" || urlSplit[0] === "events") && urlSplit.length >= 2 && typeof Number(urlSplit[1]) === "number" ? "visible" : "hidden"}` }} className="see-all-event-groups-buttons-container">
+          Back to: <NavLink className="see-all-event-groups-buttons" to="/events"><span>All events</span></NavLink> <NavLink className="see-all-event-groups-buttons" to="/groups"><span>All groups</span></NavLink> <span>or:</span></div>
+        <NavLink className="navigation-navlink new-group" to="/forms/group-form">
+          <div className="navigation-start-a-new-group" style={{ visibility: `${(sessionUser && url !== "/forms/group-form") ? "visible" : "hidden"}` }}>
+            Start a new group
+          </div>
+        </NavLink>
+        <div className={`navigation-right-sessionlinks-container ${sessionUser ? "logged-in" : "logged-out"}`}>
           {isLoaded && sessionLinks}
         </div>
       </div>

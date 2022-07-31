@@ -46,7 +46,7 @@ const HomePage = () => {
                         <div className="splash-page-card-image">
                             <img src={joinGroupImg} alt="Hands up image"></img>
                         </div>
-                        <Link to="/groups"><h3>Find a group</h3></Link>
+                        <Link className="splash-page-links" to="/groups"><h3>Find a group</h3></Link>
                         <p>
                             Do what you love, meet others who love it, find your community. The rest is history!
                         </p>
@@ -55,7 +55,7 @@ const HomePage = () => {
                         <div className="splash-page-card-image">
                             <img src={findEventImg} alt="ticket image"></img>
                         </div>
-                        <Link to="/events"><h3>Find an event</h3></Link>
+                        <Link className="splash-page-links"  to="/events"><h3>Find an event</h3></Link>
                         <p>
                             Events are happening on just about any topic you can think of, from free running and street-art to dance and/or rap battles.
                         </p>
@@ -64,7 +64,7 @@ const HomePage = () => {
                         <div className="splash-page-card-image">
                             <img src={startGroupImg} alt="Group of people image"></img>
                         </div>
-                        <Link to="/forms/group-form"><h3>Start a group</h3></Link>
+                        <Link className="splash-page-links"  to="/forms/group-form"><h3>Start a group</h3></Link>
                         <p>
                             You don’t have to be an expert to gather people together and explore shared interests.
                         </p>

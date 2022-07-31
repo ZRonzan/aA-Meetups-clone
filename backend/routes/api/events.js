@@ -18,7 +18,7 @@ const router = express.Router();
 //middleware to validate body elements when creating/editing an event
 const validateEvents = [
     check('venueId')
-        .custom( async (val) => {
+        .custom(async (val) => {
             if (val) {
                 const foundVenue = await Venue.findByPk(val);
                 if (!foundVenue) {
@@ -40,10 +40,16 @@ const validateEvents = [
         .withMessage("Type must be Online or In Person"),
     check('capacity')
         .isInt({ min: 1 })
-        .withMessage("Capacity must be an integer"),
+        .withMessage("Capacity must be an integer greater than 0"),
+    check('capacity')
+        .isInt({ max: 1000000000 })
+        .withMessage("Provided capacity is too high. Why would you even have an event that hosts this many people?"),
     check('price')
         .isCurrency({ allow_negatives: false, digits_after_decimal: [0, 1, 2] })
         .withMessage("Price is invalid"),
+    check('price')
+        .custom((val) => val <= 1000000000)
+        .withMessage("Price is too high. who is event going to attend this? Jeff Bezos?"),
     check('description')
         .exists({ checkFalsy: true })
         .withMessage("Description is required"),
@@ -155,7 +161,7 @@ router.get(
             include: [
                 { model: Group, attributes: ['id', 'name', 'private', 'city', 'state'] },
                 { model: Venue, attributes: ['id', 'address', 'city', 'state', 'lat', 'lng'] },
-                { model: Image, as: 'previewImage', attributes: ['imageUrl']}
+                { model: Image, as: 'previewImage', attributes: ['imageUrl'] }
             ],
             attributes: {
                 exclude: ['createdAt', 'updatedAt'],
@@ -221,9 +227,9 @@ router.get(
         }
 
         if (startDate) {
-            if (!isNaN(Date.parse(startDate))) queries.where.startDate =  startDate;
+            if (!isNaN(Date.parse(startDate))) queries.where.startDate = startDate;
         }
-        if (name) queries.where.name = {[Op.substring]: name};
+        if (name) queries.where.name = { [Op.substring]: name };
         if (type) queries.where.type = type;
 
 

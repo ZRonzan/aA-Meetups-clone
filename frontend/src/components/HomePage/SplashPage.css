@@ -83,3 +83,12 @@
     cursor: pointer;
     background-color: rgb(0, 96, 109);
 }
+
+.splash-page-links {
+    text-decoration: none;
+    color: rgb(0,130,148);
+}
+
+.splash-page-links:hover {
+    text-decoration: underline;
+}

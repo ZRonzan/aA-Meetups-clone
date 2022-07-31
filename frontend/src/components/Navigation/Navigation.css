@@ -79,6 +79,24 @@
     color: rgb(0, 152, 171);
 }
 
+.see-all-event-groups-buttons-container {
+    margin-right: 5px
+}
+
+.see-all-event-groups-buttons {
+    text-decoration: none;
+    color: white;
+    background-color: rgb(0, 130, 148);
+    padding: 10px 10px;
+    border-radius: 7px;
+}
+
+.see-all-event-groups-buttons:hover {
+    background-color: rgb(0, 96, 109);
+    padding: 10px 10px;
+    border-radius: 7px;
+}
+
 .navigation-start-a-new-group {
     background-color: rgb(0, 130, 148);
     padding: 10px 10px;

@@ -65,11 +65,11 @@ export default function EventDetails() {
                     </div>
 
                     <div className="event-details-main-body-right-container">
-                        <div className="event-details-group-card-container">
+                        <div className="event-details-group-card-container" onClick={() => history.push(`/groups/${group.id}`)}>
                             {!!group.images.length && (
                                 <img className="event-details-group-image-container" src={group.images[0].imageUrl} alt="event image"></img>
                             )}
-                            <div className="event-details-group-details" onClick={() => history.push(`/groups/${group.id}`)}>
+                            <div className="event-details-group-details" >
                                 <div className="event-details-group-details-name">{group.name}</div>
                                 <div className="event-details-group-details-privacy">{group.private ? "Private" : "Public"} group</div>
 

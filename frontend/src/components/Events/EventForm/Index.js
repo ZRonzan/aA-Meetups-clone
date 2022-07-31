@@ -141,7 +141,6 @@ const EventForm = ({ setShowModalEvent }) => {
     <>
       <div className="create-an-event-form-main-body-container">
         <div className="create-an-event-form-container">
-          <NavLink to={`/groups/${groupId}/events`}>Go back</NavLink>
           <h1 className="create-an-event-form-title">{eventId ? "Edit your event" : "Create your event"}</h1>
           <div className="create-an-event-form-errors">
             {!!error.errors && (error.errors.length > 0 && (
@@ -242,6 +241,7 @@ const EventForm = ({ setShowModalEvent }) => {
               </input>
             </label>
             <button className="create-an-event-form">Submit {eventId ? "edit" : "new event"}</button>
+            <NavLink className="create-a-group-form-go-home" to={`/groups/${groupId}/events`}>Actually, I've changed my mind. Take me back...</NavLink>
           </form>
         </div>
       </div>

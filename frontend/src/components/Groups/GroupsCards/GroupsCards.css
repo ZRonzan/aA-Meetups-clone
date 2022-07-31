@@ -2,9 +2,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    object-fit: cover;
     width: 29%;
     height:70%;
-    max-height: 150px;
+    max-height: 120px;
     margin-right: 1%;
     border-radius: 10px;
 }
@@ -61,7 +62,7 @@
     min-width: 600px;
     max-width: 900px;
     width:60%;
-    min-height: min-content;
+    min-height: 150px;
     padding: 5px 10px;
 }
 
