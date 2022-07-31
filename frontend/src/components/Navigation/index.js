@@ -51,14 +51,18 @@ function Navigation({ isLoaded }) {
         </div>
       </div>
       <div className="navigation-right">
-        <div style={{ visibility: `${(urlSplit[0] === "groups" || urlSplit[0] === "events") && urlSplit.length >= 2 && typeof Number(urlSplit[1]) === "number" ? "visible" : "hidden"}` }} className="see-all-event-groups-buttons-container">
-          Back to: <NavLink className="see-all-event-groups-buttons" to="/events"><span>All events</span></NavLink> <NavLink className="see-all-event-groups-buttons" to="/groups"><span>All groups</span></NavLink> <span>or:</span></div>
+        {sessionUser && (<div style={{ visibility: `${(urlSplit[0] === "groups" || urlSplit[0] === "events") && urlSplit.length >= 2 && typeof Number(urlSplit[1]) === "number" ? "visible" : "hidden"}` }} className="see-all-event-groups-buttons-container">
+          Back to: <NavLink className="see-all-event-groups-buttons" to="/events"><span>All events</span></NavLink> <NavLink className="see-all-event-groups-buttons" to="/groups"><span>All groups</span></NavLink> <span>or:</span>
+        </div>)}
         <NavLink className="navigation-navlink new-group" to="/forms/group-form">
           <div className="navigation-start-a-new-group" style={{ visibility: `${(sessionUser && url !== "/forms/group-form") ? "visible" : "hidden"}` }}>
             Start a new group
           </div>
         </NavLink>
         <div className={`navigation-right-sessionlinks-container ${sessionUser ? "logged-in" : "logged-out"}`}>
+          {!sessionUser && (<div style={{ visibility: `${(urlSplit[0] === "groups" || urlSplit[0] === "events") && urlSplit.length >= 2 && typeof Number(urlSplit[1]) === "number" ? "visible" : "hidden"}` }} className="see-all-event-groups-buttons-container">
+            Back to: <NavLink className="see-all-event-groups-buttons" to="/events"><span>All events</span></NavLink> <NavLink className="see-all-event-groups-buttons" to="/groups"><span>All groups</span></NavLink>
+          </div>)}
           {isLoaded && sessionLinks}
         </div>
       </div>
