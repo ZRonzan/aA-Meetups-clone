@@ -15,7 +15,6 @@ function Navigation({ isLoaded }) {
 
   const urlSplit = url.split("/")
   urlSplit.shift()
-  console.log(urlSplit)
 
   const logInDemoUser = () => {
     const demoUser = {
