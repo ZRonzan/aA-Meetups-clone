@@ -49,7 +49,7 @@ const validateEvents = [
         .withMessage("Price is invalid"),
     check('price')
         .custom((val) => val <= 1000000000)
-        .withMessage("Price is too high. who is event going to attend this? Jeff Bezos?"),
+        .withMessage("Price is too high. who is even going to attend this? Jeff Bezos?"),
     check('description')
         .exists({ checkFalsy: true })
         .withMessage("Description is required"),
