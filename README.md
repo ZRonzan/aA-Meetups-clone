@@ -1,6 +1,6 @@
 # About Street-Up
 
-Street-Up is an application inspired by Meetup, providing a place for users to create and join groups and events centered around more urban inspired interests and activities.
+Street-Up is an application inspired by [Meetup](https://www.meetup.com/), providing a place for users to create and join groups and events centered around more urban inspired interests and activities.
 
 Grab your interest? why not [check it out](https://street-up.herokuapp.com/)?
 
