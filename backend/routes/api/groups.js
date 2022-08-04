@@ -87,9 +87,15 @@ const validateEvents = [
     check('capacity')
         .isInt({ min: 1 })
         .withMessage("Capacity must be an integer greater than 0"),
+        check('capacity')
+        .isInt({ max: 1000000000 })
+        .withMessage("Provided capacity is too high. Why would you even have an event that hosts this many people?"),
     check('price')
         .isCurrency({ allow_negatives: false, digits_after_decimal: [0, 1, 2] })
         .withMessage("Price is invalid"),
+    check('price')
+        .custom((val) => val <= 1000000000)
+        .withMessage("Price is too high. who is even going to attend this? Jeff Bezos?"),
     check('description')
         .exists({ checkFalsy: true })
         .withMessage("Description is required"),
