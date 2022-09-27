@@ -148,7 +148,7 @@ export default function GroupMembers() {
                 Object.values(members).sort((a, b) => a.lastName - b.lastName)
                     .map((member, i) => {
                         const memberStatus = member.Membership[0].status
-
+                        let showStatus = true
                         return user? member.id !== user.id ? (
                             <div className="member-card" key={i}>
                                 <div
@@ -182,7 +182,9 @@ export default function GroupMembers() {
                                     >
                                         {memberStatus === "Pending" && (
                                             <button
-                                                onClick={() => handleStatusChange("Member", member.id)}
+                                                onClick={() =>{
+                                                    handleStatusChange("Member", member.id)
+                                                }}
                                                 className="member-status-buttons"
                                             >
                                                 Approve
@@ -190,10 +192,22 @@ export default function GroupMembers() {
                                         )}
                                         {userStatus === "Organizer" && memberStatus !== "Co-Host" && (
                                             <button
-                                                onClick={() => handleStatusChange("Co-Host", member.id)}
+                                                onClick={() => {
+                                                    handleStatusChange("Co-Host", member.id)
+                                                }}
                                                 className="member-status-buttons"
                                             >
                                                 Make Co-Host
+                                            </button>
+                                        )}
+                                        {userStatus === "Organizer" && memberStatus === "Co-Host" && (
+                                            <button
+                                                onClick={() => {
+                                                    handleStatusChange("Member", member.id)
+                                                }}
+                                                className="member-status-buttons"
+                                            >
+                                                Revoke Co-Host
                                             </button>
                                         )}
                                         {userStatus === "Organizer" && (

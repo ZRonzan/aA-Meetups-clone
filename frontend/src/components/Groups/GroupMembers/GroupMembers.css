@@ -49,8 +49,15 @@
 }
 
 .member-attendee-status {
+    position: relative;
     font-size: 0.8rem;
     color: grey;
+    animation: slideUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes slideUp {
+    from {opacity: 0;}
+    to {opacity: 1;}
 }
 
 .member-status-buttons-container {
@@ -76,6 +83,7 @@
     border: none;
     border-radius: 5px;
     margin: 0.25rem 0;
+    animation: scaleUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .member-status-buttons:hover {
