@@ -4,8 +4,8 @@
     align-items: center;
     object-fit: cover;
     width: 29%;
-    height:70%;
-    max-height: 120px;
+    height:90%;
+    max-height: 140px;
     margin-right: 1%;
     border-radius: 10px;
 }
@@ -57,13 +57,16 @@
 
 
 .groups-card.container {
+    position: relative;
     display: flex;
+    align-items: center;
     border-top: solid 1px rgb(230,230,230);
     min-width: 600px;
     max-width: 900px;
     width:60%;
     min-height: 150px;
     padding: 5px 10px;
+    animation: slideInLeft 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .groups-card.container:hover {

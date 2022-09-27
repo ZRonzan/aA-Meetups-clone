@@ -21,7 +21,7 @@ const validateGroups = [
         .isLength({ max: 60 })
         .withMessage('Name must be 60 characters or less'),
     check('name')
-        .isLength({min: 1})
+        .isLength({ min: 1 })
         .withMessage('Please enter a Name for the group'),
     check('about')
         .isLength({ min: 50 })
@@ -64,7 +64,7 @@ const validateVenues = [
 
 const validateEvents = [
     check('venueId')
-        .custom( async (val) => {
+        .custom(async (val) => {
             if (val) {
                 const foundVenue = await Venue.findByPk(val);
                 if (!foundVenue) {
@@ -87,7 +87,7 @@ const validateEvents = [
     check('capacity')
         .isInt({ min: 1 })
         .withMessage("Capacity must be an integer greater than 0"),
-        check('capacity')
+    check('capacity')
         .isInt({ max: 1000000000 })
         .withMessage("Provided capacity is too high. Why would you even have an event that hosts this many people?"),
     check('price')
@@ -150,6 +150,54 @@ router.get(
         }
 
         res.json(foundMembers)
+    }
+);
+
+//Get current user status of a group
+router.get(
+    '/:groupId/status',
+    requireAuth,
+    async (req, res, next) => {
+
+        const foundGroup = await Group.findByPk(req.params.groupId);
+
+        if (!foundGroup) {
+            let err = new Error("Group couldn't be found")
+            err.status = 404
+            return next(err)
+        };
+
+        let groupStatus;
+
+        if (req.user && req.user.id && req.user.id === foundGroup.organizerId) {
+            groupStatus = {
+                "currentGroupStatus": "Organizer"
+            }
+        } else if (req.user && req.user.id) {
+            foundUser = await User.findOne({
+                include: {
+                    model: Member,
+                    as: 'Membership',
+                    attributes: ['status'],
+                    where: {
+                        groupId: req.params.groupId,
+                        memberId: req.user.id
+                    }
+                }
+            });
+            console.log(foundUser)
+            if (foundUser) {
+                groupStatus = {
+                    "currentGroupStatus": foundUser.Membership[0].status
+                }
+            } else {
+                groupStatus = {
+                    "currentGroupStatus": "None"
+                }
+            }
+        }
+
+        res.json(groupStatus)
     }
 );
 
@@ -393,6 +441,7 @@ router.post(
         }
     }
 )
+
 
 
 //Request membership for a group based on the group Id

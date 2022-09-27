@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { NavLink, Route, Switch, useParams, Link, useHistory } from "react-router-dom";
 import * as sessionGroups from "../../../store/Groups"
+import * as sessionMembers from "../../../store/Members"
 import EventsCard from "../../Events/EventsCards/Index";
 import GroupDeleteFormModal from "../GroupDeleteFormModal/Index";
 import GroupEditFormModal from "../GroupEditFormModal/Index";
+import GroupMembers from "../GroupMembers";
 import "./GroupDetails.css"
 
 export default function GroupDetails() {
@@ -14,12 +16,32 @@ export default function GroupDetails() {
 
     const group = useSelector(state => state.groups.groupDetails);
     const user = useSelector(state => state.session.user)
+    const members = useSelector(state => state.members.currentGroupMembers)
+    const userStatus = useSelector(state => state.members.currentGroupStatus)
 
     const [isLoaded, setIsLoaded] = useState(false)
 
     useEffect(() => {
-        dispatch(sessionGroups.getGroupByIdThunk(Number(groupId))).then(() => setIsLoaded(true))
-    }, [dispatch])
+        dispatch(sessionGroups.getGroupByIdThunk(Number(groupId)))
+            .then(() => {
+                if (user) {
+                    console.log("USER EXISTS")
+                    dispatch(sessionMembers.getCurrentmembershipThunk(groupId))
+                }
+            })
+            .then(() => dispatch(sessionMembers.getAllMembersThunk(Number(groupId))))
+            .then(() => setIsLoaded(true))
+    }, [dispatch, user])
+
+    const handleJoin = async () => {
+        await dispatch(sessionMembers.requestMembershipThunk(groupId))
+        await dispatch(sessionMembers.getCurrentmembershipThunk(groupId))
+    }
+
+    const handleLeave = async (deletedMember) => {
+        await dispatch(sessionMembers.deleteMembershipThunk(groupId, deletedMember))
+        await dispatch(sessionMembers.getCurrentmembershipThunk(groupId))
+    }
 
     return (
         <>
@@ -48,14 +70,35 @@ export default function GroupDetails() {
                                 <NavLink className="group-details-page-navlink" to={`/groups/${groupId}/events`}>
                                     Events
                                 </NavLink>
+                                <NavLink className="group-details-page-navlink" to={`/groups/${groupId}/members`}>
+                                    Members
+                                </NavLink>
                             </div>
-                            {/* <button> Join This Group </button> */}
-                            {user && group.organizerId === user.id && (
-                                <div className="group-details-page-edit-delete-container">
-                                    <GroupEditFormModal group={group} />
-                                    <GroupDeleteFormModal group={group} />
-                                </div>
-                            )}
+                            <div className="group-details-page-edit-delete-container">
+                                {user && group.organizerId !== user.id && (
+                                    <>
+                                        { (!group.private || (group.private && (members[user.id] || userStatus === "Pending" ))) && (<button
+                                            className={`join-leave-button ${!members[user.id] && userStatus !== "Pending" ? 'join' : 'leave'}`}
+                                            onClick={() => {
+                                                !members[user.id] && userStatus !== "Pending" ? handleJoin() : handleLeave(user.id)
+                                            }}
+                                        >
+                                            {`${!members[user.id] && userStatus !== "Pending" ? 'Join' : 'Leave'} This Group`}
+                                        </button>)}
+                                        <div
+                                            className={`group-membership-status ${(userStatus === "Pending" || userStatus === "Member") ? "open" : "closed"}`}
+                                        >
+                                            {`Membership status: ${userStatus}`}
+                                        </div>
+                                    </>
+                                )}
+                                {user && group.organizerId === user.id && (
+                                    <>
+                                        <GroupEditFormModal group={group} />
+                                        <GroupDeleteFormModal group={group} />
+                                    </>
+                                )}
+                            </div>
                         </nav>
                     </div>
                     <div className="group-details-page-navlink-details-events">
@@ -78,6 +121,9 @@ export default function GroupDetails() {
                                         </button>
                                     </div>
                                     <EventsCard groupId={groupId} />
+                                </Route>
+                                <Route path="/groups/:groupId/members">
+                                    <GroupMembers />
                                 </Route>
                             </Switch>
                         </div>
