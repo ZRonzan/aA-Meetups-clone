@@ -124,7 +124,15 @@ router.get(
 
         let foundMembers;
 
-        if (req.user && req.user.id && req.user.id === foundGroup.organizerId) {
+        const foundCoHost = await Member.findOne({
+            where: {
+                groupId: req.params.groupId,
+                memberId: req.user.id,
+                status: "Co-Host"
+            }
+        })
+
+        if (req.user && req.user.id && (req.user.id === foundGroup.organizerId || foundCoHost)) {
             foundMembers = await User.findAll({
                 include: {
                     model: Member,

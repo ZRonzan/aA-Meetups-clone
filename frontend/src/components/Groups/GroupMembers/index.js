@@ -126,7 +126,7 @@ export default function GroupMembers() {
 
     useEffect(() => {
         console.log(user)
-        if(user) dispatch(sessionMembers.getCurrentmembershipThunk())
+        if(user) dispatch(sessionMembers.getCurrentmembershipThunk(groupId))
         setIsLoaded(true)
     }, [dispatch]);
 
@@ -135,7 +135,6 @@ export default function GroupMembers() {
             "memberId": memberId,
             "status": newStatus
         }
-        console.log("EDITING++++++++++++++", editedMember)
         await dispatch(sessionMembers.editMembershipThunk(groupId, editedMember))
     }
 

@@ -86,7 +86,7 @@ export default function GroupDetails() {
                                             {`${!members[user.id] && userStatus !== "Pending" ? 'Join' : 'Leave'} This Group`}
                                         </button>)}
                                         <div
-                                            className={`group-membership-status ${(userStatus === "Pending" || userStatus === "Member") ? "open" : "closed"}`}
+                                            className={`group-membership-status ${(userStatus === "Pending" || userStatus === "Member" || userStatus === "Co-Host") ? "open" : "closed"}`}
                                         >
                                             {`Membership status: ${userStatus}`}
                                         </div>
