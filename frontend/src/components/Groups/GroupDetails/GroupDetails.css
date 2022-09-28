@@ -22,7 +22,7 @@
 }
 
 .group-details-page-main-image-container {
-    display:flex;
+    display: flex;
     justify-content: center;
     align-items: center;
     object-fit: cover;
@@ -46,10 +46,11 @@
 }
 
 .group-details-page-nav-main-container {
-    display:flex;
+    display: flex;
     justify-content: center;
     width: 100%;
-    border-top: 1px solid rgb(117,117,117)
+    border-top: 1px solid rgb(117, 117, 117);
+    min-height: 70px;
 }
 
 .group-details-page-nav-bar-container {
@@ -70,7 +71,32 @@
 }
 
 .group-details-page-navlink:hover {
-    color: rgb(0,152,171);
+    color: rgb(0, 152, 171);
+}
+
+.group-membership-status.closed {
+    visibility: hidden;
+    opacity: 0;
+    width: 0;
+    overflow: hidden;
+    font-size: 0.78em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* animation: slideOpen 1s both; */
+    transition: width 0.5s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 1s;
+}
+
+.group-membership-status.open {
+    font-size: 0.78em;
+    overflow: hidden;
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 1rem;
+    /* animation: slideOpen 1s both; */
+    transition: width 0.5s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 1s;
 }
 
 .group-details-page-nav-bar-container {
@@ -82,32 +108,54 @@
     padding: 10px 1px
 }
 
-.group-details-page-edit-delete-container{
+.group-details-page-edit-delete-container {
     display: flex;
     justify-content: flex-end;
-    width:50%
+    width: 50%
 }
 
-.group-details-page-edit-delete-container button{
-    background-color: rgb(246,88,88);
+.group-details-page-edit-delete-container button {
+    background-color: rgb(246, 88, 88);
     color: white;
     font-weight: bold;
     padding: 4%;
     border: none;
     border-radius: 5px;
     margin-left: 5px;
+    animation: scaleUp 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
-.group-details-page-edit-delete-container button:hover{
+.group-details-page-edit-delete-container button:hover {
     background-color: rgb(245, 132, 132);
     cursor: pointer;
+}
+
+.join-leave-button {
+    min-width: 140px;
+    animation: scaleUp 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+    transition: background-color 0.5s;
+}
+
+.join-leave-button.join{
+    background-color:#008294;
+    transition: background-color 1s;
+}
+
+.join-leave-button.join:hover {
+    background-color:#00606d;
+    cursor: pointer;
+}
+
+@keyframes scaleUp {
+    from {scale: 0;}
+    to {scale: 100%;}
 }
 
 .group-details-page-navlink-details-events {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: rgb(246,247,248);
+    background-color: rgb(246, 247, 248);
     width: 100%;
     min-height: 450px;
 }
@@ -126,7 +174,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgb(0,152,171);
+    background-color: rgb(0, 152, 171);
     color: white;
     font-weight: bold;
     padding: 4%;
@@ -138,5 +186,5 @@
 }
 
 .group-details-page-create-event-button:hover {
-    background-color: rgb(0,130,148);
+    background-color: rgb(0, 130, 148);
 }

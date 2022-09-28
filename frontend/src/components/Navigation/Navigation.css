@@ -1,4 +1,6 @@
 .demo-user-login-button {
+    display: flex;
+    align-items: center;
     font-weight: bold;
 }
 
@@ -11,7 +13,9 @@
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid rgb(230, 230, 230);
-    height: 55px;
+    min-height: 55px;
+    height: min-content;
+    min-width: 600px;
 }
 
 .navigation-navlink {
@@ -32,7 +36,7 @@
     display: flex;
     justify-content: right;
     align-items: center;
-    width: 50%
+    width: 70%
 }
 
 .navigation-right-profile {
@@ -80,7 +84,11 @@
 }
 
 .see-all-event-groups-buttons-container {
-    margin-right: 5px
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 5px;
+    width: 260px;
 }
 
 .see-all-event-groups-buttons {
@@ -126,6 +134,13 @@
     min-width: max-content;
     top: 110%;
     left: -100%;
+    animation: slideIn 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+    will-change: top;
+}
+
+@keyframes slideIn {
+    from {top: 50%; opacity: 0;}
+    to {top: 110%; opacity: 100%;}
 }
 
 .navigation-right-sessionlinks-link {
@@ -145,8 +160,7 @@
 
 .navigation-right-sessionlinks-link:hover,
 .log-out:hover {
-    color: rgb(95, 95, 95);
-    font-weight: bolder;
+    color: rgb(203, 203, 203);
     cursor: pointer;
 }
 
@@ -161,6 +175,8 @@
 }
 
 .navigation-log-in-and-sign-up-buttons {
+    display: flex;
+    align-items: center;
     font-weight: bold;
     margin-left: 20px
 }
