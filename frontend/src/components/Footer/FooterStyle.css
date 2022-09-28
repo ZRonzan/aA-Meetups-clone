@@ -2,6 +2,7 @@
 .footer-main-container {
     display: flex;
     min-height: 520px;
+    min-width: 600px;
     flex-direction: column;
     background-color:  #212121;
     color: rgb(255, 255, 255);

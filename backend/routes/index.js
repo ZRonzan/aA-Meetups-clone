@@ -6,6 +6,8 @@ const apiRouter = require('./api');
 router.use('/api', apiRouter);
 
 if (process.env.NODE_ENV !== 'production') {
+
+  console.log("SHOULDN'T BE IN HERE")
   router.get('/api/csrf/restore', (req, res) => {
     res.cookie('XSRF-TOKEN', req.csrfToken());
     return res.json({});
@@ -51,6 +53,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 router.get("/api/csrf/restore", (req, res) => {
   const csrfToken = req.csrfToken();
+  console.log("IN HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE")
   res.cookie("XSRF-TOKEN", csrfToken);
   res.status(200).json({
     'XSRF-Token': csrfToken

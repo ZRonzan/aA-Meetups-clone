@@ -10,15 +10,24 @@
 
 .events-card.container {
     display: flex;
+    position: relative;
     border-top: solid 1px rgb(230,230,230);
     min-width: 600px;
     max-width: 900px;
     width: 60%;
     min-height: 150px;
     padding: 5px 10px;
+    animation: slideInLeft 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes slideInLeft {
+    from {left: -2%; opacity: 0;}
+    to {left: 0; opacity: 1;}
 }
 
 .events-card.container.details {
+    display: flex;
+    align-items: center;
     margin-top: 5px;
     background-color: white;
     border-radius: 10px;
@@ -32,8 +41,8 @@
 
 .events-card.image-container {
     width: 29%;
-    height:70%;
-    max-height: 120px;
+    height:90%;
+    max-height: 140px;
     object-fit: cover;
     margin-right: 1%;
     border-radius: 10px;
