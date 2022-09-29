@@ -41,6 +41,9 @@ export default function EventAttendees() {
                                 dispatch(sessionMembers.getCurrentmembershipThunk(res.Group.id))
                             }
                         })
+                } else {
+                    history.push("/404-not-found")
+                    return
                 }
             })
             .then(() => dispatch(sessionAttendees.getAllAttendeesThunk(eventId)))
