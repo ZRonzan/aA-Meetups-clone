@@ -197,10 +197,11 @@ const EventFormModal = ({ setShowModalEvent }) => {
               </select>
             </label>
             <label className="create-a-modal-event-form">
-              Capacity: <input className="create-a-modal-event-form"
+              {`Capacity (cannot be lower than the current number of attendees: ${event.numAttending}):`} <input className="create-a-modal-event-form"
                 type="number"
                 onChange={(e) => setCapacity(e.target.value)}
                 value={capacity}
+                min={event.numAttending}
               >
               </input>
             </label>

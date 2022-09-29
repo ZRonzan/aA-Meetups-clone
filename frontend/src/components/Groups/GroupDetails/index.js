@@ -25,7 +25,6 @@ export default function GroupDetails() {
         dispatch(sessionGroups.getGroupByIdThunk(Number(groupId)))
             .then(() => {
                 if (user) {
-                    console.log("USER EXISTS")
                     dispatch(sessionMembers.getCurrentmembershipThunk(groupId))
                 }
             })
@@ -75,7 +74,7 @@ export default function GroupDetails() {
                                 </NavLink>
                             </div>
                             <div className="group-details-page-edit-delete-container">
-                                {user && group.organizerId !== user.id && (
+                                {!!user && group.organizerId !== user.id && (
                                     <>
                                         { (!group.private || (group.private && (members[user.id] || userStatus === "Pending" ))) && (<button
                                             className={`join-leave-button ${!members[user.id] && userStatus !== "Pending" ? 'join' : 'leave'}`}

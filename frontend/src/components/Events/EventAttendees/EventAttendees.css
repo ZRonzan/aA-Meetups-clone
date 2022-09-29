@@ -1,0 +1,94 @@
+/* divs inside event details component */
+.event-details-attendees-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    min-height: 250px;
+    padding-bottom: 1rem;
+    height: min-content;
+    background-color: rgb(246,247,248);
+}
+
+.event-details-attendees-inner-container {
+    width: 70%;
+    min-width: 600px;
+    max-width: 1000px;
+}
+
+.event-details-attendees-cards-container {
+    display: flex;
+}
+
+
+.event-details-attendee-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    width: 17%;
+    min-width: 150px;
+    background-color: white;
+    height: 150px;
+    margin: 0.25rem 0.5rem 0.25rem 0;
+    padding: 0.25rem 0;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.05);
+    animation: scaleUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.event-details-attendee-card.border {
+    height: 170px;
+    width: 0;
+    max-width: 0;
+    min-width: 0;
+    border-radius: 0;
+    margin: 0 1rem 0 0.5rem;
+    padding: 0 0;
+    border-right: 1px solid rgb(210, 210, 210);
+}
+
+.member-attendee-name-status-container.event-details-page {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    overflow-x: auto;
+}
+
+.member-attendee-name.title {
+    margin-top: 1rem;
+    font-size: 22px;
+}
+
+.view-all-attendees-link {
+    margin-bottom: 1rem;
+    text-decoration: none;
+    color: rgb(134, 134, 134);
+}
+
+.view-all-attendees-link:hover {
+    margin-bottom: 1rem;
+    text-decoration: none;
+    color: #008294;
+}
+
+/* Event attendees component */
+
+.attendees-header-link {
+    text-decoration: none;
+    color: black;
+}
+
+.attendees-header-link:hover {
+    text-decoration: none;
+    color: #008294;
+    cursor: pointer;
+}
+
+.attendees-cards-container-outer {
+    min-height: 80vh;
+    height: min-content;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: rgb(246,247,248);
+}

@@ -1,4 +1,5 @@
 import { csrfFetch } from "./csrf";
+import * as sessionAttendees from "./Attendees"
 
 const GET_ALL_MEMBERS = "members/GET_ALL_MEMBERS"
 const GET_MEMBER_STATUS = "members/GET_MEMBER_STATUS"
@@ -83,6 +84,29 @@ export const deleteMembershipThunk = (groupId, deletedMember) => async (dispatch
 
     const data = await response.json()
     if (response.ok) {
+        await dispatch(deleteAllAttendanceThunk(groupId, deletedMember))
+        return data;
+    } else {
+        console.log(data)
+        return data;
+    }
+}
+
+export const deleteAllAttendanceThunk = (groupId, userId) => async (dispatch) => {
+    console.log(userId, "DELETING ALL ATTENDANCE")
+    const response = await csrfFetch(`/api/groups/${groupId}/eventAttendance/all`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            "userId": userId
+        })
+    })
+
+    const data = await response.json()
+    if (response.ok) {
+        console.log(data)
         await dispatch(getAllMembersThunk(groupId))
         return data;
     } else {

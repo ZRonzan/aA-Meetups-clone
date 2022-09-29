@@ -11,16 +11,18 @@ export default function EventsCard() {
     const { groupId } = useParams()
 
     let events = useSelector(state => Object.values(state.events.eventsList));
+    let currentUserGroupStatus = useSelector(state => state.members.currentGroupStatus)
 
     const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
+        // setIsLoaded(false)
         if (groupId) {
             dispatch(sessionEvents.getAllEventsForGroupIdThunk(Number(groupId))).then(() => setIsLoaded(true));
         } else {
             dispatch(sessionEvents.getAllEventsThunk()).then(() => setIsLoaded(true));
         };
-    }, [dispatch]);
+    }, [dispatch, currentUserGroupStatus]);
 
     return (
         <div className="events-cards-container">

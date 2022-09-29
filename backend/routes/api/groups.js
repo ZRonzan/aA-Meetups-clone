@@ -3,7 +3,7 @@ const express = require('express')
 
 //importing authentication middleware and models from phase 03:
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
-const { Group, sequelize, Member, User, Image, Event, Venue } = require('../../db/models');
+const { Group, sequelize, Member, User, Image, Event, Venue, Attendee } = require('../../db/models');
 //------------------------------------------------------------------
 //---------------importing for phase 05-----------------------------
 const { check } = require('express-validator');
@@ -193,7 +193,6 @@ router.get(
                     }
                 }
             });
-            console.log(foundUser)
             if (foundUser) {
                 groupStatus = {
                     "currentGroupStatus": foundUser.Membership[0].status
@@ -631,6 +630,51 @@ router.delete(
             err.status = 400;
             return next(err);
         }
+    }
+);
+
+//Delete all attendance records for a group specified by its id
+router.delete(
+    '/:groupId/eventAttendance/all',
+    requireAuth,
+    async (req, res, next) => {
+
+        const foundGroup = await Group.findByPk(req.params.groupId)
+
+        if (!foundGroup) {
+            const err = new Error("Group couldn't be found");
+            err.status = 404;
+            return next(err);
+        }
+
+        if (foundGroup.organizerId !== req.user.id && req.body.userId !== req.user.id) {
+            const err = new Error("Current user is not the owner of the group, or the user whose attendance is being deleted");
+            err.status = 404;
+            return next(err);
+        }
+
+        const foundEvents = await Event.findAll({
+            where: {
+                groupId: req.params.groupId
+            }
+        });
+
+        for (let i = 0; i < foundEvents.length; i++) {
+            const foundAttendee = await Attendee.findOne({
+                where:{
+                    eventId: foundEvents[i].id,
+                    userId: req.body.userId
+                }
+            })
+
+            if(foundAttendee) {
+                await foundAttendee.destroy();
+            }
+        }
+
+        res.json({
+            "message": "All attendance records for this group successfully deleted"
+        })
     }
 );
 

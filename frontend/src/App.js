@@ -15,6 +15,7 @@ import EventDetails from "./components/Events/EventsDetails/Index";
 import EventForm from "./components/Events/EventForm/Index";
 import Footer from "./components/Footer/Index";
 import UserSignUpPage from "./components/Session/UserSignUpPage";
+import EventAttendees from "./components/Events/EventAttendees";
 
 function App() {
 
@@ -62,6 +63,9 @@ function App() {
           </Route>
           <Route path="/groups/:groupId">
             <GroupDetails />
+          </Route>
+          <Route exact path="/events/:eventId/attendees">
+            <EventAttendees />
           </Route>
           <Route exact path="/events/:eventId">
             <EventDetails />

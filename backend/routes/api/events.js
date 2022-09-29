@@ -107,15 +107,20 @@ router.get(
             return next(err);
         };
 
-        const foundCoHost = await Member.findOne({
-            where: {
-                groupId: foundEvent.groupId,
-                memberId: req.user.id,
-                status: "Co-Host"
-            }
-        })
+        let foundCoHost;
 
-        if (foundGroup.organizerId === req.user.id || foundCoHost) {
+        if (req.user) {
+            foundCoHost = await Member.findOne({
+                where: {
+                    groupId: foundEvent.groupId,
+                    memberId: req.user.id,
+                    status: "Co-Host"
+                }
+            })
+
+        }
+
+        if (req.user && (foundGroup.organizerId === req.user.id || foundCoHost)) {
             const foundMembersWithPending = await User.findAll({
                 include: [
                     {
@@ -150,6 +155,62 @@ router.get(
             res.json({ Attendees: foundMembersWithoutPending });
         }
 
+    }
+)
+
+//Get current user status of event/group
+router.get(
+    '/:eventId/status',
+    requireAuth,
+    async (req, res, next) => {
+
+        const foundEvent = await Event.findByPk(req.params.eventId);
+        if (!foundEvent) {
+            const err = new Error("Event couldn't be found");
+            err.status = 404;
+            return next(err)
+        };
+
+        const foundGroup = await Group.findByPk(foundEvent.groupId)
+        if (!foundGroup) {
+            const err = new Error("Group couldn't be found");
+            err.status = 404;
+            return next(err);
+        };
+
+        const foundCoHost = await Member.findOne({
+            where: {
+                groupId: foundEvent.groupId,
+                memberId: req.user.id,
+                status: "Co-Host"
+            }
+        })
+
+        const foundStatus = await Attendee.findOne({
+            where: {
+                eventId: req.params.eventId,
+                userId: req.user.id
+            }
+        })
+
+
+        let eventStatus;
+
+        if (foundGroup.organizerId === req.user.id) {
+            eventStatus = {
+                "currentEventStatus": "Organizer"
+            }
+        } else if (foundStatus) {
+            eventStatus = {
+                "currentEventStatus": foundStatus.status
+            }
+        } else {
+            eventStatus = {
+                "currentEventStatus": "None"
+            }
+        }
+
+        res.json(eventStatus)
     }
 )
 
