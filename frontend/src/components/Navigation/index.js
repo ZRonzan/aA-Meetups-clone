@@ -18,7 +18,7 @@ function Navigation({ isLoaded }) {
 
   const logInDemoUser = () => {
     const demoUser = {
-      email: "john.smith@gmail.com",
+      email: "demo@user.io",
       password: "secret password"
     }
 
